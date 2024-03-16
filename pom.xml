@@ -96,7 +96,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>org.algoavengers.weatherwatch/org.algoavengers.weatherwatch.HelloApplication</mainClass>
+              <mainClass>org.algoavengers.weatherwatch/org.algoavengers.weatherwatch.WeatherWatch_GUIApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
