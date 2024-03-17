@@ -1,4 +1,4 @@
-package org.algoavengers.weatherwatch.Backend;
+package org.algoavengers.weatherwatch.SQLCache;
 
 public interface CacheManager {
     // void write
