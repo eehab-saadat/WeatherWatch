@@ -7,6 +7,7 @@ module org.algoavengers.weatherwatch {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires com.google.gson;
 
     opens org.algoavengers.weatherwatch to javafx.fxml;
     exports org.algoavengers.weatherwatch;

@@ -74,7 +74,11 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
-    </dependency>  </dependencies>
+    </dependency><dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.10.1</version>
+  </dependency> </dependencies>
 
   <build>
     <plugins>
@@ -96,7 +100,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>org.algoavengers.weatherwatch/org.algoavengers.weatherwatch.HelloApplication</mainClass>
+              <mainClass>org.algoavengers.weatherwatch/org.algoavengers.weatherwatch.WeatherWatch_GUIApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
