@@ -1,4 +1,4 @@
-package org.algoavengers.weatherwatch.Services;
+package org.algoavengers.weatherwatch.services;
 
 //imports
 import com.google.gson.Gson;
