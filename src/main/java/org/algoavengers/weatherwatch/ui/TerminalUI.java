@@ -1,4 +1,4 @@
-package org.algoavengers.weatherwatch.views;
+package org.algoavengers.weatherwatch.ui;
 
 
 import java.util.Scanner;
@@ -23,7 +23,7 @@ public class TerminalUI implements DisplayInterface {
             }
             System.out.println("Latitude: " + coordinates[0]);
             System.out.println("Longitude: " + coordinates[1]);
-            JsonObject forecast = WeatherForecaster.currentForecast(API_KEY, coordinates[0], coordinates[1]);
+            JsonObject forecast = WeatherForecaster.CurrentForecast(API_KEY, coordinates[0], coordinates[1]);
             if (forecast == null) {
                 System.out.println("An error occurred while fetching the weather forecast.");
                 return;

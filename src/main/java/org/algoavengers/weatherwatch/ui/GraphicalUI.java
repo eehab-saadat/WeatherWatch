@@ -1,4 +1,4 @@
-package org.algoavengers.weatherwatch.views;
+package org.algoavengers.weatherwatch.ui;
 
 public class GraphicalUI implements DisplayInterface {
     @Override

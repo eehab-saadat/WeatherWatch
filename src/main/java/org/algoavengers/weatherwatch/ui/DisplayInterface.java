@@ -1,4 +1,4 @@
-package org.algoavengers.weatherwatch.views;
+package org.algoavengers.weatherwatch.ui;
 
 public interface DisplayInterface {
     void run(String API_KEY);

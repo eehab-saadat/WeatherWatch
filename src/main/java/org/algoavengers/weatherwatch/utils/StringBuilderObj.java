@@ -1,4 +1,4 @@
-package org.algoavengers.weatherwatch.apis;
+package org.algoavengers.weatherwatch.utils;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

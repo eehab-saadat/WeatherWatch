@@ -3,6 +3,7 @@ package org.algoavengers.weatherwatch.apis;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonArray;
+import org.algoavengers.weatherwatch.utils.StringBuilderObj;
 
 public class Geocoder {
     public static float[] geocode(String API_KEY, String city) {

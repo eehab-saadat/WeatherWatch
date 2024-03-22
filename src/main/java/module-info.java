@@ -11,4 +11,6 @@ module org.algoavengers.weatherwatch {
 
     opens org.algoavengers.weatherwatch to javafx.fxml;
     exports org.algoavengers.weatherwatch;
+    exports org.algoavengers.weatherwatch.utils;
+    opens org.algoavengers.weatherwatch.utils to javafx.fxml;
 }

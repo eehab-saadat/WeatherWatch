@@ -7,4 +7,5 @@ public interface CacheManagerInterface {
     public void delete(String key);
     public void clear();
     */
+
 }
