@@ -9,7 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class CustomLoadingScreenExample extends Application {
+public class CustomLoadingScreen extends Application {
 
     public static void main(String[] args) {
         launch(args);

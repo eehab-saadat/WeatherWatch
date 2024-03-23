@@ -8,8 +8,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
-import javafx.animation.PauseTransition;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -24,7 +22,7 @@ public class GraphicalUI extends Application implements DisplayInterface {
     @Override
     public void start(@NotNull Stage primaryStage) throws Exception {
         // Create an instance of CustomLoadingScreenExample
-        CustomLoadingScreenExample loadingScreen = new CustomLoadingScreenExample();
+        CustomLoadingScreen loadingScreen = new CustomLoadingScreen();
 
         // Show the loading screen
         Scene loadingScene = loadingScreen.createLoadingScene();
