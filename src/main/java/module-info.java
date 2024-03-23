@@ -8,6 +8,7 @@ module org.algoavengers.weatherwatch {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.google.gson;
+    requires annotations;
 
     opens org.algoavengers.weatherwatch to javafx.fxml;
     exports org.algoavengers.weatherwatch;
