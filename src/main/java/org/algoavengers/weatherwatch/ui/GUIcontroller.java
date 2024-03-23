@@ -1,9 +1,9 @@
-package org.algoavengers.weatherwatch;
+package org.algoavengers.weatherwatch.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class GUIcontroller {
     @FXML
     private Label welcomeText;
 

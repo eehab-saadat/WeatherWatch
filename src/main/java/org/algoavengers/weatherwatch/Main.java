@@ -3,7 +3,7 @@ package org.algoavengers.weatherwatch;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-import org.algoavengers.weatherwatch.ui.GraphicalUI;
+import org.algoavengers.weatherwatch.ui.GraphicalUI_App;
 import org.algoavengers.weatherwatch.ui.TerminalUI;
 import org.algoavengers.weatherwatch.utils.App;
 
@@ -24,7 +24,7 @@ public class Main {
         }
         App WeatherWatch = new App(new TerminalUI());
         WeatherWatch.app.run(API_KEY);
-        WeatherWatch = new App(new GraphicalUI());
+        WeatherWatch = new App(new GraphicalUI_App());
         WeatherWatch.app.run(API_KEY);
     }
 }
