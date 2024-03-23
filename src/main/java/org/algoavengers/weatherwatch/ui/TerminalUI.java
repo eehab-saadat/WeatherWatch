@@ -2,6 +2,7 @@ package org.algoavengers.weatherwatch.ui;
 import org.algoavengers.weatherwatch.storage.FileManager;
 
 
+import java.io.File;
 import java.util.Scanner;
 
 import com.google.gson.JsonObject;
@@ -30,8 +31,6 @@ public class TerminalUI implements DisplayInterface {
                 return;
             }
             System.out.println("Weather: " + forecast.toString());
-            FileManager fm=new FileManager();
-            fm.save(city, coordinates[0],coordinates[1]);
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
         }
