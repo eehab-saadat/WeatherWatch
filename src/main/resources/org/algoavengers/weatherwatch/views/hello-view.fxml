@@ -19,9 +19,8 @@
   <left>
     <AnchorPane prefHeight="399.0" prefWidth="210.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
       <ImageView fitHeight="400.0" fitWidth="225.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@images/weatherBackground.png" />
-            </image></ImageView>
+        <Image url="../assets/weatherBackground.png"/>
+      </ImageView>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutY="105.0" prefHeight="17.0" prefWidth="228.0" text="WeatherApp" textFill="WHITE">
         <font>
           <Font name="System Bold" size="28.0" />
