@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.Objects;
 
-public class GraphicalUI extends Application implements DisplayInterface {
+public class GraphicalUI_App extends Application implements DisplayInterface {
     private String API_KEY;
 
     public static void main(String[] args) {
