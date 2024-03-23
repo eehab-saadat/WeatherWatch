@@ -1,5 +1,8 @@
 package org.algoavengers.weatherwatch.ui;
+import org.algoavengers.weatherwatch.storage.CacheManager;
+import org.algoavengers.weatherwatch.storage.CacheManagerInterface;
 import org.algoavengers.weatherwatch.storage.FileManager;
+import org.algoavengers.weatherwatch.storage.DBManager;
 
 
 import java.io.File;
@@ -31,6 +34,18 @@ public class TerminalUI implements DisplayInterface {
                 return;
             }
             System.out.println("Weather: " + forecast.toString());
+
+            /*
+            CacheManagerInterface cacheManager = new DBManager();
+            cacheManager.save(city, coordinates[0], coordinates[1]);
+            coordinates = cacheManager.find("Tokyo");
+            if (coordinates != null) {
+                System.out.println("Latitude: " + coordinates[0]);
+                System.out.println("Longitude: " + coordinates[1]);
+            }
+            cacheManager.delete("Delhi");
+            */
+
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
         }
