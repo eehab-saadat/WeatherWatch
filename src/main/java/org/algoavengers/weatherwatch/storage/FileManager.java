@@ -87,18 +87,3 @@ public class FileManager implements CacheManagerInterface {
 }
 
 
-    class main
-{
-    public static void main(String[] args)
-    {
-        FileManager obj= new FileManager();
-
-        float arr[]=    obj.find("Karachi");
-        System.out.println("Lat: "+ arr[0]);
-        System.out.println("Lon: "+ arr[1]);
-
-//        obj.save("Multan", 31.565681f, 74.314186f);
-//        obj.save("Sahiwal", 24.854685f, 67.020706f);
-//        obj.save("Peshawar", 33.693813f, 73.06515f);
-    }
-}
