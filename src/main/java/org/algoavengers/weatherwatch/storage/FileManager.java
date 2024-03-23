@@ -4,7 +4,7 @@ import java.io.*;
 public class FileManager implements CacheManagerInterface {
     public void save(String city, float lat, float lon) {
         try {
-            FileWriter writer = new FileWriter("storage.txt", true);
+            FileWriter writer = new FileWriter("C:\\Users\\KHAN\\Desktop\\SDA PROJECT\\Proj file\\WeatherWatch\\src\\main\\java\\org\\algoavengers\\weatherwatch\\storage\\storage.txt", true);
             BufferedWriter bw = new BufferedWriter(writer);
             String coma = ", ";
             bw.write(city);
@@ -13,6 +13,7 @@ public class FileManager implements CacheManagerInterface {
             bw.write(coma);
             bw.write(String.valueOf(lon));
             bw.newLine();
+            bw.flush();
             bw.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -21,30 +22,83 @@ public class FileManager implements CacheManagerInterface {
         }
     }
 
-
     public void delete(String city) {
+        try {
+            File inputFile = new File("C:\\Users\\KHAN\\Desktop\\SDA PROJECT\\Proj file\\WeatherWatch\\src\\main\\java\\org\\algoavengers\\weatherwatch\\storage\\storage.txt");
+            File tempFile = new File("C:\\Users\\KHAN\\Desktop\\SDA PROJECT\\Proj file\\WeatherWatch\\src\\main\\java\\org\\algoavengers\\weatherwatch\\storage\\tempStorage.txt");
 
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
-        // Delete from DB
+            String lineToRemove = city;
+            String currentLine;
+
+            while ((currentLine = reader.readLine()) != null) {
+                String trimmedLine = currentLine.trim();
+                if (trimmedLine.startsWith(lineToRemove)) {
+                    continue;
+                }
+                writer.write(currentLine + System.getProperty("line.separator"));
+            }
+
+            // Close readers and writers
+            reader.close();
+            writer.close();
+
+            // Delete original file
+            if (!inputFile.delete()) {
+                System.out.println("Failed to delete the original file.");
+                return;
+            }
+
+            // Rename the temporary file to the original file
+            if (!tempFile.renameTo(inputFile)) {
+                System.out.println("Failed to rename the temporary file.");
+                return;
+            }
+
+            System.out.println("Record deleted successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 
+
     public float[] find(String city) {
-        // Find from DB
-        return new float[2];
+        try {
+            FileReader inputFile = new FileReader("C:\\Users\\KHAN\\Desktop\\SDA PROJECT\\Proj file\\WeatherWatch\\src\\main\\java\\org\\algoavengers\\weatherwatch\\storage\\storage.txt");
+            BufferedReader br = new BufferedReader(inputFile);
+            String currentLine;
+            while ((currentLine = br.readLine()) != null) {
+                String[] parts = currentLine.split(",");
+                if (parts.length >= 3 && parts[0].trim().equals(city)) {
+                    float lat = Float.parseFloat(parts[1].trim());
+                    float lon = Float.parseFloat(parts[2].trim());
+                    return new float[]{lat, lon};
+                }
+            }
+            br.close(); // Close the BufferedReader
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return null; // City not found or error occurred
     }
 }
 
 
-class main
+    class main
 {
     public static void main(String[] args)
     {
         FileManager obj= new FileManager();
-        String city="Lahore";
-        float lat=31;
-        float lon=74;
 
+        float arr[]=    obj.find("Karachi");
+        System.out.println("Lat: "+ arr[0]);
+        System.out.println("Lon: "+ arr[1]);
 
-        obj.save(city, lat,lon);
+//        obj.save("Multan", 31.565681f, 74.314186f);
+//        obj.save("Sahiwal", 24.854685f, 67.020706f);
+//        obj.save("Peshawar", 33.693813f, 73.06515f);
     }
 }
