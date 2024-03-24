@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="680.0" prefWidth="1080.0"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="680.0" prefWidth="1080.0" fx:id="rootPane"
             style="-fx-background-color: #F8E9CD;" xmlns="http://javafx.com/javafx/21"
             fx:controller="org.algoavengers.weatherwatch.ui.LoaderController">
    <children>
