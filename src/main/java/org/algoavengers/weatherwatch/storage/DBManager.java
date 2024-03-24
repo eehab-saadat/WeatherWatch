@@ -74,72 +74,68 @@ public class DBManager implements CacheManagerInterface {
         insertAPStatement.setFloat(6, apData.getO3());
     }
 
-    //delete city from database
+    //find city from database
     public Object[] find(String city) throws SQLException {
-        Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+    Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
-        String sql = "SELECT l.*, wd.*, ap.* " +
-                     "FROM Locations l " +
-                     "INNER JOIN WeatherDetails wd ON l.id = wd.location_id " +
-                     "INNER JOIN APDetails ap ON l.id = ap.location_id " +
-                     "WHERE LOWER(l.name) = ?";  // Case-insensitive search
+    String sql = "SELECT l.*, wd.*, ap.* " +
+                 "FROM Locations l " +
+                 "INNER JOIN WeatherDetails wd ON l.id = wd.location_id " +
+                 "INNER JOIN APDetails ap ON l.id = ap.location_id " +
+                 "WHERE LOWER(l.name) = ?";  // Case-insensitive search
 
-        PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setString(1, city.toLowerCase()); // Convert city to lowercase for comparison
-        ResultSet rs = statement.executeQuery();
+    PreparedStatement statement = conn.prepareStatement(sql);
+    statement.setString(1, city.toLowerCase()); // Convert city to lowercase for comparison
+    ResultSet rs = statement.executeQuery();
 
-        if (rs.next()) {
-            LocationData locationData = new LocationData(
-                    rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getFloat("latitude"),
-                    rs.getFloat("longitude"),
-                    rs.getString("country")
-            );
+    if (rs.next()) {
+        LocationData locationData = new LocationData();
+        locationData.id = rs.getInt("id");
+        locationData.name = rs.getString("name");
+        locationData.latitude = rs.getFloat("latitude");
+        locationData.longitude = rs.getFloat("longitude");
+        locationData.country = rs.getString("country");
 
-            WeatherData weatherData = new WeatherData(
-                    rs.getInt("id"), // WeatherDetails ID (optional)
-                    rs.getInt("location_id"),
-                    rs.getFloat("temp"),
-                    rs.getFloat("feelsLike"),
-                    rs.getFloat("tempMin"),
-                    rs.getFloat("tempMax"),
-                    rs.getFloat("pressure"),
-                    rs.getFloat("humidity"),
-                    rs.getFloat("windSpeed"),
-                    rs.getFloat("visibility"),
-                    rs.getString("main"),
-                    rs.getString("description"),
-                    rs.getString("icon"),
-                    rs.getString("sunrise"),
-                    rs.getString("sunset"),
-                    rs.getString("dt")
-            );
+        WeatherData weatherData = new WeatherData();
+        weatherData.id = rs.getInt("id"); // Optional (might not be used in your model)
+        weatherData.locationId = rs.getInt("location_id");
+        weatherData.temp = rs.getFloat("temp");
+        weatherData.feelsLike = rs.getFloat("feelsLike");
+        weatherData.tempMin = rs.getFloat("tempMin");
+        weatherData.tempMax = rs.getFloat("tempMax");
+        weatherData.pressure = rs.getFloat("pressure");
+        weatherData.humidity = rs.getFloat("humidity");
+        weatherData.windSpeed = rs.getFloat("windSpeed");
+        weatherData.visibility = rs.getFloat("visibility");
+        weatherData.main = rs.getString("main");
+        weatherData.description = rs.getString("description");
+        weatherData.icon = rs.getString("icon");
+        weatherData.sunrise = rs.getString("sunrise");
+        weatherData.sunset = rs.getString("sunset");
+        weatherData.dt = rs.getString("dt");
 
-            APData apData = new APData(
-                    rs.getInt("id"), // APDetails ID (optional)
-                    rs.getInt("location_id"),
-                    rs.getInt("aqi"),
-                    rs.getFloat("co"),
-                    rs.getFloat("no"),
-                    rs.getFloat("no2"),
-                    rs.getFloat("o3"),
-                    rs.getFloat("so2"),
-                    rs.getFloat("pm2_5"),
-                    rs.getFloat("pm10"),
-                    rs.getFloat("nh3"),
-                    rs.getString("comment"),
-                    rs.getString("dt")
-            );
+        APData apData = new APData();
+        apData.id = rs.getInt("id"); // Optional (might not be used in your model)
+        apData.locationId = rs.getInt("location_id");
+        apData.aqi = rs.getInt("aqi");
+        apData.co = rs.getFloat("co");
+        apData.no = rs.getFloat("no");
+        apData.no2 = rs.getFloat("no2");
+        apData.o3 = rs.getFloat("o3");
+        apData.so2 = rs.getFloat("so2");
+        apData.pm2_5 = rs.getFloat("pm2_5");
+        apData.pm10 = rs.getFloat("pm10");
+        apData.nh3 = rs.getFloat("nh3");
+        apData.comment = rs.getString("comment");
+        apData.dt = rs.getString("dt");
 
-            return new Object[]{locationData, weatherData, apData};
-        } else {
-            return null;
-        }
+        return new Object[]{locationData, weatherData, apData};
+    } else {
+        return null;
     }
 }
 
-    //find city info from database and return it (if not found return null)
+    //find top 5 city data
     public LocationData[] getTop5Locations() throws SQLException {
     Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
@@ -154,20 +150,20 @@ public class DBManager implements CacheManagerInterface {
 
     List<LocationData> locations = new ArrayList<>();
     while (rs.next() && locations.size() < 5) {
-        LocationData locationData = new LocationData(
-                rs.getInt("id"),
-                rs.getString("name"),
-                rs.getFloat("latitude"),
-                rs.getFloat("longitude"),
-                rs.getString("country")
-        );
+        LocationData locationData = new LocationData();
+        locationData.id = rs.getInt("id");
+        locationData.name = rs.getString("name");
+        locationData.latitude = rs.getFloat("latitude");
+        locationData.longitude = rs.getFloat("longitude");
+        locationData.country = rs.getString("country");
+
         locations.add(locationData);
     }
 
-    return locations.toArray(new LocationData[locations.size()]);
+    return locations.toArray
 }
 
-
+    //delete outdated data from database
     public void deleteOutdatedRecords() throws SQLException {
     Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
