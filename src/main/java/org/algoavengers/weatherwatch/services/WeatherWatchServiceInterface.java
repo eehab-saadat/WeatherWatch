@@ -7,7 +7,7 @@ import java.util.HashMap;
 public interface WeatherWatchServiceInterface {
 
     // adds a location to the saved locations table/list in database
-    void addLocation(double latitude, double longitude, String name); // usecase#1
+    void addLocation(double latitude, double longitude); // usecase#1
     // should decode the coordinates to a location and save both coordinates and the location to the database
     // if it is a valid location otherwise return an error message
     void addLocation(String name); // usecase # 2
@@ -25,7 +25,7 @@ public interface WeatherWatchServiceInterface {
     // should use the hashmap returned by getCurrentWeather() to get sunrise and sunset times
     HashMap get5dayWeatherForecast(double latitude, double longitude); // usecase # 6; see: https://openweathermap.org/forecast5
     HashMap getAirPollutionInfo(double latitude, double longitude); // usecase # 10; see: https://openweathermap.org/api/air-pollution
-    int getAQI(HashMap airPollutionData);// usecase # 10; should use the hashmap returned by getAirPollutionInfo() to get the AQI
+    int getAQI(double latitude, double longitude);// usecase get# 10; should use the hashmap returned by getAirPollutionInfo() to get the AQI
     HashMap getPollutingGasInfo(HashMap airPollutionData); // usecase # 12; should use the hashmap returned by getAirPollutionInfo() to get the polluting gas information
     void setTrigger(Gson params); // usecase # 9,11; should set a trigger for a location to notify the user when the weather changes
     void setAQITrigger(int targetAQI);
