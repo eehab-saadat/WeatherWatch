@@ -5,9 +5,9 @@ import org.algoavengers.weatherwatch.models.*;
 import java.sql.SQLException;
 
 public interface CacheManagerInterface {
-    public void save(LocationData location, WeatherData weatherData, APData apData) throws SQLException;
+    public void save(LocationData location, WeatherData weatherData, APData apData);
     void delete(String city);
-    public Object[] find(String city) throws SQLException;
-    public LocationData[] getTop5Locations() throws SQLException;
-    public void deleteOutdatedRecords() throws SQLException;
+    public Object[] find(String city);
+    public LocationData[] getTop5Locations();
+    public void deleteOutdatedRecords();
 }
