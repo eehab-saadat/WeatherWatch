@@ -98,7 +98,6 @@ public class DBManager implements CacheManagerInterface {
             locationData.country = rs.getString("country");
 
             WeatherData weatherData = new WeatherData();
-            weatherData.id = rs.getInt("id"); // Optional (might not be used in your model)
             weatherData.locationId = rs.getInt("location_id");
             weatherData.temp = rs.getFloat("temp");
             weatherData.feelsLike = rs.getFloat("feelsLike");
@@ -116,7 +115,6 @@ public class DBManager implements CacheManagerInterface {
             weatherData.dt = rs.getString("dt");
 
             APData apData = new APData();
-            apData.id = rs.getInt("id"); // Optional (might not be used in your model)
             apData.locationId = rs.getInt("location_id");
             apData.aqi = rs.getInt("aqi");
             apData.co = rs.getFloat("co");
