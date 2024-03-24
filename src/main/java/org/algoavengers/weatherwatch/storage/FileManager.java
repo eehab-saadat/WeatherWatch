@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileManager implements CacheManagerInterface {
+public class FileManager {
     private final String filepath = "src/main/java/org/algoavengers/weatherwatch/storage/";
     public void save(String city, float lat, float lon) {
         try (FileWriter writer = new FileWriter(filepath + "storage.txt", true);

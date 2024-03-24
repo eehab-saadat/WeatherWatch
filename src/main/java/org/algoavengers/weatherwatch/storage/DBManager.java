@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class DBManager implements CacheManagerInterface {
+public class DBManager {
     private static final java.lang.String DB_URL = "jdbc:mysql://sql6.freesqldatabase.com:3306/sql6693696";
     private static final java.lang.String USER = "sql6693696";
     private static final java.lang.String PASSWORD = "RPwZURS5JZ";
