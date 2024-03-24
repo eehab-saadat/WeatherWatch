@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.SearchableComboBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1080.0"
+            style="-fx-background-color: #2a9d8f;" styleClass="css" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.algoavengers.weatherwatch.ui.LoaderController">
+  <children>
+    <BorderPane prefHeight="59.0" prefWidth="1079.0" style="-fx-background-color: #001524;">
+      <left>
+        <Label contentDisplay="TOP" prefHeight="47.0" prefWidth="279.0" text=" WeatherWatch" textFill="WHITE" BorderPane.alignment="CENTER">
+          <font>
+            <Font size="32.0" />
+          </font>
+        </Label>
+      </left>
+    </BorderPane>
+    <Accordion layoutX="525.0" layoutY="335.0" />
+    <Rectangle arcWidth="5.0" fill="WHITE" height="663.0" layoutX="-1.0" layoutY="59.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="211.0" />
+    <Label alignment="CENTER" layoutX="17.0" layoutY="81.0" prefHeight="57.0" prefWidth="177.0" text="Quick Access" textFill="#001524">
+      <font>
+        <Font size="31.0" />
+      </font>
+    </Label>
+    <Label alignment="CENTER" layoutX="24.0" layoutY="148.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Lahore" textFill="#001524">
+      <font>
+        <Font size="25.0" />
+      </font>
+    </Label>
+    <Label alignment="CENTER" layoutX="23.0" layoutY="196.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Lahore" textFill="#001524">
+      <font>
+        <Font size="25.0" />
+      </font>
+    </Label>
+    <Label alignment="CENTER" layoutX="20.0" layoutY="246.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Lahore" textFill="#001524">
+      <font>
+        <Font size="25.0" />
+      </font>
+    </Label>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="287.0" layoutX="262.0" layoutY="397.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-width: 20; -fx-arc-height: 20;" width="147.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="287.0" layoutX="418.0" layoutY="398.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="147.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="286.0" layoutX="576.0" layoutY="397.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="147.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="283.0" layoutX="737.0" layoutY="397.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="147.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="283.0" layoutX="895.0" layoutY="399.0" stroke="#00000006" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="147.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="224.0" layoutX="262.0" layoutY="138.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 15; -fx-arc-width: 15; -fx-effect: gradient;" width="335.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="224.0" layoutX="687.0" layoutY="137.0" stroke="#00000003" strokeType="INSIDE" style="-fx-arc-height: 15; -fx-arc-width: 15;" width="347.0" />
+    <SearchableComboBox editable="true" layoutX="789.0" layoutY="69.0" opacity="0.51" prefHeight="47.0" prefWidth="237.0" promptText="Search" />
+    <Label layoutX="265.0" layoutY="72.0" prefHeight="45.0" prefWidth="289.0" text="Lahore,PK">
+      <font>
+        <Font size="34.0" />
+      </font>
+    </Label>
+  </children>
+</AnchorPane>
