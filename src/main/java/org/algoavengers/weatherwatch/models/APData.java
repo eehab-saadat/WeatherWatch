@@ -8,10 +8,10 @@ import org.algoavengers.weatherwatch.utils.DTConverter;
  * It includes details like air quality index, various gas concentrations, and a comment on the air quality.
  */
 public class APData {
-    LocationData location;
-    int aqi;
-    float co, no, no2, o3, so2, pm2_5, pm10, nh3;
-    String comment, dt;
+    public LocationData location;
+    public int aqi;
+    public float co, no, no2, o3, so2, pm2_5, pm10, nh3;
+    public String comment, dt;
 
     /**
      * Constructor for APData class.

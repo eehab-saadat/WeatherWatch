@@ -5,10 +5,10 @@ package org.algoavengers.weatherwatch.models;
  * It includes details like latitude, longitude, city, and country.
  */
 public class LocationData {
-    float lat;
-    float lon;
-    String city;
-    String country;
+    public float lat;
+    public float lon;
+    public String city;
+    public String country;
 
     /**
      * Constructor for LocationData class.

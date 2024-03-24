@@ -9,9 +9,9 @@ import org.algoavengers.weatherwatch.utils.DTConverter;
  */
 public class WeatherData {
     LocationData location;
-    float temp, feelsLike, tempMin, tempMax, pressure, humidity, windSpeed, visibility;
-    String main, description, icon;
-    String sunrise, sunset, dt;
+    public float temp, feelsLike, tempMin, tempMax, pressure, humidity, windSpeed, visibility;
+    public String main, description, icon;
+    public String sunrise, sunset, dt;
 
     /**
      * Constructor for WeatherData class.
