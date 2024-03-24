@@ -3,12 +3,24 @@ package org.algoavengers.weatherwatch.services.apis;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonArray;
+import org.algoavengers.weatherwatch.models.LocationData;
 import org.algoavengers.weatherwatch.utils.StringBuilderObj;
 
+/**
+ * Geocoder class provides a method to fetch geographical location data for a specific city.
+ * It uses the OpenWeatherMap Geocoding API to fetch the data.
+ */
 public class Geocoder {
-    public static float[] geocode(String API_KEY, String city) {
+    /**
+     * Fetches the geographical location data for a specific city.
+     *
+     * @param API_KEY The API key for the OpenWeatherMap API.
+     * @param city The city for which the location data is to be fetched.
+     * @return A LocationData object containing the location data for the city.
+     */
+    public static LocationData geocode(String API_KEY, String city) {
         // Constructing the API URL
-        String apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + API_KEY;
+        String apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + API_KEY;
 
         try {
             // Making the API request and getting the JSON response
@@ -20,13 +32,15 @@ public class Geocoder {
 
             // Get the first JsonObject from the JsonArray
             JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
+            System.out.println(jsonObject.toString());
 
-            // Get latitude and longitude
-            float latitude = jsonObject.get("lat").getAsFloat();
-            float longitude = jsonObject.get("lon").getAsFloat();
-
-            // Creating the float array to store latitude and longitude
-            return new float[]{latitude, longitude};
+            // Returning Location Data
+            return new LocationData(
+                    jsonObject.get("name").getAsString(),
+                    jsonObject.get("country").getAsString(),
+                    jsonObject.get("lat").getAsFloat(),
+                    jsonObject.get("lon").getAsFloat()
+            );
 
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
