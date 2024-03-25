@@ -1,9 +1,13 @@
 package org.algoavengers.weatherwatch.storage;
 
+import org.algoavengers.weatherwatch.models.*;
+
+import java.sql.SQLException;
+
 public interface CacheManagerInterface {
-
-    void save(String city, float lat, float lon);
+    public void save(LocationData location, WeatherData weatherData, APData apData);
     void delete(String city);
-    float[] find(String city);
-
+    public Object[] find(String city);
+    public LocationData[] getTop5Locations();
+    public void deleteOutdatedRecords();
 }
