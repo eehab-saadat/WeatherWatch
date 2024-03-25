@@ -39,7 +39,7 @@
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="250.0" layoutX="576.0" layoutY="397.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="147.0" />
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="250.0" layoutX="734.0" layoutY="397.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="150.0" />
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="247.0" layoutX="895.0" layoutY="399.0" stroke="#00000006" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="147.0" />
-    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="224.0" layoutX="262.0" layoutY="138.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 15; -fx-arc-width: 15; -fx-effect: gradient;" width="455.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="224.0" layoutX="262.0" layoutY="138.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 15; -fx-arc-width: 15; -fx-effect: gradient;" width="388.0" />
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="224.0" layoutX="734.0" layoutY="137.0" stroke="#00000003" strokeType="INSIDE" style="-fx-arc-height: 15; -fx-arc-width: 15;" width="300.0" />
     <SearchableComboBox editable="true" layoutX="732.0" layoutY="77.0" opacity="0.51" prefHeight="47.0" prefWidth="150.0" promptText="Search" />
     <Label layoutX="265.0" layoutY="72.0" prefHeight="45.0" prefWidth="289.0" text="Lahore,PK">
@@ -50,7 +50,7 @@
 
       <Button layoutX="894.0" layoutY="85.0" mnemonicParsing="false" />
       <Button layoutX="962.0" layoutY="85.0" mnemonicParsing="false" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="59.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1080.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="64.0" layoutY="-3.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1080.0" />
       <Label layoutX="69.0" layoutY="4.0" prefHeight="47.0" prefWidth="228.0" text="WeatherWatch">
          <font>
             <Font size="33.0" />
@@ -71,7 +71,7 @@
             <Image url="@../assets/airpollution.png" />
          </image>
       </ImageView>
-      <Label layoutX="279.0" layoutY="154.0" prefHeight="41.0" prefWidth="89.0" text="Today">
+      <Label layoutX="304.0" layoutY="158.0" prefHeight="41.0" prefWidth="89.0" text="Today">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -81,25 +81,111 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Label layoutX="279.0" layoutY="256.0" text="Wind:" />
-      <Label layoutX="279.0" layoutY="279.0" text="High:" />
-      <Label layoutX="278.0" layoutY="302.0" text="Sunrise:" />
-      <Label layoutX="279.0" layoutY="326.0" text="Visibility:" />
+      <Label layoutX="333.0" layoutY="255.0" text="Wind:" />
+      <Label layoutX="334.0" layoutY="278.0" text="High:" />
+      <Label layoutX="334.0" layoutY="303.0" text="Sunrise:" />
+      <Label layoutX="331.0" layoutY="326.0" text=" Visibility:" />
       <Label layoutX="487.0" layoutY="255.0" text="Humidity:" />
       <Label layoutX="486.0" layoutY="278.0" text="Low:" />
       <Label layoutX="487.0" layoutY="301.0" text="Sunset:" />
       <Label layoutX="487.0" layoutY="326.0" text="Pressure:" />
-      <Label layoutX="331.0" layoutY="256.0" text="-----" />
-      <Label layoutX="331.0" layoutY="279.0" text="-----" />
-      <Label layoutX="330.0" layoutY="302.0" text="-----" />
-      <Label layoutX="330.0" layoutY="326.0" text="-----" />
-      <Label layoutX="551.0" layoutY="255.0" text="-----" />
-      <Label layoutX="550.0" layoutY="274.0" text="-----" />
-      <Label layoutX="550.0" layoutY="303.0" text="-----" />
-      <Label layoutX="550.0" layoutY="327.0" text="-----" />
-      <Label layoutX="282.0" layoutY="191.0" prefHeight="27.0" prefWidth="50.0" text="69C" />
-      <Label layoutX="283.0" layoutY="224.0" prefHeight="18.0" prefWidth="75.0" text="Feels Like" />
+      <Label layoutX="398.0" layoutY="247.0" text="-----" />
+      <Label layoutX="398.0" layoutY="278.0" text="-----" />
+      <Label layoutX="398.0" layoutY="301.0" text="-----" />
+      <Label layoutX="400.0" layoutY="327.0" text="-----" />
+      <Label layoutX="556.0" layoutY="255.0" text="-----" />
+      <Label layoutX="558.0" layoutY="281.0" text="-----" />
+      <Label layoutX="558.0" layoutY="301.0" text="-----" />
+      <Label layoutX="558.0" layoutY="328.0" text="-----" />
+      <Label layoutX="333.0" layoutY="200.0" prefHeight="27.0" prefWidth="50.0" text="69C" />
+      <Label layoutX="332.0" layoutY="224.0" prefHeight="18.0" prefWidth="75.0" text="Feels Like" />
       <Label layoutX="484.0" layoutY="219.0" prefHeight="27.0" prefWidth="50.0" text="96C" />
       <Label layoutX="479.0" layoutY="179.0" prefHeight="41.0" prefWidth="212.0" text="Main Description" />
+      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="304.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/wind.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="304.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/01d.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="304.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/sunrise.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="461.0" layoutY="301.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/sunset.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="461.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/pressure.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="304.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/visibility.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="461.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/humidity.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="461.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/01n.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="856.0" layoutY="153.0" prefHeight="27.0" prefWidth="56.0" text="420">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="27.0" layoutX="906.0" layoutY="155.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
+      <Label layoutX="769.0" layoutY="211.0" prefHeight="27.0" prefWidth="132.0" text="Breakdown:">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="769.0" layoutY="253.0" text="CO:" />
+      <Label layoutX="769.0" layoutY="272.0" text="NO:" />
+      <Label layoutX="769.0" layoutY="290.0" text="NO2:" />
+      <Label layoutX="769.0" layoutY="310.0" text="Sulphur:" />
+      <Label layoutX="769.0" layoutY="328.0" text="Particulate:" />
+      <Label layoutX="911.0" layoutY="253.0" text="good" />
+      <Label layoutX="911.0" layoutY="273.0" text="fair" />
+      <Label layoutX="911.0" layoutY="290.0" text="moderate" />
+      <Label layoutX="911.0" layoutY="310.0" text="poor" />
+      <Label layoutX="912.0" layoutY="327.0" text="v.poor" />
+      <Label layoutX="283.0" layoutY="412.0" prefHeight="27.0" prefWidth="107.0" text="Tomorrow">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="438.0" layoutY="412.0" prefHeight="27.0" prefWidth="107.0" text="5/25/2024">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="596.0" layoutY="412.0" prefHeight="27.0" prefWidth="107.0" text="6/25/2024">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="755.0" layoutY="412.0" prefHeight="27.0" prefWidth="107.0" text="7/25/2024">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="915.0" layoutY="412.0" prefHeight="27.0" prefWidth="107.0" text="8/25/2024">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
   </children>
 </AnchorPane>
