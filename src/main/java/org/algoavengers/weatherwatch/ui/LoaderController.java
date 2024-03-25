@@ -37,8 +37,10 @@ public class LoaderController {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0.9), event -> { // Change the color every 1 seconds
                     // Cycle through the colors
-                    rootPane.setStyle("-fx-background-color: " + colors[colorIndex]);
-                    colorIndex = (colorIndex + 1) % colors.length;
+                    if(this.rootPane != null) {
+                        rootPane.setStyle("-fx-background-color: " + colors[colorIndex]);
+                        colorIndex = (colorIndex + 1) % colors.length;
+                    }
                 })
         );
 
@@ -46,8 +48,10 @@ public class LoaderController {
         pause.setOnFinished(event -> {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("/org/algoavengers/weatherwatch/views/home-page.fxml"));
-                Stage stage = (Stage) logoImageView.getScene().getWindow();
-                stage.setScene(new Scene(root, 1080, 680));
+                if(logoImageView.getScene() != null && logoImageView != null) {
+                    Stage stage = (Stage) logoImageView.getScene().getWindow();
+                    stage.setScene(new Scene(root, 1080, 680));
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
