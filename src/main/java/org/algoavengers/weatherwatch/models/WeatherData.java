@@ -65,6 +65,9 @@ public class WeatherData {
         }
     }
 
+    public void setLocation(LocationData location) {
+        this.location = location;
+    }
     /**
      * Method to display the weather details in the console.
      * It prints the location, temperature, humidity, wind speed, visibility, and weather description.

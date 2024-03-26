@@ -50,21 +50,22 @@ public class TestUI implements DisplayInterface {
 //            }
 
             CacheManager cacheManager = new CacheManager(new FileManager());
-//            try {
-//
-//
-//                cacheManager.cache.save(location, weatherData, apData);
-//            } catch (Exception e) {
-//                System.out.println("An error occurred while saving the data to the cache.");
-//                System.out.println(e.getMessage());
-//                return;
-//            }
-
             try {
 
 
-                Object[] obj = cacheManager.cache.find("Lahore");
+                cacheManager.cache.save(location, weatherData, apData);
+            } catch (Exception e) {
+                System.out.println("An error occurred while saving the data to the cache.");
+                System.out.println(e.getMessage());
+                return;
+            }
+
+            try {
+                System.out.println(location.city);
+                Object[] obj = cacheManager.cache.find(city);
+                System.out.println(location.city);
                 if (obj != null) {
+                    System.out.println(location.city);
                     LocationData loc = (LocationData) obj[0];
                     WeatherData wData = (WeatherData) obj[1];
                     APData aData = (APData) obj[2];
@@ -77,16 +78,16 @@ public class TestUI implements DisplayInterface {
                 System.out.println(e.getMessage());
                 return;
             }
-            try {
-                LocationData[] loc = cacheManager.cache.getTop5Locations();
-                for (LocationData l : loc) {
-                    l.displayDetails();
-                }
-            } catch (Exception e) {
-                System.out.println("An error occurred while fetching the top 5 locations from the cache.");
-                System.out.println(e.getMessage());
-                return;
-            }
+//            try {
+//                LocationData[] loc = cacheManager.cache.getTop5Locations();
+//                for (LocationData l : loc) {
+//                    l.displayDetails();
+//                }
+//            } catch (Exception e) {
+//                System.out.println("An error occurred while fetching the top 5 locations from the cache.");
+//                System.out.println(e.getMessage());
+//                return;
+//            }
             try {
 //            cacheManager.cache.delete(location.city);
                 cacheManager.cache.deleteOutdatedRecords();

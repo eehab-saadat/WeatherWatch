@@ -23,15 +23,15 @@ import java.util.List;
 public class FileManager implements CacheManagerInterface {
 
     // Filepath for storage
-    private final String filepath = "src/main/java/resources/txt/";
+    private final String filepath = "src\\main\\resources\\org\\algoavengers\\weatherwatch\\txt\\";
 
 
     public void save(LocationData location, WeatherData weatherData, APData apData) {
         // Check if the city already exists in the file
-//        if (find(location.city) != null) {
-//            System.out.println("The city already exists in the file. Skipping...");
-//            return;
-//        }
+        if (find(location.city) != null) {
+            System.out.println("The city already exists in the file. Skipping...");
+            return;
+        }
 
         try (FileWriter writer1 = new FileWriter(filepath + "WeatherDetails.txt", true);
              BufferedWriter bw1 = new BufferedWriter(writer1);
@@ -129,7 +129,8 @@ public class FileManager implements CacheManagerInterface {
                 String[] parts = currentLine.split(",");
                 if (parts[0].trim().equalsIgnoreCase(city)) { // Use case-insensitive comparison
                     locationData = new LocationData(parts[0].trim(), parts[2].trim(), Float.parseFloat(parts[3].trim()), Float.parseFloat(parts[4].trim()));
-                    weatherData = new WeatherData();
+                    weatherData = new WeatherData(); // initializing the object with default constructor where location is null
+                    weatherData.setLocation(locationData);
                     weatherData.temp = Float.parseFloat(parts[5].trim());
                     // ... fill the rest of the weatherData fields ...
                     break;
@@ -143,6 +144,7 @@ public class FileManager implements CacheManagerInterface {
                     apData = new APData();
                     apData.dt = parts[1].trim();
                     apData.aqi = Integer.parseInt(parts[2].trim());
+                    apData.setLocation(locationData);
                     // ... fill the rest of the apData fields ...
                     break;
                 }
