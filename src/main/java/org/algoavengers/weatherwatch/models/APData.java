@@ -14,6 +14,17 @@ public class APData {
     public String comment, dt;
 
     /**
+     * Default constructor for APData class.
+     * It initializes the air pollution data with default values.
+     */
+    public APData() {
+        location = null;
+        aqi = 0;
+        co = no = no2 = o3 = so2 = pm2_5 = pm10 = nh3 = 0;
+        comment = dt = "";
+    }
+
+    /**
      * Constructor for APData class.
      * It initializes the air pollution data using the provided JSON object and location data.
      *

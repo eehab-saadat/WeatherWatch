@@ -14,6 +14,17 @@ public class WeatherData {
     public String sunrise, sunset, dt;
 
     /**
+     * Default constructor for WeatherData class.
+     * It initializes the weather data with default values.
+     */
+    public WeatherData() {
+        location = null;
+        temp = feelsLike = tempMin = tempMax = pressure = humidity = windSpeed = visibility = 0;
+        main = description = icon = "";
+        sunrise = sunset = dt = "";
+    }
+
+    /**
      * Constructor for WeatherData class.
      * It initializes the weather data using the provided JSON object and location data.
      *
