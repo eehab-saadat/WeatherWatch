@@ -9,6 +9,15 @@ public class LocationData {
     public String city, country;
 
     /**
+     * Default constructor for LocationData class.
+     * It initializes the location data with default values.
+     */
+    public LocationData() {
+        lat = lon = 0;
+        city = country = "";
+    }
+
+    /**
      * Constructor for LocationData class.
      * It initializes the location data using the provided city, country, latitude, and longitude.
      *

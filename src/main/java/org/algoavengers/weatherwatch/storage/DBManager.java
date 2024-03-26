@@ -154,7 +154,8 @@ public class DBManager implements CacheManagerInterface {
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println("An error occurred: " + e.getMessage());
+            return null;
         }
     }
 
