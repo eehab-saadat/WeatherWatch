@@ -10,13 +10,11 @@ import org.algoavengers.weatherwatch.models.WeatherData;
 import org.algoavengers.weatherwatch.services.apis.APGetter;
 import org.algoavengers.weatherwatch.services.apis.Geocoder;
 import org.algoavengers.weatherwatch.services.apis.WeatherForecaster;
-
 /**
  * TerminalUI class implements the DisplayInterface.
  * It provides a terminal-based user interface for the weather watch application.
  */
 public class TerminalUI implements DisplayInterface {
-
     /**
      * The run method is the entry point for the TerminalUI.
      * It prompts the user for a city name, fetches the location data, current weather forecast,
@@ -24,99 +22,278 @@ public class TerminalUI implements DisplayInterface {
      *
      * @param API_KEY The API key to be used for the API calls.
      */
+
+    // Data members
+    private WeatherData currentWeather;
+    private LocationData location;
+    private WeatherData[] forecast;
+    private APData APdata;
+
     @Override
     public void run(String API_KEY) {
+        System.out.println("Welcome to the Location App!");
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\nMain Menu:");
+            System.out.println("1. Get saved locations");
+            System.out.println("2. Search by name");
+            System.out.println("3. Search by coordinates");
+            System.out.println("4. Credits");
+            System.out.println("5. Exit");
+
+            System.out.print("Enter your choice (1/2/3/4/5): ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    // Placeholder for getSavedLocations() method
+                    break;
+                case 2:
+                    searchByName(API_KEY, scanner);
+                    break;
+                case 3:
+                    searchByCoordinates(API_KEY, scanner);
+                    break;
+                case 4:
+                    displayCredits();
+                    break;
+                case 5:
+                    System.out.println("Exiting. Thank you!");
+                    scanner.close();
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please select 1, 2, 3, 4 or 5.");
+            }
+        }
+    }
+    private void displayCredits() {
+
+        System.out.println("***************************************************");
+        System.out.println("*                                                 *");
+        System.out.println("*            WeatherWatch Application             *");
+        System.out.println("*                                                 *");
+        System.out.println("*         Developed by the AlgoAvengers           *");
+        System.out.println("*                                                 *");
+        System.out.println("*     Credits to the amazing team members:        *");
+        System.out.println("*                                                 *");
+        System.out.println("*       - Eehab Saadat                            *");
+        System.out.println("*       - Fayyez Farrukh                          *");
+        System.out.println("*       - M.Ahmad Karim                           *");
+        System.out.println("*       - Zain Iqbal                              *");
+        System.out.println("*       - Arahim Qaiser                           *");
+        System.out.println("*       - Ammar Khan                              *");
+        System.out.println("*                                                 *");
+        System.out.println("*        Instructor:                              *");
+        System.out.println("*                                                 *");
+        System.out.println("*       - Aamir Iqbal                             *");
+        System.out.println("*                                                 *");
+        System.out.println("*        Teaching Assistant:                      *");
+        System.out.println("*                                                 *");
+        System.out.println("*       - Moeez Ali                               *");
+        System.out.println("*                                                 *");
+        System.out.println("***************************************************");
+    }
+    private void searchByName(String API_KEY, Scanner scanner) {
+        System.out.print("Enter city name: ");
+        String cityName = scanner.nextLine();
         try {
-            // Create a Scanner object for user input
-            Scanner scanner = new Scanner(System.in);
-
-            // Prompt the user for a city name
-            System.out.print("Enter city name: ");
-            String city = scanner.nextLine();
-
-            // Close the Scanner object
-            scanner.close();
-
-            // Fetch the location data for the entered city
-            LocationData location = Geocoder.geocode(API_KEY, city);
-
-            // If the location data is null, print an error message and return
+            location = Geocoder.geocode(API_KEY, cityName);
             if (location == null) {
-                System.out.println("An error occurred while fetching the coordinates.");
+                System.out.println("Location not found.");
                 return;
             }
 
-            // Display the location data
-            location.displayDetails();
-
-            // Fetch the current weather forecast for the location
-            System.out.println();
-            System.out.println("Fetching weather forecast...");
-            System.out.println();
-            WeatherData weatherData = WeatherForecaster.GetCurrentForecast(API_KEY, location);
-
-            // If the weather data is null, print an error message and return
-            if (weatherData == null) {
-                System.out.println("An error occurred while fetching the weather forecast.");
+            currentWeather = WeatherForecaster.GetCurrentForecast(API_KEY, location);
+            if (currentWeather == null) {
+                System.out.println("Error fetching weather data.");
                 return;
             }
 
-            // Display the current weather forecast
-            System.out.println("-----------------------");
-            System.out.println("Current Weather Forecast");
-            weatherData.displayDetails();
-
-            // Fetch the 5-day weather forecast for the location
-            System.out.println();
-            System.out.println("Fetching weather forecast for the next 5 days...");
-            System.out.println();
-            WeatherData[] weatherArray = WeatherForecaster.GetPentaDayForecast(API_KEY, location);
-
-            // If the 5-day weather forecast is null, print an error message and return
-            if (weatherArray == null) {
-                System.out.println("An error occurred while fetching the weather forecast.");
+            forecast = WeatherForecaster.GetPentaDayForecast(API_KEY, location);
+            if (forecast == null) {
+                System.out.println("Error fetching 5-day forecast.");
                 return;
             }
 
-            // Display the 5-day weather forecast
-            System.out.println("-----------------------");
-            System.out.println("Weather Forecast for the next 5 days:");
-            for (WeatherData weatherDataItem : weatherArray) {
-                weatherDataItem.displayDetails();
-                System.out.println("-----------------------");
-            }
-
-            // Fetch the air pollution data for the location
-            System.out.println();
-            System.out.println("Fetching Air Pollution Data...");
-            System.out.println();
-            APData apData = APGetter.GetAPIData(API_KEY, location);
-
-            // If the air pollution data is null, print an error message and return
-            if (apData == null) {
-                System.out.println("An error occurred while fetching the air pollution data.");
+            APdata = APGetter.GetAPIData(API_KEY, location);
+            if (APdata == null) {
+                System.out.println("Error fetching air pollution data.");
                 return;
             }
 
-            // Display the air pollution data
-            System.out.println("-----------------------");
-            System.out.println("Air Polution Data:");
-            apData.displayDetails();
-
-            /*
-            CacheManagerInterface cacheManager = new DBManager();
-            cacheManager.save(city, coordinates[0], coordinates[1]);
-            coordinates = cacheManager.find("Tokyo");
-            if (coordinates != null) {
-                System.out.println("Latitude: " + coordinates[0]);
-                System.out.println("Longitude: " + coordinates[1]);
-            }
-            cacheManager.delete("Delhi");
-            */
-
+            System.out.println("Data fetched successfully for " + cityName + ".");
+            displayActionMenu(scanner);
         } catch (Exception e) {
-            // Print any exceptions that occur
             System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
+
+    private void searchByCoordinates(String API_KEY, Scanner scanner) {
+        System.out.print("Enter latitude: ");
+        float latitude = scanner.nextFloat();
+        scanner.nextLine();
+        System.out.print("Enter longitude: ");
+        float longitude = scanner.nextFloat();
+        scanner.nextLine();
+
+        try {
+            location = Geocoder.geocode(API_KEY, latitude, longitude);
+            if (location == null) {
+                System.out.println("Location not found.");
+                return;
+            }
+
+            currentWeather = WeatherForecaster.GetCurrentForecast(API_KEY, location);
+            if (currentWeather == null) {
+                System.out.println("Error fetching weather data.");
+                return;
+            }
+
+            forecast = WeatherForecaster.GetPentaDayForecast(API_KEY, location);
+            if (forecast == null) {
+                System.out.println("Error fetching 5-day forecast.");
+                return;
+            }
+
+            APdata = APGetter.GetAPIData(API_KEY, location);
+            if (APdata == null) {
+                System.out.println("Error fetching air pollution data.");
+                return;
+            }
+
+            System.out.println("Data fetched successfully for coordinates: " + latitude + ", " + longitude);
+            displayActionMenu(scanner);
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
+    private void displayActionMenu(Scanner scanner) {
+        while (true) {
+            System.out.println("\nAction Menu:");
+            System.out.println("1. Get current weather");
+            System.out.println("2. Basic information");
+            System.out.println("3. Get sunset/sunrise");
+            System.out.println("4. Get 5-day forecast");
+            System.out.println("5. Get AQI");
+            System.out.println("6. Get air pollution info");
+            System.out.println("7. Save location");
+            System.out.println("8. Set trigger for AQI");
+            System.out.println("9. Set trigger for weather condition");
+            System.out.println("10. Back to Main Menu");
+
+            System.out.print("Enter your choice (1-10): ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    getCurrentWeather();
+                    break;
+                case 2:
+                    getBasicInformation();
+                    break;
+                case 3:
+                    getSunsetSunrise();
+                    break;
+                case 4:
+                    get5DayForecast();
+                    break;
+                case 5:
+                    getAQI();
+                    break;
+                case 6:
+                    getAirPollutionInfo();
+                    break;
+               /*  case 7:
+                 saveLocation();
+                 break;
+                 case 8:
+                   setAQITrigger();
+                   break;
+                 case 9:
+                   setWeatherConditionTrigger();
+                  break;
+                  */
+                case 10:
+                    return; // Return to Main Menu
+                default:
+                    System.out.println("Invalid choice. Please select a number between 1 and 10.");
+            }
+        }
+    }
+
+    private void getCurrentWeather() {
+        if (currentWeather != null) {
+            // Print current weather data
+            System.out.println("Current Weather:");
+            System.out.println("Temperature: " + currentWeather.temp);
+            System.out.println("Feels Like: " + currentWeather.feelsLike);
+            System.out.println("Main: " + currentWeather.main);
+            System.out.println("Description: " + currentWeather.description);
+            // Print more data as needed
+        } else {
+            System.out.println("No current weather data available.");
+        }
+    }
+
+    private void getBasicInformation() {
+        if (currentWeather != null) {
+            // Print basic information
+            System.out.println("Basic Information:");
+            System.out.println("Temperature: " + currentWeather.temp);
+            System.out.println("Feels Like: " + currentWeather.feelsLike);
+            System.out.println("Main: " + currentWeather.main);
+            System.out.println("Description: " + currentWeather.description);
+            System.out.println("Minimum Temperature: " + currentWeather.tempMin);
+            System.out.println("Maximum Temperature: " + currentWeather.tempMax);
+            // Print more data as needed
+        } else {
+            System.out.println("No current weather data available.");
+        }
+    }
+
+    private void getSunsetSunrise() {
+        if (currentWeather != null) {
+            // Print sunset and sunrise times
+            System.out.println("Sunset Time: " + currentWeather.sunset);
+            System.out.println("Sunrise Time: " + currentWeather.sunrise);
+        } else {
+            System.out.println("No current weather data available.");
+        }
+    }
+
+    private void get5DayForecast() {
+        if (forecast != null) {
+            // Print 5-day forecast data
+            System.out.println("5-Day Forecast:");
+            for (WeatherData data : forecast) {
+                System.out.println("Date: " + data.dt);
+                System.out.println("Temperature: " + data.temp);
+                // Print more forecast data as needed
+            }
+        } else {
+            System.out.println("No 5-day forecast data available.");
+        }
+    }
+
+    private void getAQI() {
+        if (APdata != null) {
+            // Print AQI data
+            System.out.println("Air Quality Index (AQI): " + APdata.aqi);
+            System.out.println("Comment: " + APdata.comment);
+            // Print more AQI data as needed
+        } else {
+            System.out.println("No air quality data available.");
+        }
+    }
+
+    private void getAirPollutionInfo() {
+        if (APdata != null) {
+            // Print air pollution data
+            System.out.println("Air Pollution Information:");
+            System.out.println("Air Quality Index (AQI): " + APdata.aqi);
+            System.out.println("Comment: " + APdata.comment);
         }
     }
 }
