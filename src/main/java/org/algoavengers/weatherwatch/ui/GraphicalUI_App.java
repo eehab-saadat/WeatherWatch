@@ -29,21 +29,21 @@ public class GraphicalUI_App extends Application implements DisplayInterface {
         primaryStage.show();
 
         // Create a PauseTransition with a duration of 3 seconds
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-        pause.setOnFinished(event -> {
-            // Load the home-page.fxml file
-            try {
-                Parent homeRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/algoavengers/weatherwatch/views/home-page.fxml")));
-
-                // Switch to the home-page.fxml screen
-                primaryStage.setScene(new Scene(homeRoot));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        // Start the PauseTransition
-        pause.play();
+//        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+//        pause.setOnFinished(event -> {
+//            // Load the home-page.fxml file
+//            try {
+//                Parent homeRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/algoavengers/weatherwatch/views/home-page.fxml")));
+//
+//                // Switch to the home-page.fxml screen
+//                primaryStage.setScene(new Scene(homeRoot));
+//            } catch (IOException e) {
+//                //e.printStackTrace();
+//            }
+//        });
+//
+//        // Start the PauseTransition
+//        pause.play();
     }
 
     @Override

@@ -8,8 +8,8 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.WorldMapView?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.algoavengers.weatherwatch.views.SearchMap">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.algoavengers.weatherwatch.ui.SearchMapController">
    <children>
       <HBox id="header" prefHeight="16.0" prefWidth="600.0" style="-fx-background-color: #ffe8d6;">
          <children>
@@ -25,6 +25,6 @@
             </Label>
          </children>
       </HBox>
-      <WorldMapView id="map" countrySelectionMode="SINGLE" layoutY="43.0" locationSelectionMode="SINGLE" prefHeight="358.0" prefWidth="600.0" />
+      <WorldMapView id="map" fx:id="worldMap" countrySelectionMode="SINGLE" layoutY="43.0" locationSelectionMode="SINGLE" prefHeight="358.0" prefWidth="600.0" />
    </children>
 </AnchorPane>

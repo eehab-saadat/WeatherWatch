@@ -14,11 +14,11 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1080.0" style="-fx-background-color: #2a9d8f;" styleClass="css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.algoavengers.weatherwatch.ui.LoaderController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1080.0" style="-fx-background-color: #2a9d8f;" styleClass="css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.algoavengers.weatherwatch.ui.HomePageController">
    <children>
       <Accordion layoutX="525.0" layoutY="335.0" />
       <Rectangle arcWidth="5.0" fill="WHITE" height="622.0" layoutX="-1.0" layoutY="59.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="211.0" />
-      <Button alignment="CENTER" layoutX="17.0" layoutY="81.0" onAction="#handleQuickAccess" prefHeight="57.0" prefWidth="177.0" text="Quick Access" textFill="#001524">
+      <Button fx:id="saved_locations_button" alignment="CENTER" layoutX="17.0" layoutY="81.0" onAction="#handleQuickAccess" prefHeight="57.0" prefWidth="177.0" text="Quick Access" textFill="#001524">
          <font>
             <Font size="21.0" />
          </font>
@@ -56,18 +56,34 @@
       </ImageView>
       <Pane layoutX="209.0" layoutY="61.0" prefHeight="622.0" prefWidth="871.0">
          <children>
-            <HBox layoutX="77.0" layoutY="14.0" prefHeight="50.0" prefWidth="406.0">
+            <HBox layoutX="66.0" layoutY="14.0" prefHeight="50.0" prefWidth="498.0">
                <children>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-                <Label prefHeight="50.0" prefWidth="356.0" text="Lahore,PK">
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/location_pin.png" />
+                     </image></ImageView>
+                <Label prefHeight="50.0" prefWidth="356.0" text="....">
                   <font>
                     <Font size="34.0" />
                   </font>
                 </Label>
+                  <HBox prefHeight="30.0" prefWidth="87.0" spacing="15.0">
+                     <children>
+                  
+                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" text="save +">
+                           <font>
+                              <Font name="System Italic" size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="6.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </HBox>
-          <SearchableComboBox editable="true" layoutX="523.0" layoutY="21.0" opacity="0.7" prefHeight="30.0" prefWidth="196.0" promptText="Search" />
-            <Pane layoutX="66.0" layoutY="77.0" prefHeight="225.0" prefWidth="428.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 8;">
+          <SearchableComboBox editable="true" layoutX="581.0" layoutY="22.0" opacity="0.7" prefHeight="30.0" prefWidth="208.0" promptText="Search" />
+            <Pane layoutX="66.0" layoutY="77.0" prefHeight="225.0" prefWidth="440.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 8;">
                <children>
                   <HBox layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="196.0">
                      <children>
@@ -76,7 +92,7 @@
                               <Font name="System Bold" size="26.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="40.0" prefWidth="82.0" text="69°C" textAlignment="CENTER">
+                        <Label fx:id="temp_label" prefHeight="40.0" prefWidth="82.0" text="..." textAlignment="CENTER">
                            <font>
                               <Font size="28.0" />
                            </font>
@@ -95,7 +111,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="27.0" prefWidth="50.0" text="96°C">
+                        <Label prefHeight="27.0" prefWidth="50.0" text="...">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -108,10 +124,13 @@
                            <children>
                               <HBox prefHeight="22.0" prefWidth="171.0">
                                  <children>
-                                    <ImageView fitHeight="17.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="16.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../assets/wind.png" />
                                        </image>
+                                       <HBox.margin>
+                                          <Insets top="3.0" />
+                                       </HBox.margin>
                                     </ImageView>
                                     <Label prefHeight="22.0" prefWidth="70.0" text="  Wind:" />
                                     <Label prefHeight="22.0" prefWidth="55.0" text="-----" />
@@ -130,7 +149,7 @@
                               </HBox>
                               <HBox prefHeight="13.0" prefWidth="171.0">
                                  <children>
-                                    <ImageView fitHeight="28.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="24.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../assets/sunrise.png" />
                                        </image>
@@ -194,7 +213,7 @@
                                           <Image url="@../assets/pressure.png" />
                                        </image>
                                     </ImageView>
-                                    <Label prefHeight="24.0" prefWidth="69.0" text=" Pressure:" />
+                                    <Label prefHeight="23.0" prefWidth="69.0" text=" Pressure:" />
                                     <Label prefHeight="24.0" prefWidth="66.0" text="-----" />
                                  </children>
                               </HBox>
@@ -202,29 +221,29 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox layoutX="193.0" layoutY="50.0" prefHeight="58.0" prefWidth="229.0">
+                  <HBox layoutX="193.0" layoutY="50.0" prefHeight="58.0" prefWidth="229.0" spacing="2.0">
                      <children>
                         <ImageView fitHeight="44.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
                         <VBox prefHeight="58.0" prefWidth="182.0">
                            <children>
-                              <Label prefHeight="28.0" prefWidth="109.0" text="  Main ">
+                              <Label fx:id="main_label" prefHeight="7.0" prefWidth="110.0" text="Main ">
                                  <font>
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
-                              <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="183.0" text="  Description" wrapText="true" />
+                              <Label fx:id="description_label" alignment="TOP_LEFT" prefHeight="41.0" prefWidth="182.0" text="Description" wrapText="true" />
                            </children>
                         </VBox>
                      </children>
                   </HBox>
                </children>
             </Pane>
-            <Pane layoutX="513.0" layoutY="77.0" prefHeight="226.0" prefWidth="300.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 8;">
+            <Pane layoutX="513.0" layoutY="77.0" prefHeight="226.0" prefWidth="294.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 8;">
                <children>
                   <HBox layoutX="5.0" layoutY="5.0" prefHeight="20.0" prefWidth="298.0" spacing="2.0">
                      <children>
                         <ImageView fitHeight="41.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image >
+                           <image>
                               <Image url="@../assets/airpollution.png" />
                            </image>
                         </ImageView>
@@ -249,45 +268,46 @@
                   </Label>
                   <VBox layoutX="16.0" layoutY="95.0" prefHeight="115.0" prefWidth="253.0" style="-fx-background-color: #ffe8d6;">
                      <children>
-                        <HBox prefHeight="24.0" prefWidth="200.0" spacing="120.0">
+                        <HBox prefHeight="4.0" prefWidth="254.0">
                            <children>
-                              <Label prefHeight="24.0" prefWidth="29.0" text="CO: " />
-                              <Label alignment="TOP_LEFT" contentDisplay="CENTER" graphicTextGap="26.0" prefHeight="18.0" prefWidth="90.0" text="good" textAlignment="CENTER" />
+                              <Label prefHeight="18.0" prefWidth="100.0" text="CO: " />
+                              <Label alignment="TOP_LEFT" contentDisplay="CENTER" graphicTextGap="26.0" prefHeight="18.0" prefWidth="109.0" text="----" textAlignment="CENTER" />
                            </children>
                         </HBox>
-                        <HBox prefHeight="23.0" prefWidth="272.0" spacing="122.0">
+                        <HBox prefHeight="7.0" prefWidth="254.0">
                            <children>
-                              <Label text="NO:" />
-                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="93.0" text="fair" />
+                              <Label prefHeight="18.0" prefWidth="100.0" text="NO:" />
+                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="93.0" text="----" />
                            </children>
                         </HBox>
-                        <HBox prefHeight="30.0" prefWidth="217.0" spacing="115.0">
-                           <Label text="NO2:"/>
-                           <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="95.0" text="moderate"/>
-                        </HBox>
-                        <HBox prefHeight="27.0" prefWidth="186.0" spacing="96.0">
+                        <HBox prefHeight="9.0" prefWidth="254.0">
                            <children>
-                              <Label text="Sulphur:" />
-                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="92.0" text="poor" />
+                              <Label prefHeight="18.0" prefWidth="100.0" text="NO2:" />
+                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="95.0" text="----" />
                            </children>
                         </HBox>
-                        <HBox prefHeight="24.0" prefWidth="147.0" spacing="78.0">
+                        <HBox prefHeight="4.0" prefWidth="254.0">
                            <children>
-                              <Label text="Particulate:" />
-                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="102.0" text="v.poor" />
+                              <Label prefHeight="18.0" prefWidth="100.0" text="Sulphur:" />
+                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="69.0" text="----" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="3.0" prefWidth="254.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="100.0" text="Particulate (~2.5):" />
+                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="102.0" text="----" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="3.0" prefWidth="254.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="100.0" text="Particulate (&gt;10):" />
+                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="102.0" text="----" />
                            </children>
                         </HBox>
                      </children>
                   </VBox>
                </children>
             </Pane>
-            <HBox layoutX="760.0" layoutY="21.0" prefHeight="30.0" prefWidth="87.0" spacing="15.0">
-               <children>
-            
-                  <Button mnemonicParsing="false" />
-                  <Button mnemonicParsing="false" />
-               </children>
-            </HBox>
             <HBox fx:id="forecast_box" layoutX="66.0" layoutY="324.0" prefHeight="258.0" prefWidth="746.0">
                <children>
                   <Pane fx:id="day1" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
