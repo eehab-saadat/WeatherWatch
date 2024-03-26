@@ -13,6 +13,8 @@ import javafx.util.Duration;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
+import javafx.scene.control.Label;
+import javafx.scene.shape.Rectangle;
 
 public class LoaderController {
 
@@ -24,6 +26,31 @@ public class LoaderController {
 
     private int colorIndex = 0;
     private final String[] colors = {"#F8E9CD","#BDB2FF", "#14213d"};
+
+    @FXML
+    private Rectangle rectangleLahore;
+    @FXML
+    private Rectangle rectangleIstanbul;
+    @FXML
+    private Rectangle rectangleLondon;
+
+    @FXML
+    private Label labelLahore;
+    @FXML
+    private Label labelIstanbul;
+    @FXML
+    private Label labelLondon;
+
+    @FXML
+    public void handleQuickAccess() {
+        rectangleLahore.setVisible(true);
+        rectangleIstanbul.setVisible(true);
+        rectangleLondon.setVisible(true);
+
+        labelLahore.setVisible(true);
+        labelIstanbul.setVisible(true);
+        labelLondon.setVisible(true);
+    }
 
     public void initialize() {
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), logoImageView); // Increase the duration to 2 seconds
@@ -37,10 +64,8 @@ public class LoaderController {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0.9), event -> { // Change the color every 1 seconds
                     // Cycle through the colors
-                    if(this.rootPane != null) {
-                        rootPane.setStyle("-fx-background-color: " + colors[colorIndex]);
-                        colorIndex = (colorIndex + 1) % colors.length;
-                    }
+                    rootPane.setStyle("-fx-background-color: " + colors[colorIndex]);
+                    colorIndex = (colorIndex + 1) % colors.length;
                 })
         );
 
@@ -48,10 +73,8 @@ public class LoaderController {
         pause.setOnFinished(event -> {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("/org/algoavengers/weatherwatch/views/home-page.fxml"));
-                if(logoImageView.getScene() != null && logoImageView != null) {
-                    Stage stage = (Stage) logoImageView.getScene().getWindow();
-                    stage.setScene(new Scene(root, 1080, 680));
-                }
+                Stage stage = (Stage) logoImageView.getScene().getWindow();
+                stage.setScene(new Scene(root, 1080, 680));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -63,5 +86,11 @@ public class LoaderController {
         // Start the timeline
         timeline.play();
         pause.play();
+    }
+
+    public void updateLabels(String lahoreData, String istanbulData, String londonData) {
+        labelLahore.setText(lahoreData);
+        labelIstanbul.setText(istanbulData);
+        labelLondon.setText(londonData);
     }
 }
