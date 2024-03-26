@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -15,216 +14,340 @@
 <?import org.controlsfx.control.SearchableComboBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1080.0" style="-fx-background-color: #2a9d8f;" styleClass="css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.algoavengers.weatherwatch.ui.LoaderController">
-  <children>
-    <Accordion layoutX="525.0" layoutY="335.0" />
-    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="248.0" layoutX="259.0" layoutY="397.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-width: 20; -fx-arc-height: 20;" width="147.0" />
+   <children>
+      <Accordion layoutX="525.0" layoutY="335.0" />
+      <Rectangle arcWidth="5.0" fill="WHITE" height="622.0" layoutX="-1.0" layoutY="59.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="211.0" />
+      <Button alignment="CENTER" layoutX="17.0" layoutY="81.0" onAction="#handleQuickAccess" prefHeight="57.0" prefWidth="177.0" text="Quick Access" textFill="#001524">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Button>
+      <Rectangle fx:id="rectangleLahore" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="24.0" layoutY="148.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" visible="false" width="174.0" />
+      <Label fx:id="labelLahore" alignment="CENTER" layoutX="24.0" layoutY="148.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Lahore" textFill="#001524" visible="false">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+
+      <Rectangle fx:id="rectangleIstanbul" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="23.0" layoutY="196.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" visible="false" width="174.0" />
+      <Label fx:id="labelIstanbul" alignment="CENTER" layoutX="23.0" layoutY="196.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Istanbul" textFill="#001524" visible="false">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+
+      <Rectangle fx:id="rectangleLondon" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="20.0" layoutY="246.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" visible="false" width="174.0" />
+      <Label fx:id="labelLondon" alignment="CENTER" layoutX="20.0" layoutY="246.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="London" textFill="#001524" visible="false">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="247.0" layoutX="418.0" layoutY="398.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="147.0" />
-    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="250.0" layoutX="576.0" layoutY="397.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="147.0" />
-    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="250.0" layoutX="734.0" layoutY="397.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="150.0" />
-    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="247.0" layoutX="895.0" layoutY="399.0" stroke="#00000006" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="147.0" />
-    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="224.0" layoutX="262.0" layoutY="138.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 15; -fx-arc-width: 15; -fx-effect: gradient;" width="388.0" />
-    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="224.0" layoutX="734.0" layoutY="137.0" stroke="#00000003" strokeType="INSIDE" style="-fx-arc-height: 15; -fx-arc-width: 15;" width="300.0" />
     <SearchableComboBox editable="true" layoutX="732.0" layoutY="77.0" opacity="0.51" prefHeight="47.0" prefWidth="150.0" promptText="Search" />
     <Label layoutX="265.0" layoutY="72.0" prefHeight="45.0" prefWidth="289.0" text="Lahore,PK">
       <font>
         <Font size="34.0" />
       </font>
     </Label>
-
-      <Button layoutX="894.0" layoutY="85.0" mnemonicParsing="false" />
-      <Button layoutX="962.0" layoutY="85.0" mnemonicParsing="false" />
-      <Label layoutX="792.0" layoutY="147.0" prefHeight="41.0" prefWidth="75.0" text="AQI">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="64.0" layoutY="-3.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1080.0" />
+      <Label layoutX="69.0" layoutY="4.0" prefHeight="47.0" prefWidth="228.0" text="WeatherWatch">
          <font>
-            <Font name="System Bold" size="27.0" />
+            <Font size="33.0" />
          </font>
       </Label>
-      <ImageView fitHeight="41.0" fitWidth="40.0" layoutX="749.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="81.0" fitWidth="85.0" layoutX="-10.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../assets/airpollution.png" />
+            <Image url="@../assets/logo.png" />
          </image>
       </ImageView>
-      <Label layoutX="304.0" layoutY="158.0" prefHeight="41.0" prefWidth="89.0" text="Today">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-      </Label>
-      <Label layoutX="480.0" layoutY="153.0" prefHeight="30.0" prefWidth="87.0" text="23-03-2024">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Label>
-      <Label layoutX="333.0" layoutY="255.0" text="Wind:" />
-      <Label layoutX="334.0" layoutY="278.0" text="High:" />
-      <Label layoutX="334.0" layoutY="303.0" text="Sunrise:" />
-      <Label layoutX="331.0" layoutY="326.0" text=" Visibility:" />
-      <Label layoutX="487.0" layoutY="255.0" text="Humidity:" />
-      <Label layoutX="486.0" layoutY="278.0" text="Low:" />
-      <Label layoutX="487.0" layoutY="301.0" text="Sunset:" />
-      <Label layoutX="487.0" layoutY="326.0" text="Pressure:" />
-      <Label layoutX="398.0" layoutY="247.0" text="-----" />
-      <Label layoutX="398.0" layoutY="278.0" text="-----" />
-      <Label layoutX="398.0" layoutY="301.0" text="-----" />
-      <Label layoutX="400.0" layoutY="327.0" text="-----" />
-      <Label layoutX="556.0" layoutY="255.0" text="-----" />
-      <Label layoutX="558.0" layoutY="281.0" text="-----" />
-      <Label layoutX="558.0" layoutY="301.0" text="-----" />
-      <Label layoutX="558.0" layoutY="328.0" text="-----" />
-      <Label layoutX="333.0" layoutY="200.0" prefHeight="27.0" prefWidth="50.0" text="69C" />
-      <Label layoutX="332.0" layoutY="224.0" prefHeight="18.0" prefWidth="75.0" text="Feels Like" />
-      <Label layoutX="484.0" layoutY="219.0" prefHeight="27.0" prefWidth="50.0" text="96C" />
-      <Label layoutX="479.0" layoutY="179.0" prefHeight="41.0" prefWidth="212.0" text="Main Description" />
-      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="304.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/wind.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="304.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/01d.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="304.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/sunrise.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="461.0" layoutY="301.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/sunset.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="461.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/pressure.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="304.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/visibility.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="461.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/humidity.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="18.0" fitWidth="19.0" layoutX="461.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/01n.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="856.0" layoutY="153.0" prefHeight="27.0" prefWidth="56.0" text="420">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="27.0" layoutX="906.0" layoutY="155.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-      <Label layoutX="769.0" layoutY="211.0" prefHeight="27.0" prefWidth="132.0" text="Breakdown:">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Label layoutX="769.0" layoutY="253.0" text="CO:" />
-      <Label layoutX="769.0" layoutY="272.0" text="NO:" />
-      <Label layoutX="769.0" layoutY="290.0" text="NO2:" />
-      <Label layoutX="769.0" layoutY="310.0" text="Sulphur:" />
-      <Label layoutX="769.0" layoutY="328.0" text="Particulate:" />
-      <Label layoutX="911.0" layoutY="253.0" text="good" />
-      <Label layoutX="911.0" layoutY="273.0" text="fair" />
-      <Label layoutX="911.0" layoutY="290.0" text="moderate" />
-      <Label layoutX="911.0" layoutY="310.0" text="poor" />
-      <Label layoutX="912.0" layoutY="327.0" text="v.poor" />
-      <Label layoutX="283.0" layoutY="412.0" prefHeight="27.0" prefWidth="107.0" text="Tomorrow">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
       <Label layoutX="438.0" layoutY="412.0" prefHeight="27.0" prefWidth="107.0" text="5/25/2024">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="596.0" layoutY="412.0" prefHeight="27.0" prefWidth="107.0" text="6/25/2024">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="755.0" layoutY="412.0" prefHeight="27.0" prefWidth="107.0" text="7/25/2024">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="915.0" layoutY="412.0" prefHeight="27.0" prefWidth="107.0" text="8/25/2024">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Pane layoutY="63.0" prefHeight="620.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+      <Pane layoutX="258.0" layoutY="133.0" prefHeight="225.0" prefWidth="428.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 8;">
          <children>
-            <VBox alignment="CENTER" layoutY="29.0" prefHeight="210.0" prefWidth="200.0">
+            <HBox layoutX="25.0" layoutY="15.0" prefHeight="48.0" prefWidth="171.0">
                <children>
-                <Label alignment="CENTER" prefHeight="30.0" prefWidth="200.0" text="Saved locations" textFill="#001524">
-                  <font>
-                    <Font size="20.0" />
-                  </font>
-                </Label>
-                <Label alignment="CENTER" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Lahore" textFill="#001524">
-                  <font>
-                    <Font size="25.0" />
-                  </font>
-                </Label>
-                <Label alignment="CENTER" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Lahore" textFill="#001524">
-                  <font>
-                    <Font size="25.0" />
-                  </font>
-                     <VBox.margin>
-                        <Insets top="3.0" />
-                     </VBox.margin>
-                </Label>
-                <Label alignment="CENTER" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Lahore" textFill="#001524">
-                  <font>
-                    <Font size="25.0" />
-                  </font>
-                     <VBox.margin>
-                        <Insets top="3.0" />
-                     </VBox.margin>
-                </Label>
-                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Lahore" textFill="#001524">
+                  <Label prefHeight="38.0" prefWidth="89.0" text="Today">
                      <font>
-                        <Font size="25.0" />
+                        <Font name="System Bold" size="26.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets top="3.0" />
-                     </VBox.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="36.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Lahore" textFill="#001524">
+                  <Label prefHeight="37.0" prefWidth="61.0" text="69C">
                      <font>
-                        <Font size="25.0" />
+                        <Font size="28.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets top="3.0" />
-                     </VBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <Label layoutX="315.0" layoutY="20.0" prefHeight="30.0" prefWidth="87.0" text="23-03-2024">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <HBox layoutX="25.0" layoutY="60.0" prefHeight="38.0" prefWidth="184.0">
+               <children>
+                  <Label prefHeight="24.0" prefWidth="128.0" text="Feels Like">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="27.0" prefWidth="50.0" text="96C">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Label layoutX="297.0" layoutY="57.0" prefHeight="41.0" prefWidth="128.0" text="Main Description" />
+            <VBox layoutX="15.0" layoutY="103.0" prefHeight="115.0" prefWidth="171.0" style="-fx-background-color: #FFE8D6;">
+               <children>
+                  <HBox prefHeight="18.0" prefWidth="150.0">
+                     <children>
+                        <ImageView fitHeight="17.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/wind.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="18.0" prefWidth="48.0" text="  Wind:" />
+                        <Label text="-----" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="22.0" prefWidth="171.0">
+                     <children>
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/01d.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="     High:" />
+                        <Label text="    -----" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="24.0" prefWidth="113.0">
+                     <children>
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/sunrise.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="     Sunrise:" />
+                        <Label text="  -----" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="24.0" prefWidth="130.0">
+                     <children>
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/visibility.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="     Visibility:" />
+                        <Label text="    -----" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox layoutX="273.0" layoutY="106.0" prefHeight="94.0" prefWidth="151.0" style="-fx-background-color: #FFE8D6;">
+               <children>
+                  <HBox prefHeight="22.0" prefWidth="119.0">
+                     <children>
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/humidity.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="Humidity:" />
+                        <Label prefHeight="18.0" prefWidth="43.0" text="-----" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="24.0" prefWidth="99.0">
+                     <children>
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/01n.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="Low:" />
+                        <Label text="-----" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="27.0" prefWidth="119.0">
+                     <children>
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/sunset.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="Sunset:" />
+                        <Label text="-----" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="24.0" prefWidth="113.0">
+                     <children>
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/pressure.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="Pressure:" />
+                        <Label text="-----" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+      <Pane layoutX="724.0" layoutY="132.0" prefHeight="226.0" prefWidth="300.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 8;">
+         <children>
+            <HBox layoutX="5.0" layoutY="5.0" prefHeight="20.0" prefWidth="298.0" spacing="20.0">
+               <children>
+                  <ImageView fitHeight="41.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/airpollution.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="41.0" prefWidth="75.0" text="AQI">
+                     <font>
+                        <Font name="System Bold" size="27.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="41.0" prefWidth="56.0" text="420">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="31.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
+               </children>
+            </HBox>
+            <Label layoutX="12.0" layoutY="50.0" prefHeight="27.0" prefWidth="132.0" text="Breakdown:">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <VBox layoutX="16.0" layoutY="95.0" prefHeight="115.0" prefWidth="253.0" style="-fx-background-color: #ffe8d6;">
+               <children>
+                  <HBox prefHeight="24.0" prefWidth="200.0" spacing="120.0">
+                     <children>
+                        <Label text="CO: " />
+                        <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="26.0" text="good" textAlignment="CENTER" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="23.0" prefWidth="272.0" spacing="122.0">
+                     <children>
+                        <Label text="NO:" />
+                        <Label text="fair" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="30.0" prefWidth="217.0" spacing="115.0">
+                     <children>
+                        <Label text="NO2:" />
+                        <Label text="moderate" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="27.0" prefWidth="186.0" spacing="96.0">
+                     <children>
+                        <Label text="Sulphur:" />
+                        <Label text="poor" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="24.0" prefWidth="147.0" spacing="78.0">
+                     <children>
+                        <Label text="Particulate:" />
+                        <Label text="v.poor" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+      <HBox layoutX="896.0" layoutY="81.0" prefHeight="36.0" prefWidth="87.0" spacing="15.0">
+         <children>
+      
+            <Button mnemonicParsing="false" />
+            <Button mnemonicParsing="false" />
+         </children>
+      </HBox>
+      <Pane layoutX="257.0" layoutY="396.0" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+         <children>
+            <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="138.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="107.0" text="   Tomorrow">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
                   </Label>
                </children>
             </VBox>
          </children>
       </Pane>
-      <Pane prefHeight="64.0" prefWidth="1080.0" style="-fx-background-color: #ffe8d6;">
+      <Pane layoutX="413.0" layoutY="395.0" prefHeight="256.0" prefWidth="152.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
          <children>
-            <HBox layoutY="1.0" prefHeight="47.0" prefWidth="341.0">
+            <VBox layoutX="6.0" layoutY="-1.0" prefHeight="249.0" prefWidth="149.0">
                <children>
-                  <ImageView fitHeight="62.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/logo.png" />
-                     </image>
-                  </ImageView>
-                  <Label prefHeight="65.0" prefWidth="228.0" text="WeatherWatch">
-                     <font>
-                        <Font size="33.0" />
-                     </font>
-                  </Label>
+                  <HBox prefHeight="253.0" prefWidth="149.0">
+                     <children>
+                        <Label prefHeight="42.0" prefWidth="107.0" text="6/25/2024">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </VBox>
+         </children>
+      </Pane>
+      <Pane layoutX="573.0" layoutY="396.0" prefHeight="257.0" prefWidth="150.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+         <children>
+            <VBox layoutX="10.0" layoutY="6.0" prefHeight="235.0" prefWidth="133.0">
+               <children>
+                  <HBox prefHeight="315.0" prefWidth="133.0">
+                     <children>
+                        <Label prefHeight="27.0" prefWidth="107.0" text="7/25/2024">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+      <Pane layoutX="731.0" layoutY="397.0" prefHeight="256.0" prefWidth="150.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+         <children>
+            <VBox layoutX="10.0" layoutY="6.0" prefHeight="235.0" prefWidth="133.0">
+               <children>
+                  <HBox prefHeight="252.0" prefWidth="149.0">
+                     <children>
+                        <Label prefHeight="27.0" prefWidth="107.0" text="8/25/2024">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+      <Pane layoutX="888.0" layoutY="398.0" prefHeight="256.0" prefWidth="150.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+         <children>
+            <VBox layoutX="10.0" layoutY="6.0" prefHeight="235.0" prefWidth="133.0">
+               <children>
+                  <HBox prefHeight="252.0" prefWidth="149.0">
+                     <children>
+                        <Label prefHeight="27.0" prefWidth="107.0" text="9/25/2024">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
       </Pane>
   </children>
