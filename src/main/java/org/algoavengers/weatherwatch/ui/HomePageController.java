@@ -38,7 +38,6 @@ public class HomePageController {
         rectangleLahore.setVisible(true);
         rectangleIstanbul.setVisible(true);
         rectangleLondon.setVisible(true);
-
         labelLahore.setVisible(true);
         labelIstanbul.setVisible(true);
         labelLondon.setVisible(true);

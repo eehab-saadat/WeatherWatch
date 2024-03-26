@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.gluonhq.charm.glisten.control.TextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,7 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import org.controlsfx.control.SearchableComboBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1080.0" style="-fx-background-color: #2a9d8f;" styleClass="css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.algoavengers.weatherwatch.ui.HomePageController">
    <children>
@@ -62,7 +64,7 @@
                      <image>
                         <Image url="@../assets/location_pin.png" />
                      </image></ImageView>
-                <Label prefHeight="50.0" prefWidth="356.0" text="....">
+                <Label fx:id="locationName" prefHeight="50.0" prefWidth="356.0" text="....">
                   <font>
                     <Font size="34.0" />
                   </font>
@@ -70,7 +72,7 @@
                   <HBox prefHeight="30.0" prefWidth="87.0" spacing="15.0">
                      <children>
                   
-                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" text="save +">
+                        <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" text="save +">
                            <font>
                               <Font name="System Italic" size="16.0" />
                            </font>
@@ -82,7 +84,6 @@
                   </HBox>
                </children>
             </HBox>
-          <SearchableComboBox editable="true" layoutX="581.0" layoutY="22.0" opacity="0.7" prefHeight="30.0" prefWidth="208.0" promptText="Search" />
             <Pane layoutX="66.0" layoutY="77.0" prefHeight="225.0" prefWidth="440.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 8;">
                <children>
                   <HBox layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="196.0">
@@ -92,14 +93,14 @@
                               <Font name="System Bold" size="26.0" />
                            </font>
                         </Label>
-                        <Label fx:id="temp_label" prefHeight="40.0" prefWidth="82.0" text="..." textAlignment="CENTER">
+                        <Label fx:id="tempLabel" prefHeight="40.0" prefWidth="82.0" text="..." textAlignment="CENTER">
                            <font>
                               <Font size="28.0" />
                            </font>
                         </Label>
                      </children>
                   </HBox>
-                  <Label alignment="CENTER" layoutX="295.0" layoutY="14.0" prefHeight="26.0" prefWidth="99.0" text="23-03-2024" textAlignment="CENTER">
+                  <Label fx:id="todayDate" alignment="CENTER" layoutX="295.0" layoutY="14.0" prefHeight="26.0" prefWidth="99.0" text="23-03-2024" textAlignment="CENTER">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -111,7 +112,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="27.0" prefWidth="50.0" text="...">
+                        <Label fx:id="feelsLikeTemp" prefHeight="27.0" prefWidth="50.0" text="...">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -133,7 +134,7 @@
                                        </HBox.margin>
                                     </ImageView>
                                     <Label prefHeight="22.0" prefWidth="70.0" text="  Wind:" />
-                                    <Label prefHeight="22.0" prefWidth="55.0" text="-----" />
+                                    <Label fx:id="windLabel" prefHeight="22.0" prefWidth="55.0" text="-----" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="12.0" prefWidth="171.0">
@@ -144,7 +145,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="24.0" prefWidth="75.0" text="   High:" />
-                                    <Label prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                    <Label fx:id="maxTempLabel" prefHeight="24.0" prefWidth="65.0" text="-----" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="13.0" prefWidth="171.0">
@@ -155,7 +156,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="24.0" prefWidth="76.0" text="   Sunrise:" />
-                                    <Label prefHeight="24.0" prefWidth="59.0" text="-----" />
+                                    <Label fx:id="sunriseTime" prefHeight="24.0" prefWidth="59.0" text="-----" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="18.0" prefWidth="171.0">
@@ -166,7 +167,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="22.0" prefWidth="78.0" text="   Visibility:" />
-                                    <Label prefHeight="18.0" prefWidth="58.0" text="-----" />
+                                    <Label fx:id="visibilityLabel" prefHeight="18.0" prefWidth="58.0" text="-----" />
                                  </children>
                               </HBox>
                            </children>
@@ -181,7 +182,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="22.0" prefWidth="69.0" text=" Humidity:" />
-                                    <Label prefHeight="18.0" prefWidth="70.0" text="-----" />
+                                    <Label fx:id="humidityLabel" prefHeight="18.0" prefWidth="70.0" text="-----" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="24.0" prefWidth="99.0">
@@ -192,7 +193,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="23.0" prefWidth="69.0" text=" Low:" />
-                                    <Label prefHeight="18.0" prefWidth="54.0" text="-----" />
+                                    <Label fx:id="minTempLabel" prefHeight="18.0" prefWidth="54.0" text="-----" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="22.0" prefWidth="146.0">
@@ -203,7 +204,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="23.0" prefWidth="69.0" text="  Sunset:" />
-                                    <Label prefHeight="23.0" prefWidth="72.0" text="-----" />
+                                    <Label fx:id="sunsetTime" prefHeight="23.0" prefWidth="72.0" text="-----" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="24.0" prefWidth="113.0">
@@ -214,7 +215,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="23.0" prefWidth="69.0" text=" Pressure:" />
-                                    <Label prefHeight="24.0" prefWidth="66.0" text="-----" />
+                                    <Label fx:id="pressureLabel" prefHeight="24.0" prefWidth="66.0" text="-----" />
                                  </children>
                               </HBox>
                            </children>
@@ -226,12 +227,12 @@
                         <ImageView fitHeight="44.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
                         <VBox prefHeight="58.0" prefWidth="182.0">
                            <children>
-                              <Label fx:id="main_label" prefHeight="7.0" prefWidth="110.0" text="Main ">
+                              <Label fx:id="mainWeather" prefHeight="7.0" prefWidth="110.0" text="Main ">
                                  <font>
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="description_label" alignment="TOP_LEFT" prefHeight="41.0" prefWidth="182.0" text="Description" wrapText="true" />
+                              <Label fx:id="description" alignment="TOP_LEFT" prefHeight="41.0" prefWidth="182.0" text="Description" wrapText="true" />
                            </children>
                         </VBox>
                      </children>
@@ -252,13 +253,13 @@
                               <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="40.0" prefWidth="66.0" text="?">
+                        <Label fx:id="aqiValue" prefHeight="40.0" prefWidth="66.0" text="?">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
                         <Label prefHeight="40.0" prefWidth="37.0" text="Status:" />
-                        <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#ff1f1f" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
+                        <Rectangle fx:id="aqiStatus" arcHeight="10.0" arcWidth="10.0" fill="#ff1f1f" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
                      </children>
                   </HBox>
                   <Label layoutX="12.0" layoutY="56.0" prefHeight="27.0" prefWidth="132.0" text="Breakdown:">
@@ -404,6 +405,20 @@
                   <Insets right="3.0" />
                </padding>
             </HBox>
+            <MenuButton accessibleText="search" layoutX="576.0" layoutY="18.0" mnemonicParsing="false" opacity="0.6" prefHeight="38.0" prefWidth="221.0" text="Search">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Search by name">
+                     <graphic>
+                        <TextField maxLength="50" promptText="Enter name" />
+                     </graphic>
+                  </MenuItem>
+                <MenuItem mnemonicParsing="false" text="Search by coordinates (lat,lon)">
+                     <graphic>
+                        <TextField promptText="latitude, longitude" />
+                     </graphic>
+                  </MenuItem>
+              </items>
+            </MenuButton>
          </children>
       </Pane>
   </children>
