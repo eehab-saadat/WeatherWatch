@@ -88,6 +88,7 @@ public class DBManager implements CacheManagerInterface {
         {
             e.printStackTrace();
         }
+        return null;
 
     }
 
