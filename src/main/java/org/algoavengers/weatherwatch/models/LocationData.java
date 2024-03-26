@@ -7,7 +7,8 @@ package org.algoavengers.weatherwatch.models;
 public class LocationData {
     public float lat, lon;
     public String city, country;
-
+    //default constructor
+    public LocationData() {}
     /**
      * Constructor for LocationData class.
      * It initializes the location data using the provided city, country, latitude, and longitude.
