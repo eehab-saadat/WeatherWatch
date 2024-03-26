@@ -58,7 +58,8 @@ public class APData {
         long timestamp = listObject.get("dt").getAsLong();
         this.dt = DTConverter.convertToDateTime(timestamp);
     }
-
+    //default constructor
+    public APData() {}
     /**
      * Method to display the air pollution details in the console.
      * It prints the location, air quality index, gas concentrations, comment on the air quality, and the fetch time.
