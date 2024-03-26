@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.TextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,11 +22,6 @@
    <children>
       <Accordion layoutX="525.0" layoutY="335.0" />
       <Rectangle arcWidth="5.0" fill="WHITE" height="622.0" layoutX="-1.0" layoutY="59.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="211.0" />
-      <Button fx:id="saved_locations_button" alignment="CENTER" layoutX="17.0" layoutY="81.0" onAction="#handleQuickAccess" prefHeight="57.0" prefWidth="177.0" text="Quick Access" textFill="#001524">
-         <font>
-            <Font size="21.0" />
-         </font>
-      </Button>
       <Rectangle fx:id="rectangleLahore" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="24.0" layoutY="148.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" visible="false" width="174.0" />
       <Label fx:id="labelLahore" alignment="CENTER" layoutX="24.0" layoutY="148.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Lahore" textFill="#001524" visible="false">
          <font>
@@ -56,7 +53,7 @@
             <Image url="@../assets/logo.png" />
          </image>
       </ImageView>
-      <Pane layoutX="209.0" layoutY="61.0" prefHeight="622.0" prefWidth="871.0">
+      <Pane fx:id="mainPane" layoutX="209.0" layoutY="61.0" prefHeight="622.0" prefWidth="871.0">
          <children>
             <HBox layoutX="66.0" layoutY="14.0" prefHeight="50.0" prefWidth="498.0">
                <children>
@@ -100,11 +97,6 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Label fx:id="todayDate" alignment="CENTER" layoutX="295.0" layoutY="14.0" prefHeight="26.0" prefWidth="99.0" text="23-03-2024" textAlignment="CENTER">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Label>
                   <HBox layoutX="14.0" layoutY="54.0" prefHeight="28.0" prefWidth="184.0">
                      <children>
                         <Label prefHeight="28.0" prefWidth="68.0" text="Feels Like">
@@ -224,7 +216,7 @@
                   </HBox>
                   <HBox layoutX="193.0" layoutY="50.0" prefHeight="58.0" prefWidth="229.0" spacing="2.0">
                      <children>
-                        <ImageView fitHeight="44.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="mainWeatherIcon" fitHeight="44.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
                         <VBox prefHeight="58.0" prefWidth="182.0">
                            <children>
                               <Label fx:id="mainWeather" prefHeight="7.0" prefWidth="110.0" text="Main ">
@@ -235,6 +227,16 @@
                               <Label fx:id="description" alignment="TOP_LEFT" prefHeight="41.0" prefWidth="182.0" text="Description" wrapText="true" />
                            </children>
                         </VBox>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="191.0" layoutY="17.0" prefHeight="7.0" prefWidth="200.0" spacing="8.0">
+                     <children>
+                        <ImageView fitHeight="18.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/refresh.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="todayDate" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="184.0" text="23-03-2024" textAlignment="CENTER" />
                      </children>
                   </HBox>
                </children>
@@ -258,7 +260,7 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="40.0" prefWidth="37.0" text="Status:" />
+                        <Label prefHeight="40.0" prefWidth="50.0" text="Status:" />
                         <Rectangle fx:id="aqiStatus" arcHeight="10.0" arcWidth="10.0" fill="#ff1f1f" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
                      </children>
                   </HBox>
@@ -271,128 +273,434 @@
                      <children>
                         <HBox prefHeight="4.0" prefWidth="254.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="100.0" text="CO: " />
-                              <Label alignment="TOP_LEFT" contentDisplay="CENTER" graphicTextGap="26.0" prefHeight="18.0" prefWidth="109.0" text="----" textAlignment="CENTER" />
+                              <Label prefHeight="18.0" prefWidth="120.0" text="CO: " />
+                              <Label fx:id="COLevel" alignment="TOP_LEFT" contentDisplay="CENTER" graphicTextGap="26.0" prefHeight="18.0" prefWidth="109.0" text="----" textAlignment="CENTER" />
                            </children>
                         </HBox>
                         <HBox prefHeight="7.0" prefWidth="254.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="100.0" text="NO:" />
-                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="93.0" text="----" />
+                              <Label prefHeight="18.0" prefWidth="120.0" text="NO:" />
+                              <Label fx:id="NOLevel" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="93.0" text="----" />
                            </children>
                         </HBox>
                         <HBox prefHeight="9.0" prefWidth="254.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="100.0" text="NO2:" />
-                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="95.0" text="----" />
+                              <Label prefHeight="18.0" prefWidth="120.0" text="NO2:" />
+                              <Label fx:id="NO2Level" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="95.0" text="----" />
                            </children>
                         </HBox>
                         <HBox prefHeight="4.0" prefWidth="254.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="100.0" text="Sulphur:" />
-                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="69.0" text="----" />
+                              <Label prefHeight="18.0" prefWidth="120.0" text="Sulphur:" />
+                              <Label fx:id="sulphurLevel" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="69.0" text="----" />
                            </children>
                         </HBox>
                         <HBox prefHeight="3.0" prefWidth="254.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="100.0" text="Particulate (~2.5):" />
-                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="102.0" text="----" />
+                              <Label prefHeight="18.0" prefWidth="120.0" text="Particulate (~2.5):" />
+                              <Label fx:id="pm2Level" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="102.0" text="----" />
                            </children>
                         </HBox>
                         <HBox prefHeight="3.0" prefWidth="254.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="100.0" text="Particulate (&gt;10):" />
-                              <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="102.0" text="----" />
+                              <Label prefHeight="18.0" prefWidth="120.0" text="Particulate (&gt;10):" />
+                              <Label fx:id="pm10Level" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="102.0" text="----" />
                            </children>
                         </HBox>
                      </children>
                   </VBox>
                </children>
             </Pane>
-            <HBox fx:id="forecast_box" layoutX="66.0" layoutY="324.0" prefHeight="258.0" prefWidth="746.0">
+            <HBox fx:id="forecast_box" layoutX="66.0" layoutY="324.0" prefHeight="258.0" prefWidth="746.0" spacing="4.0">
                <children>
                   <Pane fx:id="day1" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
                      <children>
-                        <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
+                        <VBox layoutX="6.0" layoutY="9.0" prefHeight="237.0" prefWidth="132.0">
                            <children>
-                              <Label prefHeight="27.0" prefWidth="107.0" text="   Tomorrow">
+                              <Label fx:id="Fdate1" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0" text="Tomorrow">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
+                              <Label fx:id="Ftemp1" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="133.0" text="..." textAlignment="CENTER">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Label>
+                              <VBox prefHeight="58.0" prefWidth="182.0" spacing="3.0">
+                                 <children>
+                                    <ImageView fx:id="FmainIcon1" fitHeight="44.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                       <VBox.margin>
+                                          <Insets left="43.0" right="43.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label fx:id="Fmain1" alignment="CENTER" prefHeight="20.0" prefWidth="134.0" text="Main ">
+                                       <font>
+                                          <Font name="System Bold Italic" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="Fdescription1" alignment="CENTER" prefHeight="41.0" prefWidth="182.0" text="Description" wrapText="true" />
+                                 </children>
+                              </VBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/01d.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="High:">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="FmaxTemp1" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/01n.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="Low:" />
+                                    <Label fx:id="FminTemp1" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/humidity.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="Humidity:" />
+                                    <Label fx:id="Fhumidity1" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>
                      <HBox.margin>
-                        <Insets right="4.0" />
+                        <Insets />
                      </HBox.margin>
                      <padding>
                         <Insets right="4.0" />
                      </padding>
                   </Pane>
-                  <Pane fx:id="day2" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+                  <Pane fx:id="day11" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
                            <children>
-                              <Label prefHeight="27.0" prefWidth="107.0" text="   Tomorrow">
+                              <Label fx:id="Fdate2" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0" text="Tomorrow">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
+                              <Label fx:id="Ftemp2" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="133.0" text="..." textAlignment="CENTER">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Label>
+                              <VBox prefHeight="89.0" prefWidth="139.0" spacing="3.0">
+                                 <children>
+                                    <ImageView fx:id="FmainIcon2" fitHeight="44.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                       <VBox.margin>
+                                          <Insets left="43.0" right="43.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label fx:id="Fmain2" alignment="CENTER" prefHeight="20.0" prefWidth="134.0" text="Main ">
+                                       <font>
+                                          <Font name="System Bold Italic" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="Fdescription2" alignment="CENTER" prefHeight="41.0" prefWidth="182.0" text="Description" wrapText="true" />
+                                 </children>
+                              </VBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/01d.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="High:">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="FmaxTemp2" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/01n.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="Low:" />
+                                    <Label fx:id="FminTemp2" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/humidity.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="Humidity:" />
+                                    <Label fx:id="Fhumidity2" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>
-                     <HBox.margin>
-                        <Insets right="4.0" />
-                     </HBox.margin>
                   </Pane>
-                  <Pane fx:id="day3" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+                  <Pane fx:id="day12" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
                            <children>
-                              <Label prefHeight="27.0" prefWidth="107.0" text="   Tomorrow">
+                              <Label fx:id="Fdate3" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0" text="Tomorrow">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
+                              <Label fx:id="Ftemp3" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="133.0" text="..." textAlignment="CENTER">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Label>
+                              <VBox prefHeight="58.0" prefWidth="182.0" spacing="3.0">
+                                 <children>
+                                    <ImageView fx:id="FmainIcon3" fitHeight="44.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                       <VBox.margin>
+                                          <Insets left="43.0" right="43.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label fx:id="Fmain3" alignment="CENTER" prefHeight="20.0" prefWidth="134.0" text="Main ">
+                                       <font>
+                                          <Font name="System Bold Italic" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="Fdescription3" alignment="CENTER" prefHeight="41.0" prefWidth="182.0" text="Description" wrapText="true" />
+                                 </children>
+                              </VBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/01d.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="High:">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="FmaxTemp3" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/01n.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="Low:" />
+                                    <Label fx:id="FminTemp3" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/humidity.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="Humidity:" />
+                                    <Label fx:id="Fhumidity3" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets left="1.0" right="4.0" />
+                     </padding>
+                  </Pane>
+                  <Pane fx:id="day13" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+                     <children>
+                        <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
+                           <children>
+                              <Label fx:id="Fdate4" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0" text="Tomorrow">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Ftemp4" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="133.0" text="..." textAlignment="CENTER">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Label>
+                              <VBox prefHeight="58.0" prefWidth="182.0" spacing="3.0">
+                                 <children>
+                                    <ImageView fx:id="FmainIcon4" fitHeight="44.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                       <VBox.margin>
+                                          <Insets left="43.0" right="43.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label fx:id="Fmain4" alignment="CENTER" prefHeight="20.0" prefWidth="134.0" text="Main ">
+                                       <font>
+                                          <Font name="System Bold Italic" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="Fdescription4" alignment="CENTER" prefHeight="41.0" prefWidth="182.0" text="Description" wrapText="true" />
+                                 </children>
+                              </VBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/01d.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="High:">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="FmaxTemp4" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/01n.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="Low:" />
+                                    <Label fx:id="FminTemp4" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/humidity.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="Humidity:" />
+                                    <Label fx:id="Fhumidity4" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>
                      <padding>
                         <Insets right="4.0" />
                      </padding>
-                     <HBox.margin>
-                        <Insets right="4.0" />
-                     </HBox.margin>
                   </Pane>
-                  <Pane fx:id="day4" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+                  <Pane fx:id="day14" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
                            <children>
-                              <Label prefHeight="27.0" prefWidth="107.0" text="   Tomorrow">
+                              <Label fx:id="Fdate5" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0" text="Tomorrow">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                     <padding>
-                        <Insets right="4.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets right="4.0" />
-                     </HBox.margin>
-                  </Pane>
-                  <Pane fx:id="day5" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
-                     <children>
-                        <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
-                           <children>
-                              <Label prefHeight="27.0" prefWidth="107.0" text="   Tomorrow">
+                              <Label fx:id="Ftemp5" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="133.0" text="..." textAlignment="CENTER">
                                  <font>
-                                    <Font name="System Bold" size="15.0" />
+                                    <Font size="28.0" />
                                  </font>
                               </Label>
+                              <VBox prefHeight="58.0" prefWidth="182.0" spacing="3.0">
+                                 <children>
+                                    <ImageView fx:id="FmainIcon5" fitHeight="44.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                       <VBox.margin>
+                                          <Insets left="43.0" right="43.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label fx:id="Fmain5" alignment="CENTER" prefHeight="20.0" prefWidth="134.0" text="Main ">
+                                       <font>
+                                          <Font name="System Bold Italic" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="Fdescription5" alignment="CENTER" prefHeight="41.0" prefWidth="182.0" text="Description" wrapText="true" />
+                                 </children>
+                              </VBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/01d.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="High:">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="FmaxTemp5" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="16.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/01n.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="Low:" />
+                                    <Label fx:id="FminTemp5" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="21.0" prefWidth="132.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/humidity.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="24.0" prefWidth="75.0" text="Humidity:" />
+                                    <Label fx:id="Fhumidity5" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>
@@ -405,21 +713,105 @@
                   <Insets right="3.0" />
                </padding>
             </HBox>
-            <MenuButton accessibleText="search" layoutX="576.0" layoutY="18.0" mnemonicParsing="false" opacity="0.6" prefHeight="38.0" prefWidth="221.0" text="Search">
+            <MenuButton fx:id="searchBar" accessibleText="search" layoutX="576.0" layoutY="18.0" mnemonicParsing="false" opacity="0.6" prefHeight="38.0" prefWidth="221.0" text="Search">
               <items>
                 <MenuItem mnemonicParsing="false" text="Search by name">
                      <graphic>
-                        <TextField maxLength="50" promptText="Enter name" />
+                        <TextField />
                      </graphic>
                   </MenuItem>
                 <MenuItem mnemonicParsing="false" text="Search by coordinates (lat,lon)">
                      <graphic>
-                        <TextField promptText="latitude, longitude" />
+                        <TextField />
                      </graphic>
                   </MenuItem>
               </items>
             </MenuButton>
          </children>
       </Pane>
+      <VBox layoutX="14.0" layoutY="148.0" prefHeight="248.0" prefWidth="182.0" spacing="2.0">
+         <children>
+            <Label prefHeight="18.0" prefWidth="181.0" text="Saved Locations">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="SL1" mnemonicParsing="false" prefHeight="38.0" prefWidth="182.0" text="none">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
+            <Button fx:id="SL2" mnemonicParsing="false" prefHeight="38.0" prefWidth="182.0" text="none">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
+            <Button fx:id="SL3" mnemonicParsing="false" prefHeight="38.0" prefWidth="182.0" text="none">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
+            <Button fx:id="SL4" mnemonicParsing="false" prefHeight="38.0" prefWidth="182.0" text="none">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
+            <Button fx:id="SL5" mnemonicParsing="false" prefHeight="38.0" prefWidth="182.0" text="none">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
+         </children>
+      </VBox>
+      <HBox layoutX="11.0" layoutY="89.0" prefHeight="42.0" prefWidth="182.0" spacing="7.0">
+         <children>
+            <ImageView fitHeight="38.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/map.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="openMapButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="142.0" text="Search on Map">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <effect>
+                  <Glow />
+               </effect>
+            </Button>
+         </children>
+      </HBox>
   </children>
 </AnchorPane>
