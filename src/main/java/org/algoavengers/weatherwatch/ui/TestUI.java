@@ -104,7 +104,7 @@ public class TestUI implements DisplayInterface {
                 return;
             }
 
-            CacheManager cacheManager = new CacheManager(new DBManager());
+            cacheManager = new CacheManager(new DBManager());
             //cacheManager.cache.
             cacheManager.cache.save(location, weatherData, apData, forecast);
             System.out.println("Data saved to cache");
