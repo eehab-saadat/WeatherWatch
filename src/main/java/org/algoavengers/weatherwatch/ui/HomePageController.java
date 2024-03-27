@@ -260,20 +260,23 @@ public class HomePageController {
         mainWeatherIcon.setImage(loadImageFromAssets(currentWeather.icon));
         //implement background images here
         String bkgPNG = "";
-        if(currentWeather.main == "Drizzle" || currentWeather.main == "Rain")
-            bkgPNG = "rain";
-        else if(currentWeather.main == "Snow")
-            bkgPNG = "snow";
-        else if(currentWeather.main == "Clear")
-            bkgPNG = "clear";
-        else if(currentWeather.main == "Clouds")
-            bkgPNG = "clouds";
-        else if (currentWeather.main == "Thunderstorm" || currentWeather.main == "Tornado")
-            bkgPNG = "thunderstorm";
-        else if (currentWeather.main == "Smoke" || currentWeather.main == "Haze" || currentWeather.main == "Dust" || currentWeather.main == "Fog")
-            bkgPNG = "haze";
-        else bkgPNG = "";
-        mainPane.setStyle("-fx-background-image: url('" + assetsPath + bkgPNG + ".png'); -fx-background-size: cover;");
+        if(currentWeather.main.equals("Drizzle") || currentWeather.main.equals("Rain"))
+            bkgPNG = "rain.jpg";
+        else if(currentWeather.main.equals("Snow"))
+            bkgPNG = "snow.jpeg";
+        else if(currentWeather.main.equals("Clear"))
+            bkgPNG = "clear.jpeg";
+        else if(currentWeather.main.equals("Clouds"))
+            bkgPNG = "clouds.jpg";
+        else if (currentWeather.main.equals("Thunderstorm") || currentWeather.main.equals("Tornado"))
+            bkgPNG = "thunderstorm.jpg";
+        else if (currentWeather.main.equals("Smoke") || currentWeather.main.equals("Haze") || currentWeather.main.equals("Dust") || currentWeather.main.equals("Fog"))
+            bkgPNG = "haze.jpeg";
+
+        if (bkgPNG.length() > 0) {
+            String imagePath = getClass().getResource("/assets/" + bkgPNG).toExternalForm();
+            mainPane.setStyle("-fx-background-image: url('" + imagePath + "'); -fx-background-size: cover;");
+        }
 
         // air quality info
         aqiValue.setText(currentAPData.aqi + "");
