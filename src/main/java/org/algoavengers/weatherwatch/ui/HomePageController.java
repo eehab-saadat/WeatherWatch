@@ -3,19 +3,28 @@ package org.algoavengers.weatherwatch.ui;
 //fxml imports
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Button;
 import javafx.scene.control.Accordion;
 //models imports
+import javafx.stage.Stage;
 import org.algoavengers.weatherwatch.models.*;
+import org.algoavengers.weatherwatch.services.WeatherWatchService;
+import org.algoavengers.weatherwatch.utils.DTConverter;
+
+import static org.algoavengers.weatherwatch.utils.DTConverter.getDate;
 
 
 public class HomePageController {
     // assets
     private String assetsPath = "src/main/resources/org/algoavengers/weatherwatch/assets/";
+    // service
+    WeatherWatchService wws = new WeatherWatchService();
     // Weather Data from backend
     private WeatherData currentWeather;
     private LocationData currentLocation;
@@ -25,12 +34,27 @@ public class HomePageController {
     // Accordion
     @FXML
     private Accordion accordion;
-
+    // Text Fields
+    @FXML
+    private TextField searchByNameField;
+    @FXML
+    private TextField searchByCoordsField;
+    // Pane
+    @FXML
+    private Pane mainPane;
     // Buttons
     @FXML
-    private Button saved_locations_button;
-    @FXML
     private Button saveButton;
+    @FXML
+    private Button SL1;
+    @FXML
+    private Button SL2;
+    @FXML
+    private Button SL3;
+    @FXML
+    private Button SL4;
+    @FXML
+    private Button SL5;
     // images
     @FXML
     private ImageView mainWeatherIcon;
@@ -166,8 +190,52 @@ public class HomePageController {
     private Rectangle aqiStatus;
 
     @FXML
-    public void handleQuickAccess() {
+    public void initialize() {
+        // set svae locations
 
+        // set all event listeners here
+        searchByNameField.setOnAction(event -> {
+            String text = searchByNameField.getText();
+            System.out.println(text);
+            try {
+                currentLocation = wws.cityToCoords(text);
+                Object[] data = wws.fetchData(currentLocation);
+                setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
+                displayData();
+            } catch (Exception e) {
+                System.out.println("Error fetching data: " + e.getMessage());
+            }
+            searchByNameField.clear();
+
+        });
+
+        searchByCoordsField.setOnAction(event -> {
+            String text = searchByCoordsField.getText();
+            System.out.println(text);
+            // split text into (float) lat, lon
+            String[] coords = text.split(", ");
+            System.out.println(Float.parseFloat(coords[0]));
+            System.out.println(Float.parseFloat(coords[1]));
+            try {
+                currentLocation = wws.coordsToCity(Float.parseFloat(coords[0]), Float.parseFloat(coords[1]));
+                Object[] data = wws.fetchData(currentLocation);
+                setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
+                displayData();
+            } catch (NumberFormatException e) {
+                System.out.println("Error parsing coordinates: " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Error fetching data: " + e.getMessage());
+            }
+            searchByCoordsField.clear();
+        });
+
+        saveButton.setOnAction(event -> {
+            wws.saveLocation(currentLocation);
+            displaySavedLocation();
+        });
+        // default actions
+        // setting saved locations
+        displaySavedLocation();
     }
 
     public void displayData() {
@@ -179,16 +247,33 @@ public class HomePageController {
         todayDate.setText(currentWeather.dt);
         feelsLikeTemp.setText(currentWeather.feelsLike + "°C");
         mainWeather.setText(currentWeather.main);
+        // set png image on main pane here
         description.setText(currentWeather.description);
         windLabel.setText(currentWeather.windSpeed + "m/s");
         maxTempLabel.setText(currentWeather.tempMax + "°C");
-        sunriseTime.setText(currentWeather.sunrise);
+        sunriseTime.setText(DTConverter.getTime(currentWeather.sunrise));
         visibilityLabel.setText(currentWeather.visibility + "m");
         humidityLabel.setText(currentWeather.humidity + "%");
         minTempLabel.setText(currentWeather.tempMin + "°C");
-        sunsetTime.setText(currentWeather.sunset);
+        sunsetTime.setText(DTConverter.getTime(currentWeather.sunset));
         pressureLabel.setText(currentWeather.pressure + "hPa");
-        mainWeatherIcon.setImage(new Image("file:" + assetsPath + currentWeather.icon + ".png"));
+        mainWeatherIcon.setImage(loadImageFromAssets(currentWeather.icon));
+        //implement background images here
+        String bkgPNG = "";
+        if(currentWeather.main == "Drizzle" || currentWeather.main == "Rain")
+            bkgPNG = "rain";
+        else if(currentWeather.main == "Snow")
+            bkgPNG = "snow";
+        else if(currentWeather.main == "Clear")
+            bkgPNG = "clear";
+        else if(currentWeather.main == "Clouds")
+            bkgPNG = "clouds";
+        else if (currentWeather.main == "Thunderstorm" || currentWeather.main == "Tornado")
+            bkgPNG = "thunderstorm";
+        else if (currentWeather.main == "Smoke" || currentWeather.main == "Haze" || currentWeather.main == "Dust" || currentWeather.main == "Fog")
+            bkgPNG = "haze";
+        else bkgPNG = "";
+        mainPane.setStyle("-fx-background-image: url('" + assetsPath + bkgPNG + ".png'); -fx-background-size: cover;");
 
         // air quality info
         aqiValue.setText(currentAPData.aqi + "");
@@ -198,21 +283,91 @@ public class HomePageController {
         sulphurLevel.setText(currentAPData.so2 + " µg/m³");
         pm2Level.setText(currentAPData.pm2_5 + " µg/m³");
         pm10Level.setText(currentAPData.pm10 + " µg/m³");
-        if (currentAPData.aqi > 0 && currentAPData.aqi <= 50)
-            aqiStatus.setFill(Color.GREEN);
-        else if (currentAPData.aqi > 50 && currentAPData.aqi <= 100)
-            aqiStatus.setFill(Color.YELLOW);
-        else if (currentAPData.aqi > 100 && currentAPData.aqi <= 150)
-            aqiStatus.setFill(Color.ORANGE);
-        else if (currentAPData.aqi > 150 && currentAPData.aqi <= 200)
-            aqiStatus.setFill(Color.ORANGERED);
-        else if (currentAPData.aqi > 200 && currentAPData.aqi <= 300)
-            aqiStatus.setFill(Color.RED);
-        else
-            aqiStatus.setFill(Color.BLACK);
+        switch (currentAPData.aqi) {
+            case 1:
+                aqiStatus.setFill(Color.GREEN);
+                break;
+            case 2:
+                aqiStatus.setFill(Color.YELLOW);
+                break;
+            case 3:
+                aqiStatus.setFill(Color.ORANGE);
+                break;
+            case 4:
+                aqiStatus.setFill(Color.DARKORANGE);
+                break;
+            case 5:
+                aqiStatus.setFill(Color.RED);
+                break;
+            default:
+                aqiStatus.setFill(Color.BLACK);
+        }
+
 
         // forecast
+        loadForecastCards();
+    }
+    public void displaySavedLocation() {
+        savedLocations = wws.getSavedLocations();
+        int size = savedLocations.length;
+        Button[] SLButtons = new Button[]{SL1, SL2, SL3, SL4, SL5};
+        for(int i = 0; i < size; i++) {
+            if (savedLocations[i].city.length() > 0)
+                SLButtons[i].setText(savedLocations[i].city + ", " + savedLocations[i].country);
+            else SLButtons[i].setText("(" + savedLocations[i].lat + ", " + savedLocations[i].lon + ")");
+            SLButtons[i].setDisable(false);
+        }
+    }
 
+    public void getSavedLocationData1() {
+        try {
+            currentLocation = savedLocations[0];
+            Object[] data = wws.fetchData(currentLocation);
+            setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
+            displayData();
+        } catch (Exception e) {
+            System.out.println("Error fetching data: " + e.getMessage());
+        }
+    }
+    public void getSavedLocationData2() {
+        try {
+            currentLocation = savedLocations[1];
+            Object[] data = wws.fetchData(currentLocation);
+            setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
+            displayData();
+        } catch (Exception e) {
+            System.out.println("Error fetching data: " + e.getMessage());
+        }
+    }
+    public void getSavedLocationData3() {
+        try {
+            currentLocation = savedLocations[2];
+            Object[] data = wws.fetchData(currentLocation);
+            setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
+            displayData();
+        } catch (Exception e) {
+            System.out.println("Error fetching data: " + e.getMessage());
+        }
+    }
+    public void getSavedLocationData4() {
+        try {
+            currentLocation = savedLocations[3];
+            Object[] data = wws.fetchData(currentLocation);
+            setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
+            displayData();
+        } catch (Exception e) {
+            System.out.println("Error fetching data: " + e.getMessage());
+        }
+    }
+    public void getSavedLocationData5() {
+        try {
+            currentLocation = savedLocations[4];
+            Object[] data = wws.fetchData(currentLocation);
+            setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
+            displayData();
+        } catch (Exception e) {
+            System.out.println("Error fetching data: " + e.getMessage());
+        }
     }
 
     //setters
@@ -236,7 +391,7 @@ public class HomePageController {
     }
 
     // others
-    public void loadForecastArrays() {
+    public void loadForecastCards() {
         Label[] Fdates = new Label[5];
         Label[] Ftemps = new Label[5];
         Label[] Fmains = new Label[5];
@@ -245,5 +400,27 @@ public class HomePageController {
         Label[] FmaxTemps = new Label[5];
         Label[] FminTemps = new Label[5];
         Label[] Fhumidities = new Label[5];
+        // push all fxml elements in the relevant forecast arrays
+        Fdates[0] = Fdate1; Fdates[1] = Fdate2; Fdates[2] = Fdate3; Fdates[3] = Fdate4; Fdates[4] = Fdate5;
+        Ftemps[0] = Ftemp1; Ftemps[1] = Ftemp2; Ftemps[2] = Ftemp3; Ftemps[3] = Ftemp4; Ftemps[4] = Ftemp5;
+        Fmains[0] = Fmain1; Fmains[1] = Fmain2; Fmains[2] = Fmain3; Fmains[3] = Fmain4; Fmains[4] = Fmain5;
+        FmainIcons[0] = FmainIcon1; FmainIcons[1] = FmainIcon2; FmainIcons[2] = FmainIcon3; FmainIcons[3] = FmainIcon4; FmainIcons[4] = FmainIcon5;
+        Fdescriptions[0] = Fdescription1; Fdescriptions[1] = Fdescription2; Fdescriptions[2] = Fdescription3; Fdescriptions[3] = Fdescription4; Fdescriptions[4] = Fdescription5;
+        FmaxTemps[0] = FmaxTemp1; FmaxTemps[1] = FmaxTemp2; FmaxTemps[2] = FmaxTemp3; FmaxTemps[3] = FmaxTemp4; FmaxTemps[4] = FmaxTemp5;
+        FminTemps[0] = FminTemp1; FminTemps[1] = FminTemp2; FminTemps[2] = FminTemp3; FminTemps[3] = FminTemp4; FminTemps[4] = FminTemp5;
+        Fhumidities[0] = Fhumidity1; Fhumidities[1] = Fhumidity2; Fhumidities[2] = Fhumidity3; Fhumidities[3] = Fhumidity4; Fhumidities[4] = Fhumidity5;
+        for(int currentIndex = 0; currentIndex < 5; currentIndex++) {
+            Fdates[currentIndex].setText(getDate(forecast[currentIndex].dt));
+            Ftemps[currentIndex].setText(forecast[currentIndex].temp + "°C");
+            Fmains[currentIndex].setText(forecast[currentIndex].main);
+            Fdescriptions[currentIndex].setText(forecast[currentIndex].description);
+            FmaxTemps[currentIndex].setText(forecast[currentIndex].tempMax + "°C");
+            FminTemps[currentIndex].setText(forecast[currentIndex].tempMin + "°C");
+            Fhumidities[currentIndex].setText(forecast[currentIndex].humidity + "%");
+            FmainIcons[currentIndex].setImage(loadImageFromAssets(forecast[currentIndex].icon));
+        }
+    }
+    public Image loadImageFromAssets(String iconName) {
+        return new Image("file:" + assetsPath + iconName + ".png");
     }
 }
