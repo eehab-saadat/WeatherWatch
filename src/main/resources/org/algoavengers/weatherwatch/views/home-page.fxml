@@ -90,7 +90,7 @@
                               <Font name="System Bold" size="26.0" />
                            </font>
                         </Label>
-                        <Label fx:id="tempLabel" prefHeight="40.0" prefWidth="82.0" text="..." textAlignment="CENTER">
+                        <Label fx:id="tempLabel" prefHeight="40.0" prefWidth="107.0" text="..." textAlignment="CENTER">
                            <font>
                               <Font size="28.0" />
                            </font>
@@ -104,7 +104,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="feelsLikeTemp" prefHeight="27.0" prefWidth="50.0" text="...">
+                        <Label fx:id="feelsLikeTemp" prefHeight="27.0" prefWidth="97.0" text="...">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -126,7 +126,7 @@
                                        </HBox.margin>
                                     </ImageView>
                                     <Label prefHeight="22.0" prefWidth="70.0" text="  Wind:" />
-                                    <Label fx:id="windLabel" prefHeight="22.0" prefWidth="55.0" text="-----" />
+                                    <Label fx:id="windLabel" prefHeight="22.0" prefWidth="96.0" text="-----" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="12.0" prefWidth="171.0">
@@ -137,7 +137,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="24.0" prefWidth="75.0" text="   High:" />
-                                    <Label fx:id="maxTempLabel" prefHeight="24.0" prefWidth="65.0" text="-----" />
+                                    <Label fx:id="maxTempLabel" prefHeight="24.0" prefWidth="99.0" text="-----" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="13.0" prefWidth="171.0">
@@ -148,7 +148,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="24.0" prefWidth="76.0" text="   Sunrise:" />
-                                    <Label fx:id="sunriseTime" prefHeight="24.0" prefWidth="59.0" text="-----" />
+                                    <Label fx:id="sunriseTime" prefHeight="24.0" prefWidth="98.0" text="-----" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="18.0" prefWidth="171.0">
@@ -159,7 +159,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="22.0" prefWidth="78.0" text="   Visibility:" />
-                                    <Label fx:id="visibilityLabel" prefHeight="18.0" prefWidth="58.0" text="-----" />
+                                    <Label fx:id="visibilityLabel" prefHeight="18.0" prefWidth="93.0" text="-----" />
                                  </children>
                               </HBox>
                            </children>
@@ -185,7 +185,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="23.0" prefWidth="69.0" text=" Low:" />
-                                    <Label fx:id="minTempLabel" prefHeight="18.0" prefWidth="54.0" text="-----" />
+                                    <Label fx:id="minTempLabel" prefHeight="18.0" prefWidth="86.0" text="-----" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="22.0" prefWidth="146.0">
@@ -196,7 +196,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="23.0" prefWidth="69.0" text="  Sunset:" />
-                                    <Label fx:id="sunsetTime" prefHeight="23.0" prefWidth="72.0" text="-----" />
+                                    <Label fx:id="sunsetTime" prefHeight="23.0" prefWidth="84.0" text="-----" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="24.0" prefWidth="113.0">
@@ -207,7 +207,7 @@
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="23.0" prefWidth="69.0" text=" Pressure:" />
-                                    <Label fx:id="pressureLabel" prefHeight="24.0" prefWidth="66.0" text="-----" />
+                                    <Label fx:id="pressureLabel" prefHeight="24.0" prefWidth="81.0" text="-----" />
                                  </children>
                               </HBox>
                            </children>
@@ -229,14 +229,14 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox layoutX="191.0" layoutY="17.0" prefHeight="7.0" prefWidth="200.0" spacing="8.0">
+                  <HBox layoutX="237.0" layoutY="17.0" prefHeight="7.0" prefWidth="200.0" spacing="8.0">
                      <children>
                         <ImageView fitHeight="18.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../assets/refresh.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="todayDate" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="184.0" text="23-03-2024" textAlignment="CENTER" />
+                        <Label fx:id="todayDate" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="184.0" text="last refreshed" textAlignment="CENTER" />
                      </children>
                   </HBox>
                </children>
@@ -261,7 +261,7 @@
                            </font>
                         </Label>
                         <Label prefHeight="40.0" prefWidth="50.0" text="Status:" />
-                        <Rectangle fx:id="aqiStatus" arcHeight="10.0" arcWidth="10.0" fill="#ff1f1f" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
+                        <Rectangle fx:id="aqiStatus" arcHeight="10.0" arcWidth="10.0" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
                      </children>
                   </HBox>
                   <Label layoutX="12.0" layoutY="56.0" prefHeight="27.0" prefWidth="132.0" text="Breakdown:">
@@ -317,7 +317,7 @@
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="237.0" prefWidth="132.0">
                            <children>
-                              <Label fx:id="Fdate1" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0" text="Tomorrow">
+                              <Label fx:id="Fdate1" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
@@ -399,7 +399,7 @@
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
                            <children>
-                              <Label fx:id="Fdate2" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0" text="Tomorrow">
+                              <Label fx:id="Fdate2" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
@@ -475,7 +475,7 @@
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
                            <children>
-                              <Label fx:id="Fdate3" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0" text="Tomorrow">
+                              <Label fx:id="Fdate3" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
@@ -554,7 +554,7 @@
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
                            <children>
-                              <Label fx:id="Fdate4" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0" text="Tomorrow">
+                              <Label fx:id="Fdate4" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
@@ -633,7 +633,7 @@
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
                            <children>
-                              <Label fx:id="Fdate5" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0" text="Tomorrow">
+                              <Label fx:id="Fdate5" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="132.0">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
@@ -717,12 +717,12 @@
               <items>
                 <MenuItem mnemonicParsing="false" text="Search by name">
                      <graphic>
-                        <TextField />
+                        <TextField fx:id="searchByNameField" promptText="Enter location" />
                      </graphic>
                   </MenuItem>
                 <MenuItem mnemonicParsing="false" text="Search by coordinates (lat,lon)">
                      <graphic>
-                        <TextField />
+                        <TextField fx:id="searchByCoordsField" promptText="latitude, longitude" />
                      </graphic>
                   </MenuItem>
               </items>
@@ -736,7 +736,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="SL1" mnemonicParsing="false" prefHeight="38.0" prefWidth="182.0" text="none">
+            <Button fx:id="SL1" disable="true" mnemonicParsing="false" onAction="#getSavedLocationData1" prefHeight="38.0" prefWidth="182.0" text="none">
                <font>
                   <Font size="14.0" />
                </font>
@@ -747,7 +747,7 @@
                   <Glow />
                </effect>
             </Button>
-            <Button fx:id="SL2" mnemonicParsing="false" prefHeight="38.0" prefWidth="182.0" text="none">
+            <Button fx:id="SL2" disable="true" mnemonicParsing="false" onAction="#getSavedLocationData2" prefHeight="38.0" prefWidth="182.0" text="none">
                <font>
                   <Font size="14.0" />
                </font>
@@ -758,7 +758,7 @@
                   <Glow />
                </effect>
             </Button>
-            <Button fx:id="SL3" mnemonicParsing="false" prefHeight="38.0" prefWidth="182.0" text="none">
+            <Button fx:id="SL3" disable="true" mnemonicParsing="false" onAction="#getSavedLocationData3" prefHeight="38.0" prefWidth="182.0" text="none">
                <font>
                   <Font size="14.0" />
                </font>
@@ -769,7 +769,7 @@
                   <Glow />
                </effect>
             </Button>
-            <Button fx:id="SL4" mnemonicParsing="false" prefHeight="38.0" prefWidth="182.0" text="none">
+            <Button fx:id="SL4" disable="true" mnemonicParsing="false" onAction="#getSavedLocationData4" prefHeight="38.0" prefWidth="182.0" text="none">
                <font>
                   <Font size="14.0" />
                </font>
@@ -780,7 +780,7 @@
                   <Glow />
                </effect>
             </Button>
-            <Button fx:id="SL5" mnemonicParsing="false" prefHeight="38.0" prefWidth="182.0" text="none">
+            <Button fx:id="SL5" disable="true" mnemonicParsing="false" onAction="#getSavedLocationData5" prefHeight="38.0" prefWidth="182.0" text="none">
                <font>
                   <Font size="14.0" />
                </font>
@@ -800,7 +800,7 @@
                   <Image url="@../assets/map.png" />
                </image>
             </ImageView>
-            <Button fx:id="openMapButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="142.0" text="Search on Map">
+            <Button fx:id="openMapButton" disable="true" mnemonicParsing="false" prefHeight="45.0" prefWidth="142.0" text="Search on Map">
                <font>
                   <Font size="14.0" />
                </font>
