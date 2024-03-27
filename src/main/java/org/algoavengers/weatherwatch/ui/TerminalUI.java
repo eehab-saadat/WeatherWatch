@@ -269,7 +269,11 @@ public class TerminalUI implements DisplayInterface {
             System.out.println("5-Day Forecast:");
             for (WeatherData data : forecast) {
                 System.out.println("Date: " + data.dt);
+                System.out.println("Main: " + data.main);
+                System.out.println("Description: " + data.description);
                 System.out.println("Temperature: " + data.temp);
+                System.out.println("min temp: " + data.tempMin);
+                System.out.println("max temp: " + data.tempMax);
                 // Print more forecast data as needed
             }
         } else {
@@ -291,9 +295,14 @@ public class TerminalUI implements DisplayInterface {
     private void getAirPollutionInfo() {
         if (APdata != null) {
             // Print air pollution data
-            System.out.println("Air Pollution Information:");
-            System.out.println("Air Quality Index (AQI): " + APdata.aqi);
-            System.out.println("Comment: " + APdata.comment);
+            getAQI();
+            System.out.println("Carbon Monoxide: " + APdata.co);
+            System.out.println("Nitrogen Monoxide: " + APdata.no);
+            System.out.println("Nitrogen Dioxide: " + APdata.no2);
+            System.out.println("Suplhur: " + APdata.so2);
+            System.out.println("PM 2.5: " + APdata.pm2_5);
+            System.out.println("PM 10: " + APdata.pm10);
+
         }
     }
 }

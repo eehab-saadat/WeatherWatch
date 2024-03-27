@@ -26,7 +26,7 @@ public class FileManager implements CacheManagerInterface {
     private final String filepath = "src\\main\\resources\\org\\algoavengers\\weatherwatch\\txt\\";
 
 
-    public void save(LocationData location, WeatherData weatherData, APData apData) {
+    public void save(LocationData location, WeatherData weatherData, APData apData, WeatherData[] forecastData) {
         // Check if the city already exists in the file
         if (find(location.city) != null) {
             System.out.println("The city already exists in the file. Skipping...");

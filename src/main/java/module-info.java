@@ -9,9 +9,12 @@ module org.algoavengers.weatherwatch {
     requires eu.hansolo.tilesfx;
     requires com.google.gson;
     requires java.sql;
+    requires annotations;
 
     opens org.algoavengers.weatherwatch to javafx.fxml;
     exports org.algoavengers.weatherwatch;
     exports org.algoavengers.weatherwatch.utils;
     opens org.algoavengers.weatherwatch.utils to javafx.fxml;
+    exports org.algoavengers.weatherwatch.ui;
+    opens org.algoavengers.weatherwatch.ui to javafx.fxml;
 }

@@ -26,4 +26,13 @@ public class DTConverter {
         // Format the ZonedDateTime object to a string in ISO_LOCAL_DATE_TIME format and return
         return zonedDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replace('T', ' ');
     }
+    public static String getDate(String dt) {
+        // split dateTime for " " and return the first part
+        return dt.split(" ")[0];
+    }
+    public static String getTime(String dt) {
+        // split dateTime for " " and return the second part
+        return dt.split(" ")[1];
+    }
+
 }
