@@ -43,8 +43,12 @@ public class TestUI implements DisplayInterface {
             }
 
             CacheManager cacheManager = new CacheManager(new DBManager());
-            cacheManager.cache.save(location, weatherData, apData);
-            cacheManager.cache.find(location.city);
+            //cacheManager.cache.
+            cacheManager.cache.save(location, weatherData, apData, forecast);
+            System.out.println("Data saved to cache");
+            Object[] obj = cacheManager.cache.find(location.city);
+            System.out.println("found:");
+            ((LocationData) obj[0]).displayDetails();
             cacheManager.cache.getTop5Locations();
             cacheManager.cache.delete(location.city);
             cacheManager.cache.deleteOutdatedRecords();
