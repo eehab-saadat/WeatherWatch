@@ -447,5 +447,64 @@ public class DBManager implements CacheManagerInterface {
         }
     }
 
+    //function which connects to database and stores a trigger string in the database
+    public void saveTrigger(String trigger, int locationId, String locationName) {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+
+            // Insert trigger string into the database
+            String insertTriggerSql = "INSERT INTO Triggers (location_id, location_name, trigger_id) VALUES (?, ?, ?)";
+            PreparedStatement insertTriggerStatement = conn.prepareStatement(insertTriggerSql);
+            insertTriggerStatement.setInt(1, locationId);
+            insertTriggerStatement.setString(2, locationName);
+            insertTriggerStatement.setString(3, trigger);
+            insertTriggerStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //function to get trigger from database based on city name
+    public String getTrigger(String city) {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+
+            // Find trigger string based on city name
+            String findTriggerSql = "SELECT trigger_id FROM Triggers WHERE location_name = ?";
+            PreparedStatement triggerStatement = conn.prepareStatement(findTriggerSql);
+            triggerStatement.setString(1, city);
+            ResultSet rs = triggerStatement.executeQuery();
+
+            if (!rs.next()) {
+                return null;  // No trigger found
+            }
+
+            return rs.getString("trigger_id");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 }
