@@ -19,7 +19,7 @@ import java.util.List;
  * FileManager class implements CacheManagerInterface.
  * It provides methods to interact with a storage file.
  */
-public class FileManager {
+public class FileManager implements CacheManagerInterface {
 
     // Filepath for storage
     private final String filepath = "src\\main\\resources\\org\\algoavengers\\weatherwatch\\txt\\";
