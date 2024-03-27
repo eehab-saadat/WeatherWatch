@@ -25,7 +25,7 @@ public class Main {
         }
         App WeatherWatch = new App(new TestUI());
         WeatherWatch.app.run(API_KEY);
-        /*WeatherWatch = new App(new GraphicalUI_App());
-        WeatherWatch.app.run(API_KEY);*/
+        //WeatherWatch = new App(new GraphicalUI_App());
+       // WeatherWatch.app.run(API_KEY);
     }
 }
