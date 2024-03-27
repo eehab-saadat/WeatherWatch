@@ -87,4 +87,64 @@ public class WeatherData {
         System.out.println("Sunset: " + sunset);
         System.out.println("Fetch DateTime: " + dt);
     }
+
+    // setters
+    public void setLocation(LocationData location) {
+        this.location = location;
+    }
+
+    public void setMain(String main) {
+        this.main = main;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setFeelsLike(float feelsLike) {
+        this.feelsLike = feelsLike;
+    }
+
+    public void setHumidity(float humidity) {
+        this.humidity = humidity;
+    }
+
+    public void setDt(String dt) {
+        this.dt = dt;
+    }
+
+    public void setPressure(float pressure) {
+        this.pressure = pressure;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public void setSunrise(String sunrise) {
+        this.sunrise = sunrise;
+    }
+
+    public void setSunset(String sunset) {
+        this.sunset = sunset;
+    }
+
+    public void setTemp(float temp) {
+        this.temp = temp;
+    }
+
+    public void setTempMax(float tempMax) {
+        this.tempMax = tempMax;
+    }
+
+    public void setTempMin(float tempMin) {
+        this.tempMin = tempMin;
+    }
+    public void setVisibility(float visibility) {
+        this.visibility = visibility;
+    }
+
+    public void setWindSpeed(float windSpeed) {
+        this.windSpeed = windSpeed;
+    }
 }

@@ -60,4 +60,19 @@ public class LocationData {
     public float getLon() {
         return lon;
     }
+    // setters
+    public void setLat(float lat) {
+        this.lat = lat;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    public void setLon(float lon) {
+        this.lon = lon;
+    }
+
 }
