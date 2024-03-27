@@ -1,1 +1,0 @@
-city, dt ,country , lat, lon, temp, feelsLike, tempMin, tempMax, pressure, humidity, windSpeed, visibility, main, description, icon, sunrise, sunset
