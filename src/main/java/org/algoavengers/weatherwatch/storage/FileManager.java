@@ -1,6 +1,5 @@
 package org.algoavengers.weatherwatch.storage;
 
-import com.google.gson.JsonObject;
 import org.algoavengers.weatherwatch.models.APData;
 import org.algoavengers.weatherwatch.models.LocationData;
 import org.algoavengers.weatherwatch.models.WeatherData;
@@ -29,6 +28,53 @@ public class FileManager implements CacheManagerInterface {
     public void save(LocationData location, WeatherData weatherData, APData apData, WeatherData[] forecastData) {
         // Check if the city already exists in the file
         if (find(location.city) != null) {
+            System.out.println("The city already exists in the file. Skipping...");
+            return;
+        }
+
+        try (FileWriter writer1 = new FileWriter(filepath + "WeatherDetails.txt", true);
+             BufferedWriter bw1 = new BufferedWriter(writer1);
+             FileWriter writer2 = new FileWriter(filepath + "APDetails.txt", true);
+             BufferedWriter bw2 = new BufferedWriter(writer2);
+             FileWriter writer3 = new FileWriter(filepath + "Locations.txt", true);
+             BufferedWriter bw3 = new BufferedWriter(writer3);
+             FileWriter writer4 = new FileWriter(filepath + "Forecasts.txt", true);
+             BufferedWriter bw4 = new BufferedWriter(writer4)
+        ) {
+            bw1.write(location.city + ", " + apData.dt + ", " + location.country + ", " + location.lat + ", " + location.lon + ", " +
+                    weatherData.temp + ", " + weatherData.feelsLike + ", " + weatherData.tempMin + ", " + weatherData.tempMax + ", " +
+                    weatherData.pressure + ", " + weatherData.humidity + ", " + weatherData.windSpeed + ", " + weatherData.visibility + ", " +
+                    weatherData.main + ", " + weatherData.description + ", " + weatherData.icon + ", " + weatherData.sunrise + ", " + weatherData.sunset);
+            bw1.newLine();
+
+            bw2.write(location.city + ", " + apData.dt + ", " + apData.aqi + ", " + location.country + ", " + location.lat + ", " + location.lon + ", " +
+                    apData.co + ", " + apData.no + ", " + apData.no2 + ", " + apData.o3 + ", " + apData.so2 + ", " + apData.pm2_5 + ", " + apData.pm10 + ", " + apData.nh3 + ", " + apData.comment);
+            bw2.newLine();
+
+
+
+            bw3.write(location.city + ", " + weatherData.dt + ", " + location.lat + ", " + location.lon + ", " + location.country + ", " + "0");
+            bw3.newLine();
+
+            // Write forecastData attributes to Forecasts.txt
+            for (WeatherData forecast : forecastData) {
+                bw4.write(location.city + ", " + forecast.dt + ", " + forecast.temp + ", " + forecast.feelsLike + ", " +
+                        forecast.tempMin + ", " + forecast.tempMax + ", " + forecast.pressure + ", " + forecast.humidity + ", " +
+                        forecast.windSpeed + ", " + forecast.visibility + ", " + forecast.main + ", " + forecast.description + ", " +
+                        forecast.icon);
+                bw4.newLine();
+            }
+
+            System.out.println("Successfully wrote to the files.");
+
+        } catch (IOException e) {
+            System.out.println("An error occurred. " + e.getMessage());
+        }
+    }
+    public void save(LocationData location, WeatherData weatherData, APData apData) {
+        // Check if the city already exists in the file
+        if (find(location.city) != null)
+        {
             System.out.println("The city already exists in the file. Skipping...");
             return;
         }
@@ -230,7 +276,6 @@ public class FileManager implements CacheManagerInterface {
 
     }
 
-
     public void deleteOutdatedRecords() {
         try {
             File weatherDetailsFile = new File(filepath + "WeatherDetails.txt");
@@ -288,6 +333,106 @@ public class FileManager implements CacheManagerInterface {
         }
     }
 
+    @Override
+    public LocationData[] getSavedLocations() {
+        List<LocationData> savedLocations = new ArrayList<>();
+        try {
+            File inputFile = new File(filepath + "Locations.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
 
+            String currentLine;
+
+            while ((currentLine = reader.readLine()) != null) {
+                String[] parts = currentLine.split(",");
+                if (parts[parts.length - 1].trim().equals("1")) {
+                    String city = parts[0].trim();
+                    String country = parts[4].trim();
+                    float lat = Float.parseFloat(parts[2].trim());
+                    float lon = Float.parseFloat(parts[3].trim());
+                    savedLocations.add(new LocationData(city, country, lat, lon));
+                }
+            }
+
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+
+        return savedLocations.toArray(new LocationData[0]);
+    }
+    public void saveLocation(LocationData location) {
+        try {
+            File inputFile = new File(filepath + "Locations.txt");
+            File tempFile = new File(filepath + "tempLocations.txt");
+
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+            String currentLine;
+
+            while ((currentLine = reader.readLine()) != null) {
+                String[] parts = currentLine.split(",");
+                if (parts[0].trim().equals(location.city)) {
+                    parts[parts.length - 1] = "1";
+                    currentLine = String.join(",", parts);
+                }
+                writer.write(currentLine + System.getProperty("line.separator"));
+            }
+
+            reader.close();
+            writer.close();
+
+            if (!inputFile.delete()) {
+                System.out.println("Failed to delete the original file.");
+                return;
+            }
+
+            if (!tempFile.renameTo(inputFile)) {
+                System.out.println("Failed to rename the temporary file.");
+            }
+
+            System.out.println("Location saved successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
+
+    public void removeLocation(String city  )
+    {
+        try {
+            File inputFile = new File(filepath + "Locations.txt");
+            File tempFile = new File(filepath + "tempLocations.txt");
+
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+            String currentLine;
+
+            while ((currentLine = reader.readLine()) != null) {
+                String[] parts = currentLine.split(",");
+                if (parts[0].trim().equals(city)) {
+                    parts[parts.length - 1] = "0";
+                    currentLine = String.join(",", parts);
+                }
+                writer.write(currentLine + System.getProperty("line.separator"));
+            }
+
+            reader.close();
+            writer.close();
+
+            if (!inputFile.delete()) {
+                System.out.println("Failed to delete the original file.");
+                return;
+            }
+
+            if (!tempFile.renameTo(inputFile)) {
+                System.out.println("Failed to rename the temporary file.");
+            }
+
+            System.out.println("Location saved successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
 
 }

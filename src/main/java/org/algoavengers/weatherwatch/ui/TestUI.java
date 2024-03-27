@@ -53,7 +53,12 @@ public class TestUI implements DisplayInterface {
             try {
 
 
-                cacheManager.cache.save(location, weatherData, apData);
+                cacheManager.cache.save(location, weatherData, apData, forecast);
+                cacheManager.cache.saveLocation(location);
+                for (LocationData data : cacheManager.cache.getSavedLocations()) {
+                    data.displayDetails();
+                }
+
             } catch (Exception e) {
                 System.out.println("An error occurred while saving the data to the cache.");
                 System.out.println(e.getMessage());
@@ -69,9 +74,9 @@ public class TestUI implements DisplayInterface {
                     LocationData loc = (LocationData) obj[0];
                     WeatherData wData = (WeatherData) obj[1];
                     APData aData = (APData) obj[2];
-                    loc.displayDetails();
-                    wData.displayDetails();
-                    aData.displayDetails();
+//                    loc.displayDetails();
+//                    wData.displayDetails();
+//                    aData.displayDetails();
                 }
             } catch (Exception e) {
                 System.out.println("An error occurred while fetching the data from the cache.");
@@ -98,5 +103,7 @@ public class TestUI implements DisplayInterface {
                 System.out.println(e.getMessage());
                 return;
             }
+
+            cacheManager.cache.delete("Delhi");
         }
 }

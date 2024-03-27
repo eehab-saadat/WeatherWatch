@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import org.algoavengers.weatherwatch.ui.GraphicalUI_App;
 import org.algoavengers.weatherwatch.ui.TerminalUI;
+import org.algoavengers.weatherwatch.ui.TestUI;
 import org.algoavengers.weatherwatch.utils.App;
 
 import java.io.FileReader;
@@ -22,9 +23,9 @@ public class Main {
             System.out.println("An error occurred: " + e.getMessage());
             return;
         }
-        App WeatherWatch = new App(new TerminalUI());
+        App WeatherWatch = new App(new TestUI());
         WeatherWatch.app.run(API_KEY);
-        WeatherWatch = new App(new GraphicalUI_App());
-        WeatherWatch.app.run(API_KEY);
+        //WeatherWatch = new App(new GraphicalUI_App());
+       // WeatherWatch.app.run(API_KEY);
     }
 }
