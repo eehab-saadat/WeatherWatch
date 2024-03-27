@@ -49,7 +49,7 @@ public class TestUI implements DisplayInterface {
 //                data.displayDetails();
 //            }
 
-            CacheManager cacheManager = new CacheManager(new FileManager());
+            CacheManager cacheManager = new FileManager();
             try {
 
 

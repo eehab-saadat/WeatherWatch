@@ -6,14 +6,15 @@ import org.algoavengers.weatherwatch.models.WeatherData;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.lang.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 
 public class DBManager implements CacheManagerInterface {
-    private static final java.lang.String DB_URL = "jdbc:mysql://sql6.freesqldatabase.com:3306/sql6693906";
-    private static final java.lang.String USER = "sql6693906";
-    private static final java.lang.String PASSWORD = "VDA1QRU1Re";
+    private static final java.lang.String DB_URL = "jdbc:mysql://sql6.freesqldatabase.com:3306/sql6693696";
+    private static final java.lang.String USER = "sql6693696";
+    private static final java.lang.String PASSWORD = "RPwZURS5JZ";
 
     //function to add city to database
 
@@ -143,8 +144,7 @@ public class DBManager implements CacheManagerInterface {
         } catch (SQLException e) {
             e.printStackTrace();
 
-        }
-        finally {
+        } finally {
             try {
                 if (conn != null) {
                     conn.close();
@@ -158,7 +158,7 @@ public class DBManager implements CacheManagerInterface {
     //find city from database
     @Override
 
-    public Object[] find(String city){
+    public Object[] find(String city) {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
@@ -174,10 +174,10 @@ public class DBManager implements CacheManagerInterface {
             }
 
             LocationData location = new LocationData();
-            location.city=(rs.getString("name"));
-            location.lat=(rs.getFloat("latitude"));
-            location.lon=(rs.getFloat("longitude"));
-            location.country=(rs.getString("country"));
+            location.city = (rs.getString("name"));
+            location.lat = (rs.getFloat("latitude"));
+            location.lon = (rs.getFloat("longitude"));
+            location.country = (rs.getString("country"));
             int locationId = rs.getInt("id");
 
             // Find weather data for the location
@@ -189,21 +189,21 @@ public class DBManager implements CacheManagerInterface {
             WeatherData weatherData = null;
             if (rs.next()) {
                 weatherData = new WeatherData();
-                weatherData.temp=(rs.getFloat("temp"));
-                weatherData.feelsLike=(rs.getFloat("feelsLike"));
-                weatherData.tempMin=(rs.getFloat("tempMin"));
-                weatherData.tempMax=(rs.getFloat("tempMax"));
-                weatherData.pressure=(rs.getFloat("pressure"));
-                weatherData.humidity=(rs.getFloat("humidity"));
-                weatherData.windSpeed=(rs.getFloat("windSpeed"));
-                weatherData.visibility=(rs.getFloat("visibility"));
-                weatherData.main=(rs.getString("main"));
-                weatherData.description=(rs.getString("description"));
-                weatherData.icon=(rs.getString("icon"));
-                weatherData.sunrise=(rs.getString("sunrise"));
-                weatherData.sunset=(rs.getString("sunset"));
-                weatherData.dt=(rs.getString("dt"));
-
+                weatherData.setLocation(location);
+                weatherData.temp = (rs.getFloat("temp"));
+                weatherData.feelsLike = (rs.getFloat("feelsLike"));
+                weatherData.tempMin = (rs.getFloat("tempMin"));
+                weatherData.tempMax = (rs.getFloat("tempMax"));
+                weatherData.pressure = (rs.getFloat("pressure"));
+                weatherData.humidity = (rs.getFloat("humidity"));
+                weatherData.windSpeed = (rs.getFloat("windSpeed"));
+                weatherData.visibility = (rs.getFloat("visibility"));
+                weatherData.main = (rs.getString("main"));
+                weatherData.description = (rs.getString("description"));
+                weatherData.icon = (rs.getString("icon"));
+                weatherData.sunrise = (rs.getString("sunrise"));
+                weatherData.sunset = (rs.getString("sunset"));
+                weatherData.dt = (rs.getString("dt"));
             }
 
             // Find air pollution data for the location
@@ -215,17 +215,18 @@ public class DBManager implements CacheManagerInterface {
             APData apData = null;
             if (rs.next()) {
                 apData = new APData();
-                apData.aqi=(rs.getInt("aqi"));
-                apData.co=(rs.getFloat("co"));
-                apData.no=(rs.getFloat("no"));
-                apData.no2=(rs.getFloat("no2"));
-                apData.o3=(rs.getFloat("o3"));
-                apData.so2=(rs.getFloat("so2"));
-                apData.pm2_5=(rs.getFloat("pm2_5"));
-                apData.pm10=(rs.getFloat("pm10"));
-                apData.nh3=(rs.getFloat("nh3"));
-                apData.comment=(rs.getString("comment"));
-                apData.dt=(rs.getString("dt"));
+                apData.setLocation(location);
+                apData.aqi = (rs.getInt("aqi"));
+                apData.co = (rs.getFloat("co"));
+                apData.no = (rs.getFloat("no"));
+                apData.no2 = (rs.getFloat("no2"));
+                apData.o3 = (rs.getFloat("o3"));
+                apData.so2 = (rs.getFloat("so2"));
+                apData.pm2_5 = (rs.getFloat("pm2_5"));
+                apData.pm10 = (rs.getFloat("pm10"));
+                apData.nh3 = (rs.getFloat("nh3"));
+                apData.comment = (rs.getString("comment"));
+                apData.dt = (rs.getString("dt"));
 
             }
 
@@ -239,18 +240,19 @@ public class DBManager implements CacheManagerInterface {
             int i = 0;
             while (rs.next() && i < 5) {
                 WeatherData forecast = new WeatherData();
-                forecast.temp=(rs.getFloat("temp"));
-                forecast.feelsLike=(rs.getFloat("feelsLike"));
-                forecast.tempMin=(rs.getFloat("tempMin"));
-                forecast.tempMax=(rs.getFloat("tempMax"));
-                forecast.pressure=(rs.getFloat("pressure"));
-                forecast.humidity=(rs.getFloat("humidity"));
-                forecast.windSpeed=(rs.getFloat("windSpeed"));
-                forecast.visibility=(rs.getFloat("visibility"));
-                forecast.main=(rs.getString("main"));
-                forecast.description=(rs.getString("description"));
-                forecast.icon=(rs.getString("icon"));
-                forecast.dt=(rs.getString("dt"));
+                forecast.setLocation(location);
+                forecast.temp = (rs.getFloat("temp"));
+                forecast.feelsLike = (rs.getFloat("feelsLike"));
+                forecast.tempMin = (rs.getFloat("tempMin"));
+                forecast.tempMax = (rs.getFloat("tempMax"));
+                forecast.pressure = (rs.getFloat("pressure"));
+                forecast.humidity = (rs.getFloat("humidity"));
+                forecast.windSpeed = (rs.getFloat("windSpeed"));
+                forecast.visibility = (rs.getFloat("visibility"));
+                forecast.main = (rs.getString("main"));
+                forecast.description = (rs.getString("description"));
+                forecast.icon = (rs.getString("icon"));
+                forecast.dt = (rs.getString("dt"));
                 weatherForecasts[i++] = forecast;
             }
 
@@ -297,20 +299,15 @@ public class DBManager implements CacheManagerInterface {
 
             // Convert List to array (optional, can return the List directly)
             return locations.toArray(new LocationData[locations.size()]);
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
 
-
-
-
     //delete outdated data from database
-    public void deleteOutdatedRecords(){
+    public void deleteOutdatedRecords() {
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
@@ -326,8 +323,7 @@ public class DBManager implements CacheManagerInterface {
             statement.setString(1, currentDate);
             statement.executeUpdate();
             conn.close();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -343,7 +339,7 @@ public class DBManager implements CacheManagerInterface {
 
     }
 
-    public LocationData[] getSavedLocations(){
+    public LocationData[] getSavedLocations() {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
@@ -355,10 +351,10 @@ public class DBManager implements CacheManagerInterface {
             List<LocationData> locations = new ArrayList<>();
             while (rs.next()) {
                 LocationData location = new LocationData();
-                location.city=(rs.getString("name"));
-                location.lat=(rs.getFloat("latitude"));
-                location.lon=(rs.getFloat("longitude"));
-                location.country=(rs.getString("country"));
+                location.city = (rs.getString("name"));
+                location.lat = (rs.getFloat("latitude"));
+                location.lon = (rs.getFloat("longitude"));
+                location.country = (rs.getString("country"));
                 locations.add(location);
             }
 
@@ -378,7 +374,7 @@ public class DBManager implements CacheManagerInterface {
         }
     }
 
-    public void saveLocation(LocationData location){
+    public void saveLocation(LocationData location) {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
@@ -450,7 +446,6 @@ public class DBManager implements CacheManagerInterface {
             }
         }
     }
-
 
 
 }
