@@ -90,4 +90,42 @@ public class APData {
         System.out.println("Comment: " + comment);
         System.out.println("Time: " + dt);
     }
+    // setters
+    public void setLocation(LocationData location) {
+        this.location = location;
+    }
+    public void setAqi(int aqi) {
+        this.aqi = aqi;
+    }
+    public void setCo(float co) {
+        this.co = co;
+    }
+    public void setNo(float no) {
+        this.no = no;
+    }
+    public void setNo2(float no2) {
+        this.no2 = no2;
+    }
+    public void setO3(float o3) {
+        this.o3 = o3;
+    }
+    public void setSo2(float so2) {
+        this.so2 = so2;
+    }
+    public void setPm2_5(float pm2_5) {
+        this.pm2_5 = pm2_5;
+    }
+    public void setPm10(float pm10) {
+        this.pm10 = pm10;
+    }
+    public void setNh3(float nh3) {
+        this.nh3 = nh3;
+    }
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+    public void setDt(String dt) {
+        this.dt = dt;
+    }
+
 }
