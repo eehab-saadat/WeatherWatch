@@ -51,7 +51,7 @@ public class TerminalUI implements DisplayInterface {
 
             switch (choice) {
                 case 1:
-                 /*   CacheMananger cacheManager = new CacheManager(new DBManager());
+                 /*  CacheMananger cacheManager = new CacheManager(new DBManager());
                     LocationData[] locationArr = cacheManager.getSavedLocations();*/
                     break;
                 case 2:
