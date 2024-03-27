@@ -21,8 +21,8 @@ public class TestUI implements DisplayInterface {
                 System.out.println("An error occurred while fetching the coordinates.");
                 return;
             }
-//            location.displayDetails();
-
+           /* location.displayDetails();
+*/
             System.out.println();
             WeatherData weatherData = WeatherForecaster.GetCurrentForecast(API_KEY, location);
             if (weatherData == null) {
@@ -30,30 +30,30 @@ public class TestUI implements DisplayInterface {
                 return;
             }
 
-//            weatherData.displayDetails();
+          /* weatherData.displayDetails();*/
 
             APData apData = APGetter.GetAPIData(API_KEY, location);
             if (apData == null) {
                 System.out.println("An error occurred while fetching the air pollution data.");
                 return;
             }
-//            apData.displayDetails();
+           /* apData.displayDetails();*/
 
             WeatherData[] forecast = WeatherForecaster.GetPentaDayForecast(API_KEY, location);
             if (forecast == null) {
                 System.out.println("An error occurred while fetching the 5-day weather forecast.");
                 return;
             }
-//
-//            for (WeatherData data : forecast) {
-//                data.displayDetails();
-//            }
 
-            CacheManager cacheManager = new CacheManager(new FileManager());
+          /*  for (WeatherData data : forecast) {
+                data.displayDetails();
+            }*/
+
+            CacheManager cacheManager = new CacheManager(new DBManager());
             try {
 
 
-                cacheManager.cache.save(location, weatherData, apData);
+                cacheManager.cache.save(location, weatherData, apData, forecast);
             } catch (Exception e) {
                 System.out.println("An error occurred while saving the data to the cache.");
                 System.out.println(e.getMessage());
@@ -61,17 +61,21 @@ public class TestUI implements DisplayInterface {
             }
 
             try {
-                System.out.println(location.city);
+                //System.out.println(location.city);
                 Object[] obj = cacheManager.cache.find(city);
-                System.out.println(location.city);
+                //System.out.println(location.city);
                 if (obj != null) {
                     System.out.println(location.city);
                     LocationData loc = (LocationData) obj[0];
                     WeatherData wData = (WeatherData) obj[1];
                     APData aData = (APData) obj[2];
+                    WeatherData[] fData = (WeatherData[]) obj[3];
                     loc.displayDetails();
                     wData.displayDetails();
                     aData.displayDetails();
+                    /*for (WeatherData data : fData) {
+                        data.displayDetails();
+                    }*/
                 }
             } catch (Exception e) {
                 System.out.println("An error occurred while fetching the data from the cache.");
