@@ -132,7 +132,23 @@ public class FileManager implements CacheManagerInterface {
                     weatherData = new WeatherData(); // initializing the object with default constructor where location is null
                     weatherData.setLocation(locationData);
                     weatherData.temp = Float.parseFloat(parts[5].trim());
-                    // ... fill the rest of the weatherData fields ...
+                    // Fill the rest of the weatherData fields
+                    weatherData.feelsLike = Float.parseFloat(parts[6].trim());
+                    weatherData.tempMin = Float.parseFloat(parts[7].trim());
+                    weatherData.tempMax = Float.parseFloat(parts[8].trim());
+                    weatherData.pressure = Float.parseFloat(parts[9].trim());
+                    weatherData.humidity = Float.parseFloat(parts[10].trim());
+                    weatherData.windSpeed = Float.parseFloat(parts[11].trim());
+                    weatherData.visibility = Float.parseFloat(parts[12].trim());
+
+                    weatherData.main = parts[13].trim();
+                    System.out.println(weatherData.main);
+
+
+                    weatherData.description = parts[14].trim();
+                    weatherData.icon = parts[15].trim();
+                    weatherData.sunrise = parts[16].trim();
+                    weatherData.sunset = parts[17].trim();
                     break;
                 }
             }
@@ -145,7 +161,16 @@ public class FileManager implements CacheManagerInterface {
                     apData.dt = parts[1].trim();
                     apData.aqi = Integer.parseInt(parts[2].trim());
                     apData.setLocation(locationData);
-                    // ... fill the rest of the apData fields ...
+                    // Fill the rest of the apData fields
+                    apData.co = Float.parseFloat(parts[6].trim());
+                    apData.no = Float.parseFloat(parts[7].trim());
+                    apData.no2 = Float.parseFloat(parts[8].trim());
+                    apData.o3 = Float.parseFloat(parts[9].trim());
+                    apData.so2 = Float.parseFloat(parts[10].trim());
+                    apData.pm2_5 = Float.parseFloat(parts[11].trim());
+                    apData.pm10 = Float.parseFloat(parts[12].trim());
+                    apData.nh3 = Float.parseFloat(parts[13].trim());
+                    apData.comment = parts[14].trim();
                     break;
                 }
             }
