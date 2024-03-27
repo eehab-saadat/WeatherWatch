@@ -28,6 +28,34 @@ public class GraphicalUI_App extends Application implements DisplayInterface {
         primaryStage.setScene(new Scene(loaderRoot));
         primaryStage.show();
 
+        // Create a pause of 5 seconds
+        PauseTransition pauseBeforeHomePage = new PauseTransition(Duration.seconds(5));
+        pauseBeforeHomePage.setOnFinished(event -> {
+            // Load the home-page.fxml file
+            try {
+                Parent homeRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/algoavengers/weatherwatch/views/home-page.fxml")));
+                // Set the home-page.fxml as the scene for your primary stage
+                primaryStage.setScene(new Scene(homeRoot));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Create a pause of 5 seconds
+            PauseTransition pauseBeforePopup = new PauseTransition(Duration.seconds(5));
+            pauseBeforePopup.setOnFinished(ev -> {
+                // Display a popup with a message
+                String message = "DANGER! AQI LEVELS ARE HIGH!";
+                PopupMain popupMain = new PopupMain(message);
+                Stage popupStage = new Stage();
+                try {
+                    popupMain.start(popupStage);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
+            pauseBeforePopup.play();
+        });
+        pauseBeforeHomePage.play();
     }
 
     @Override
