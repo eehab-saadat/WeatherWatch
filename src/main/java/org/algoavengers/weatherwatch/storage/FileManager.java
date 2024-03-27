@@ -2,69 +2,169 @@ package org.algoavengers.weatherwatch.storage;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * FileManager class is responsible for managing the storage of city data.
+ * It provides methods to save, delete, and find city data in a text file.
+ */
 public class FileManager {
+    // The path to the file where city data is stored
     private final String filepath = "src/main/java/org/algoavengers/weatherwatch/storage/";
+
+    /**
+     * Saves the given city data to the file.
+     * If the city is already saved, it prints a message and returns.
+     *
+     * @param city The name of the city
+     * @param lat The latitude of the city
+     * @param lon The longitude of the city
+     */
     public void save(String city, float lat, float lon) {
-        try (FileWriter writer = new FileWriter(filepath + "storage.txt", true);
-             BufferedWriter bw = new BufferedWriter(writer)) {
-            bw.write(city + ", " + lat + ", " + lon);
-            bw.newLine();
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            System.out.println("An error occurred. " + e.getMessage());
+        BufferedReader reader = null;
+        BufferedWriter writer = null;
+        try {
+
+            reader = new BufferedReader(new FileReader(filepath + "storage.txt"));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.matches("^" + city + ",.*")) {
+                    System.out.println("The city is already saved.");
+                    return;
+                }
+            }
+
+            writer = new BufferedWriter(new FileWriter(filepath + "storage.txt", true));
+            writer.write(city + ", " + lat + ", " + lon + "\n");
+
+        }
+        catch (IOException e) {
+
+            System.out.println("An error occurred while trying to write to the file.");
+            e.printStackTrace();
+        }
+        finally {
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                    if (writer != null) {
+                        writer.close();
+                    }
+                } catch (IOException e) {
+                    System.out.println("An error occurred while trying to close the file.");
+                    e.printStackTrace();
+                }
         }
     }
 
+    /**
+     * Deletes the given city data from the file.
+     * If the city does not exist in the file, it prints a message.
+     *
+     * @param city The name of the city
+     */
     public void delete(String city) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filepath + "storage.txt"));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(filepath + "temp.txt"))) {
+        BufferedReader reader = null;
+        BufferedWriter writer = null;
+        boolean cityFound = false;
+        try {
 
-            String currentLine;
-            while ((currentLine = reader.readLine()) != null) {
-                if (!currentLine.trim().startsWith(city)) {
-                    writer.write(currentLine + System.lineSeparator());
+            reader = new BufferedReader(new FileReader(filepath + "storage.txt"));
+
+            List<String> lines = new ArrayList<String>();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+
+            for (int i = 0; i < lines.size(); i++) {
+                if (lines.get(i).matches("^" + city + ",.*")) {
+                    lines.remove(i);
+                    cityFound = true;
+                    break;
                 }
             }
 
-            File inputFile = new File(filepath + "storage.txt");
-            File tempFile = new File(filepath + "temp.txt");
+            reader.close();
 
-            if (!inputFile.delete()) {
-                System.out.println("Failed to delete the original file.");
-                return;
+            writer = new BufferedWriter(new FileWriter(filepath + "storage.txt"));
+
+            for (String l : lines) {
+                writer.write(l + "\n");
             }
 
-            if (!tempFile.renameTo(inputFile)) {
-                System.out.println("Failed to rename the temporary file.");
-                return;
+            if (!cityFound) {
+                System.out.println("The city does not exist in the file.");
             }
+        }
+        catch (IOException e) {
+            System.out.println("An error occurred while trying to delete the city from the file.");
+            e.printStackTrace();
 
-            System.out.println("Record deleted successfully.");
-        } catch (IOException e) {
-            System.out.println("An error occurred: " + e.getMessage());
+        }
+        finally {
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                    if (writer != null) {
+                        writer.close();
+                    }
+                }
+                catch (IOException e) {
+                    System.out.println("An error occurred while trying to close the file.");
+                    e.printStackTrace();
+                }
         }
     }
 
-    public float[] find(String city) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filepath + "storage.txt"))) {
-            String currentLine;
-            while ((currentLine = br.readLine()) != null) {
-                int firstComma = currentLine.indexOf(',');
-                if (firstComma > 0 && currentLine.substring(0, firstComma).trim().equals(city)) {
-                    String[] parts = currentLine.split(",");
-                    float lat = Float.parseFloat(parts[1].trim());
-                    float lon = Float.parseFloat(parts[2].trim());
-                    return new float[]{lat, lon};
+    /**
+     * Finds the given city data in the file.
+     * If the city does not exist in the file, it prints a message and returns an empty array.
+     *
+     * @param city The name of the city
+     */
+    public void find(String city) {
+        BufferedReader reader = null;
+        boolean cityFound = false;
+        try {
+
+            reader = new BufferedReader(new FileReader(filepath + "storage.txt"));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.matches("^" + city + ",.*")) {
+                    System.out.println(line);
+                    cityFound = true;
+                    break;
                 }
             }
-        } catch (IOException | NumberFormatException e) {
-            System.out.println("An error occurred: " + e.getMessage());
+
+            if (!cityFound) {
+                System.out.println("The city does not exist in the file.");
+            }
         }
-        return null; // City not found or error occurred
+        catch (IOException e) {
+            System.out.println("An error occurred while trying to find the city in the file.");
+            e.printStackTrace();
+        }
+        finally {
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    System.out.println("An error occurred while trying to close the file.");
+                    e.printStackTrace();
+                }
+        }
+
+
     }
 }

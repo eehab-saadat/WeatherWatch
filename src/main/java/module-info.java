@@ -10,6 +10,8 @@ module org.algoavengers.weatherwatch {
     requires com.google.gson;
     requires java.sql;
     requires annotations;
+    requires org.testng;
+    requires org.junit.jupiter.api;
 
     opens org.algoavengers.weatherwatch to javafx.fxml;
     exports org.algoavengers.weatherwatch;
