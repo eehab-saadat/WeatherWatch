@@ -52,6 +52,7 @@ public class WeatherWatchService {
         cacheManager.cache.removeLocation(location.city);
     }
 
+
    public void setHeatWaveTrigger(LocationData location) {
         // Set the heat wave trigger for the given location
         try {

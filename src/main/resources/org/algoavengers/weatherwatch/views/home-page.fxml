@@ -5,8 +5,10 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
@@ -18,70 +20,49 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1080.0" style="-fx-background-color: #2a9d8f;" styleClass="css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.algoavengers.weatherwatch.ui.HomePageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1080.0" style="-fx-background-color: #5a98f4;" styleClass="css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.algoavengers.weatherwatch.ui.HomePageController">
    <children>
       <Accordion layoutX="525.0" layoutY="335.0" />
-      <Rectangle arcWidth="5.0" fill="WHITE" height="622.0" layoutX="-1.0" layoutY="59.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="211.0" />
-      <Rectangle fx:id="rectangleLahore" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="24.0" layoutY="148.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" visible="false" width="174.0" />
-      <Label fx:id="labelLahore" alignment="CENTER" layoutX="24.0" layoutY="148.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Lahore" textFill="#001524" visible="false">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-
-      <Rectangle fx:id="rectangleIstanbul" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="23.0" layoutY="196.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" visible="false" width="174.0" />
-      <Label fx:id="labelIstanbul" alignment="CENTER" layoutX="23.0" layoutY="196.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Istanbul" textFill="#001524" visible="false">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-
-      <Rectangle fx:id="rectangleLondon" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="20.0" layoutY="246.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" visible="false" width="174.0" />
-      <Label fx:id="labelLondon" alignment="CENTER" layoutX="20.0" layoutY="246.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="London" textFill="#001524" visible="false">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="64.0" layoutY="-3.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1080.0" />
-      <Label layoutX="55.0" layoutY="-2.0" prefHeight="64.0" prefWidth="242.0" text="WeatherWatch">
-         <font>
-            <Font size="33.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="64.0" fitWidth="74.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/logo.png" />
-         </image>
-      </ImageView>
       <Pane fx:id="mainPane" layoutX="209.0" layoutY="61.0" prefHeight="622.0" prefWidth="871.0">
          <children>
-            <HBox layoutX="66.0" layoutY="14.0" prefHeight="50.0" prefWidth="498.0">
+            <ImageView fx:id="backgroundImage" fitHeight="622.0" fitWidth="871.0" pickOnBounds="true" />
+            <HBox layoutX="59.0" layoutY="14.0" prefHeight="50.0" prefWidth="505.0">
                <children>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/location_pin.png" />
                      </image></ImageView>
-                <Label fx:id="locationName" prefHeight="50.0" prefWidth="356.0" text="....">
+                <Label fx:id="locationName" prefHeight="50.0" prefWidth="339.0" text="....">
                   <font>
                     <Font size="34.0" />
                   </font>
                 </Label>
-                  <HBox prefHeight="30.0" prefWidth="87.0" spacing="15.0">
-                     <children>
-                  
-                        <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" text="save +">
-                           <font>
-                              <Font name="System Italic" size="16.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets top="6.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
+            
+                        <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="74.0" text="save +">
+                     <font>
+                        <Font name="System Italic" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="6.0" />
+                     </HBox.margin>
+                  </Button>
+                  <MenuButton mnemonicParsing="false" prefHeight="28.0" prefWidth="2.0">
+                     <items>
+                        <Menu mnemonicParsing="false" text="Set Trigger for">
+                          <items>
+                              <MenuItem mnemonicParsing="false" text="Heatwave" />
+                              <MenuItem mnemonicParsing="false" text="Hurricane" />
+                              <MenuItem mnemonicParsing="false" text="Snow" />
+                          </items>
+                        </Menu>
+                     </items>
+                     <HBox.margin>
+                        <Insets left="5.0" top="10.0" />
+                     </HBox.margin>
+                  </MenuButton>
                </children>
             </HBox>
-            <Pane layoutX="66.0" layoutY="77.0" prefHeight="225.0" prefWidth="440.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 8;">
+            <Pane layoutX="66.0" layoutY="77.0" opacity="0.85" prefHeight="225.0" prefWidth="440.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 8;">
                <children>
                   <HBox layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="196.0">
                      <children>
@@ -111,9 +92,9 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox layoutX="23.0" layoutY="111.0" prefHeight="102.0" prefWidth="389.0">
+                  <HBox layoutX="23.0" layoutY="111.0" prefHeight="102.0" prefWidth="389.0" style="-fx-background-color: #d3d3d3;">
                      <children>
-                        <VBox prefHeight="102.0" prefWidth="210.0" style="-fx-background-color: #FFE8D6;">
+                        <VBox prefHeight="102.0" prefWidth="210.0" style="-fx-background-color: #d3d3d3D6;">
                            <children>
                               <HBox prefHeight="22.0" prefWidth="171.0">
                                  <children>
@@ -164,7 +145,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <VBox prefHeight="102.0" prefWidth="177.0" style="-fx-background-color: #FFE8D6;">
+                        <VBox prefHeight="102.0" prefWidth="177.0">
                            <children>
                               <HBox prefHeight="22.0" prefWidth="119.0">
                                  <children>
@@ -241,7 +222,7 @@
                   </HBox>
                </children>
             </Pane>
-            <Pane layoutX="513.0" layoutY="77.0" prefHeight="226.0" prefWidth="294.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 8;">
+            <Pane layoutX="513.0" layoutY="77.0" opacity="0.85" prefHeight="226.0" prefWidth="294.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 8;">
                <children>
                   <HBox layoutX="5.0" layoutY="5.0" prefHeight="20.0" prefWidth="298.0" spacing="2.0">
                      <children>
@@ -269,7 +250,7 @@
                         <Font size="22.0" />
                      </font>
                   </Label>
-                  <VBox layoutX="16.0" layoutY="95.0" prefHeight="115.0" prefWidth="253.0" style="-fx-background-color: #ffe8d6;">
+                  <VBox layoutX="16.0" layoutY="95.0" prefHeight="115.0" prefWidth="253.0">
                      <children>
                         <HBox prefHeight="4.0" prefWidth="254.0">
                            <children>
@@ -313,7 +294,7 @@
             </Pane>
             <HBox fx:id="forecast_box" layoutX="66.0" layoutY="324.0" prefHeight="258.0" prefWidth="746.0" spacing="4.0">
                <children>
-                  <Pane fx:id="day1" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+                  <Pane fx:id="day1" opacity="0.85" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 12;">
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="237.0" prefWidth="132.0">
                            <children>
@@ -395,7 +376,7 @@
                         <Insets right="4.0" />
                      </padding>
                   </Pane>
-                  <Pane fx:id="day11" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+                  <Pane fx:id="day11" opacity="0.85" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 12;">
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
                            <children>
@@ -471,7 +452,7 @@
                         </VBox>
                      </children>
                   </Pane>
-                  <Pane fx:id="day12" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+                  <Pane fx:id="day12" opacity="0.85" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 12;">
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
                            <children>
@@ -550,7 +531,7 @@
                         <Insets left="1.0" right="4.0" />
                      </padding>
                   </Pane>
-                  <Pane fx:id="day13" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+                  <Pane fx:id="day13" opacity="0.85" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 12;">
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
                            <children>
@@ -629,7 +610,7 @@
                         <Insets right="4.0" />
                      </padding>
                   </Pane>
-                  <Pane fx:id="day14" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #ffe8d6; -fx-background-radius: 12;">
+                  <Pane fx:id="day14" opacity="0.85" prefHeight="257.0" prefWidth="147.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 12;">
                      <children>
                         <VBox layoutX="6.0" layoutY="9.0" prefHeight="235.0" prefWidth="132.0">
                            <children>
@@ -720,6 +701,7 @@
                         <TextField fx:id="searchByNameField" promptText="Enter location" />
                      </graphic>
                   </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
                 <MenuItem mnemonicParsing="false" text="Search by coordinates (lat,lon)">
                      <graphic>
                         <TextField fx:id="searchByCoordsField" promptText="latitude, longitude" />
@@ -729,6 +711,38 @@
             </MenuButton>
          </children>
       </Pane>
+      <Rectangle arcWidth="5.0" fill="#3b90d1" height="622.0" layoutX="-1.0" layoutY="59.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="211.0" />
+      <Rectangle fx:id="rectangleLahore" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="24.0" layoutY="148.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" visible="false" width="174.0" />
+      <Label fx:id="labelLahore" alignment="CENTER" layoutX="24.0" layoutY="148.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Lahore" textFill="#001524" visible="false">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+
+      <Rectangle fx:id="rectangleIstanbul" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="23.0" layoutY="196.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" visible="false" width="174.0" />
+      <Label fx:id="labelIstanbul" alignment="CENTER" layoutX="23.0" layoutY="196.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="Istanbul" textFill="#001524" visible="false">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+
+      <Rectangle fx:id="rectangleLondon" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="20.0" layoutY="246.0" smooth="false" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" visible="false" width="174.0" />
+      <Label fx:id="labelLondon" alignment="CENTER" layoutX="20.0" layoutY="246.0" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: grey;" text="London" textFill="#001524" visible="false">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="64.0" layoutY="-3.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1080.0" />
+      <Label layoutX="55.0" layoutY="-2.0" prefHeight="64.0" prefWidth="242.0" text="WeatherWatch">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="64.0" fitWidth="74.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/logo.png" />
+         </image>
+      </ImageView>
       <VBox layoutX="14.0" layoutY="148.0" prefHeight="248.0" prefWidth="182.0" spacing="2.0">
          <children>
             <Label prefHeight="18.0" prefWidth="181.0" text="Saved Locations">

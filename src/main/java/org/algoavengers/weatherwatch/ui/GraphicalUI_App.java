@@ -28,6 +28,19 @@ public class GraphicalUI_App extends Application implements DisplayInterface {
         primaryStage.setScene(new Scene(loaderRoot));
         primaryStage.show();
 
+        // Create a pause of 5 seconds
+        PauseTransition pauseBeforeHomePage = new PauseTransition(Duration.seconds(5));
+        pauseBeforeHomePage.setOnFinished(event -> {
+            // Load the home-page.fxml file
+            try {
+                Parent homeRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/algoavengers/weatherwatch/views/home-page.fxml")));
+                // Set the home-page.fxml as the scene for your primary stage
+                primaryStage.setScene(new Scene(homeRoot));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
     }
 
     @Override
