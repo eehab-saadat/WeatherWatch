@@ -12,9 +12,9 @@ import java.util.List;
 
 
 public class DBManager implements CacheManagerInterface {
-    private static final java.lang.String DB_URL = "jdbc:mysql://sql6.freesqldatabase.com:3306/sql6693906";
-    private static final java.lang.String USER = "sql6693906";
-    private static final java.lang.String PASSWORD = "VDA1QRU1Re";
+    private static final java.lang.String DB_URL = "jdbc:mysql://sql6.freesqldatabase.com:3306/sql6693696";
+    private static final java.lang.String USER = "sql6693696";
+    private static final java.lang.String PASSWORD = "RPwZURS5JZ";
 
     //function to add city to database
 
@@ -358,7 +358,11 @@ public class DBManager implements CacheManagerInterface {
                 locations.add(location);
             }
 
-            // Convert List to array (optional)
+
+            if (locations.isEmpty()) {
+                System.out.println("No saved locations found!");
+                return null;
+            }
             return locations.toArray(new LocationData[locations.size()]);
         } catch (SQLException e) {
             e.printStackTrace();  // Log or handle the exception as needed
@@ -440,6 +444,182 @@ public class DBManager implements CacheManagerInterface {
             try {
                 if (conn != null) {
                     conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void saveTrigger(LocationData locationData, String triggerId, String description){
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+
+            // 1. Get location ID from location name
+            String getLocationIdSql = "SELECT id FROM Locations WHERE name = ?";
+            statement = connection.prepareStatement(getLocationIdSql);
+            statement.setString(1, locationData.city);
+
+            resultSet = statement.executeQuery();
+
+            int locationId;
+            if (resultSet.next()) {
+                locationId = resultSet.getInt(1);
+            } else {
+                throw new SQLException("Location with name '" + locationData.city + "' not found.");
+            }
+
+            // 2. Insert trigger details with retrieved location ID
+            String insertTriggerSql = "INSERT INTO Triggers (location_id, trigger_id, description, dt) VALUES (?, ?, ?, ?)";
+            statement.close(); // Close the previous statement before using a new one
+            statement = connection.prepareStatement(insertTriggerSql);
+            statement.setInt(1, locationId);
+            statement.setString(2, triggerId);
+            statement.setString(3, description);
+            statement.setString(4, getCurrentDate());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public Object[] getTriggerDetails(String id)  {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            String sql = "SELECT t.id AS trigger_id, t.trigger_id, t.description, t.dt, l.id AS location_id, l.name " +
+                    "FROM Triggers t " +
+                    "INNER JOIN Locations l ON t.location_id = l.id " +
+                    "WHERE t.id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, id);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String description = resultSet.getString("t.description");
+
+                LocationData location = new LocationData();
+                location.city = resultSet.getString("l.name");
+                location.lat = resultSet.getFloat("l.latitude");
+                location.lon = resultSet.getFloat("l.longitude");
+                location.country = resultSet.getString("l.country");
+                return new Object[]{location, description};
+            } else {
+                return null; // No trigger found with the specified ID
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Re-throw the exception for handling
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public String[] getTriggerIDs()  {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<String> triggerIds = new ArrayList<>();
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            String sql = "SELECT trigger_id FROM Triggers";
+            statement = connection.prepareStatement(sql);
+
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                triggerIds.add(resultSet.getString(1));
+            }
+            if(triggerIds.isEmpty())
+            {
+                System.out.println("No triggers found!");
+                return null;
+            }
+            return triggerIds.toArray(new String[0]);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public void clearOutdatedTriggers(){
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            String sql = "DELETE FROM Triggers WHERE dt < ?";
+            statement = connection.prepareStatement(sql);
+            statement.setDate(1, getOneWeekOldDate());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private Date getOneWeekOldDate() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, -7);  // Subtract 7 days from current date
+        return new Date(cal.getTimeInMillis());
+    }
+
+    public void clear() {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            String sql = "DELETE FROM Locations";
+            statement = connection.prepareStatement(sql);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
