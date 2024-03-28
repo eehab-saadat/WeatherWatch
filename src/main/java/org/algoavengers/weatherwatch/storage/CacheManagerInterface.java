@@ -14,4 +14,9 @@ public interface CacheManagerInterface {
     public LocationData[] getSavedLocations();
     public void saveLocation(LocationData location);
     public void removeLocation(String city);
+    public void saveTrigger(LocationData locationData, String triggerId, String description);
+    public Object[] getTriggerDetails(String id);
+    public String[] getTriggerIDs();
+    public void clearOutdatedTriggers();
+    public void clear();
 }
