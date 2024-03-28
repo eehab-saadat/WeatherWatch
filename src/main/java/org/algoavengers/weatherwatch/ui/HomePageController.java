@@ -200,8 +200,8 @@ public class HomePageController {
             String text = searchByNameField.getText();
             System.out.println(text);
             try {
-                currentLocation = wws.cityToCoords(text);
-                Object[] data = wws.fetchData(currentLocation);
+                LocationData tempLocation = wws.cityToCoords(text);
+                Object[] data = wws.fetchData(tempLocation);
                 setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
                 displayData();
             } catch (Exception e) {
@@ -219,8 +219,8 @@ public class HomePageController {
             System.out.println(Float.parseFloat(coords[0]));
             System.out.println(Float.parseFloat(coords[1]));
             try {
-                currentLocation = wws.coordsToCity(Float.parseFloat(coords[0]), Float.parseFloat(coords[1]));
-                Object[] data = wws.fetchData(currentLocation);
+                LocationData tempLocation = wws.coordsToCity(Float.parseFloat(coords[0]), Float.parseFloat(coords[1]));
+                Object[] data = wws.fetchData(tempLocation);
                 setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
                 displayData();
             } catch (NumberFormatException e) {
