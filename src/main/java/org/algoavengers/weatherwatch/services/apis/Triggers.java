@@ -99,7 +99,7 @@ public class Triggers {
         //return jsonResponse.toString();
     }
 
-    public static JsonObject getTrigger(String API_KEY, String id) throws IOException {
+    public static String getTrigger(String API_KEY, String id) throws IOException {
         String url = BASE_URL + "/" + id + "?appid=" + API_KEY;
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setRequestMethod("GET");
@@ -113,6 +113,6 @@ public class Triggers {
 
         JsonObject json = JsonParser.parseString(response.toString()).getAsJsonObject();
         System.out.println(json);
-        return json;
+        return json.toString();
     }
 }

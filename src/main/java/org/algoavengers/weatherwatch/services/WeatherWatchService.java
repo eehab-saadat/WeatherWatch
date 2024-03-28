@@ -6,6 +6,7 @@ import com.google.gson.stream.JsonReader;
 import org.algoavengers.weatherwatch.models.*;
 import org.algoavengers.weatherwatch.storage.*;
 import org.algoavengers.weatherwatch.services.apis.*;
+import org.algoavengers.weatherwatch.ui.LoaderController;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -48,7 +49,43 @@ public class WeatherWatchService {
     // TODO: Implement this method (awaiting db/file implementation)
     public void removeLocation(LocationData location) {
         // Remove the location data
-        // cacheManager.cache.removeLocation();
+        cacheManager.cache.removeLocation(location.city);
+    }
+
+    void setHeatWaveTrigger(LocationData location) {
+        // Set the heat wave trigger for the given location
+        try {
+            Triggers.setTrigger(API_KEY, "temp", 321, location.getLat(), location.getLon());
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
+
+    void setSnowTrigger(LocationData location) {
+        // Set the snow trigger for the given location
+        try {
+            Triggers.setTrigger(API_KEY, "temp", 265, location.getLat(), location.getLon());
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
+
+    void setHurricaneTrigger(LocationData location) {
+        // Set the hurricane trigger for the given location
+        try {
+            Triggers.setTrigger(API_KEY, "wind_speed", 40, location.getLat(), location.getLon());
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
+
+    String getTrigger(String id) {
+        try {
+            return Triggers.getTrigger(API_KEY, id);
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+            return null;
+        }
     }
 
     /**
