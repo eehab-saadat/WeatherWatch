@@ -25,7 +25,6 @@ public class FileManager implements CacheManagerInterface {
     // Filepath for storage
     private final String filepath = "src\\main\\resources\\org\\algoavengers\\weatherwatch\\txt\\";
 
-
     public void save(LocationData location, WeatherData weatherData, APData apData, WeatherData[] forecastData) {
         // Check if the city already exists in the file
         if (find(location.city) != null) {
@@ -559,7 +558,7 @@ public class FileManager implements CacheManagerInterface {
         }
     }
 
-    public void clearAll() {
+    public void clear() {
         File dir = new File(filepath);
         File[] files = dir.listFiles((d, name) -> name.endsWith(".txt"));
         if (files != null) {
