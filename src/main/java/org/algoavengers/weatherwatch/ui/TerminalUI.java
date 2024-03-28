@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import org.algoavengers.weatherwatch.models.APData;
 import org.algoavengers.weatherwatch.models.LocationData;
 import org.algoavengers.weatherwatch.models.WeatherData;
+import org.algoavengers.weatherwatch.services.WeatherWatchService;
 import org.algoavengers.weatherwatch.services.apis.APGetter;
 import org.algoavengers.weatherwatch.services.apis.Geocoder;
 import org.algoavengers.weatherwatch.services.apis.WeatherForecaster;
@@ -32,6 +33,7 @@ public class TerminalUI implements DisplayInterface {
     private LocationData location;
     private WeatherData[] forecast;
     private APData APdata;
+    private WeatherWatchService weather = new WeatherWatchService();
 
     @Override
     public void run(String API_KEY) {
@@ -51,8 +53,8 @@ public class TerminalUI implements DisplayInterface {
 
             switch (choice) {
                 case 1:
-                 /*  CacheMananger cacheManager = new CacheManager(new DBManager());
-                    LocationData[] locationArr = cacheManager.getSavedLocations();*/
+                   WeatherWatchService cacheManager = new WeatherWatchService();
+                    LocationData[] locationArr = cacheManager.getSavedLocations();
                     break;
                 case 2:
                     searchByName(API_KEY, scanner);
@@ -113,80 +115,59 @@ public class TerminalUI implements DisplayInterface {
         pauseScreen(scanner);
     }
     private void searchByName(String API_KEY, Scanner scanner) {
-        System.out.print("Enter city name: ");
-        String cityName = scanner.nextLine();
         try {
-            location = Geocoder.geocode(API_KEY, cityName);
-            if (location == null) {
+            System.out.print("Enter city name: ");
+            String cityName = scanner.nextLine();
+            LocationData location = weather.cityToCoords(cityName);
+            if (location != null) {
+                Object[] data = weather.fetchData(location);
+                if (data != null) {
+                    this.location = (LocationData) data[0];
+                    this.currentWeather = (WeatherData) data[1];
+                    this.APdata = (APData) data[2];
+                    this.forecast = (WeatherData[]) data[3];
+                    System.out.println("Data fetched successfully for " + cityName + ".");
+                    displayActionMenu(scanner);
+                } else {
+                    System.out.println("Error fetching data for " + cityName + ".");
+                }
+            } else {
                 System.out.println("Location not found.");
-                return;
             }
-
-            currentWeather = WeatherForecaster.GetCurrentForecast(API_KEY, location);
-            if (currentWeather == null) {
-                System.out.println("Error fetching weather data.");
-                return;
-            }
-
-            forecast = WeatherForecaster.GetPentaDayForecast(API_KEY, location);
-            if (forecast == null) {
-                System.out.println("Error fetching 5-day forecast.");
-                return;
-            }
-
-            APdata = APGetter.GetAPIData(API_KEY, location);
-            if (APdata == null) {
-                System.out.println("Error fetching air pollution data.");
-                return;
-            }
-
-            System.out.println("Data fetched successfully for " + cityName + ".");
-
-            displayActionMenu(scanner);
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
         }
     }
 
     private void searchByCoordinates(String API_KEY, Scanner scanner) {
-        System.out.print("Enter latitude: ");
-        float latitude = scanner.nextFloat();
-        scanner.nextLine();
-        System.out.print("Enter longitude: ");
-        float longitude = scanner.nextFloat();
-        scanner.nextLine();
-
         try {
-            location = Geocoder.geocode(API_KEY, latitude, longitude);
-            if (location == null) {
+            System.out.print("Enter latitude: ");
+            float latitude = scanner.nextFloat();
+            scanner.nextLine();
+            System.out.print("Enter longitude: ");
+            float longitude = scanner.nextFloat();
+            scanner.nextLine();
+            LocationData location = weather.coordsToCity(latitude, longitude);
+            if (location != null) {
+                Object[] data = weather.fetchData(location);
+                if (data != null) {
+                    this.location = (LocationData) data[0];
+                    this.currentWeather = (WeatherData) data[1];
+                    this.APdata = (APData) data[2];
+                    this.forecast = (WeatherData[]) data[3];
+                    System.out.println("Data fetched successfully for coordinates: " + latitude + ", " + longitude);
+                    displayActionMenu(scanner);
+                } else {
+                    System.out.println("Error fetching data for coordinates: " + latitude + ", " + longitude);
+                }
+            } else {
                 System.out.println("Location not found.");
-                return;
             }
-
-            currentWeather = WeatherForecaster.GetCurrentForecast(API_KEY, location);
-            if (currentWeather == null) {
-                System.out.println("Error fetching weather data.");
-                return;
-            }
-
-            forecast = WeatherForecaster.GetPentaDayForecast(API_KEY, location);
-            if (forecast == null) {
-                System.out.println("Error fetching 5-day forecast.");
-                return;
-            }
-
-            APdata = APGetter.GetAPIData(API_KEY, location);
-            if (APdata == null) {
-                System.out.println("Error fetching air pollution data.");
-                return;
-            }
-
-            System.out.println("Data fetched successfully for coordinates: " + latitude + ", " + longitude);
-            displayActionMenu(scanner);
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
         }
     }
+
     private void displayActionMenu(Scanner scanner) {
         while (true) {
             System.out.println("\nAction Menu:");
@@ -224,10 +205,10 @@ public class TerminalUI implements DisplayInterface {
                 case 6:
                     getAirPollutionInfo(scanner);
                     break;
-               /*  case 7:
-                 saveLocation();
+                 case 7:
+                 saveLocation(scanner);
                  break;
-                 case 8:
+              /*   case 8:
                    setAQITrigger();
                    break;
                  case 9:
@@ -326,4 +307,14 @@ public class TerminalUI implements DisplayInterface {
             pauseScreen(scanner);
         }
     }
+    private void saveLocation(Scanner scanner) {
+        if (location != null) {
+            weather.saveLocation(location);
+            System.out.println("Location saved successfully.");
+        } else {
+            System.out.println("No location data available to save.");
+        }
+        pauseScreen(scanner);
+    }
+
 }

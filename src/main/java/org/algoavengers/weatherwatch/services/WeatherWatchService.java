@@ -15,7 +15,7 @@ import java.io.IOException;
  * It interacts with the cache to store and retrieve data.
  */
 public class WeatherWatchService {
-    CacheManager cacheManager = new CacheManager(new FileManager());
+    CacheManager cacheManager = new CacheManager(new DBManager());
     String API_KEY;
 
     public WeatherWatchService() {
