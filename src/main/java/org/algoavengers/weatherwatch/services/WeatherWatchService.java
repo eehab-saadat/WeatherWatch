@@ -16,7 +16,7 @@ import java.io.IOException;
  * It interacts with the cache to store and retrieve data.
  */
 public class WeatherWatchService {
-    CacheManager cacheManager = new CacheManager(new FileManager());
+    CacheManager cacheManager = new CacheManager(new DBManager());
     String API_KEY;
 
     public WeatherWatchService() {
@@ -52,7 +52,7 @@ public class WeatherWatchService {
         cacheManager.cache.removeLocation(location.city);
     }
 
-    void setHeatWaveTrigger(LocationData location) {
+   public void setHeatWaveTrigger(LocationData location) {
         // Set the heat wave trigger for the given location
         try {
             Triggers.setTrigger(API_KEY, "temp", 321, location.getLat(), location.getLon());
@@ -61,7 +61,7 @@ public class WeatherWatchService {
         }
     }
 
-    void setSnowTrigger(LocationData location) {
+    public void setSnowTrigger(LocationData location) {
         // Set the snow trigger for the given location
         try {
             Triggers.setTrigger(API_KEY, "temp", 265, location.getLat(), location.getLon());
@@ -70,7 +70,7 @@ public class WeatherWatchService {
         }
     }
 
-    void setHurricaneTrigger(LocationData location) {
+    public void setHurricaneTrigger(LocationData location) {
         // Set the hurricane trigger for the given location
         try {
             Triggers.setTrigger(API_KEY, "wind_speed", 40, location.getLat(), location.getLon());
@@ -79,11 +79,7 @@ public class WeatherWatchService {
         }
     }
 
-    String getTriggers() {
-        return "";
-    }
-
-    String getTrigger(String id) {
+    public String getTrigger(String id) {
         try {
             return Triggers.getTrigger(API_KEY, id);
         } catch (Exception e) {
