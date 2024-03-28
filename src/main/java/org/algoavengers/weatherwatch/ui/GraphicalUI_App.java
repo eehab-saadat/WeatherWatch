@@ -39,23 +39,8 @@ public class GraphicalUI_App extends Application implements DisplayInterface {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            // Create a pause of 5 seconds
-            PauseTransition pauseBeforePopup = new PauseTransition(Duration.seconds(5));
-            pauseBeforePopup.setOnFinished(ev -> {
-                // Display a popup with a message
-                String message = "DANGER! AQI LEVELS ARE HIGH!";
-                PopupMain popupMain = new PopupMain(message);
-                Stage popupStage = new Stage();
-                try {
-                    popupMain.start(popupStage);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            });
-            pauseBeforePopup.play();
         });
-        pauseBeforeHomePage.play();
+
     }
 
     @Override
