@@ -50,9 +50,9 @@
                      <items>
                         <Menu mnemonicParsing="false" text="Set Trigger for">
                           <items>
-                              <MenuItem mnemonicParsing="false" text="Heatwave" />
-                              <MenuItem mnemonicParsing="false" text="Hurricane" />
-                              <MenuItem mnemonicParsing="false" text="Snow" />
+                              <MenuItem fx:id="heatwaveTrigger" mnemonicParsing="false" onAction="#setHeatwaveTrigger" text="Heatwave" />
+                              <MenuItem fx:id="hurricaneTrigger" mnemonicParsing="false" onAction="#setHurricaneTrigger" text="Hurricane" />
+                              <MenuItem fx:id="snowTrigger" mnemonicParsing="false" onAction="#setSnowTrigger" text="Snow" />
                           </items>
                         </Menu>
                      </items>

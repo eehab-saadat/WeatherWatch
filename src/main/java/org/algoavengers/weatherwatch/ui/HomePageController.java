@@ -2,17 +2,13 @@ package org.algoavengers.weatherwatch.ui;
 
 //fxml imports
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.control.Button;
-import javafx.scene.control.Accordion;
 //models imports
-import javafx.stage.Stage;
 import org.algoavengers.weatherwatch.models.*;
 import org.algoavengers.weatherwatch.services.WeatherWatchService;
 import org.algoavengers.weatherwatch.utils.DTConverter;
@@ -185,7 +181,13 @@ public class HomePageController {
     private Label Fhumidity4;
     @FXML
     private Label Fhumidity5;
-
+    // menu items
+    @FXML
+    private MenuItem heatwaveTrigger;
+    @FXML
+    private MenuItem hurricaneTrigger;
+    @FXML
+    private MenuItem snowTrigger;
 
     // Rectangles
     @FXML
@@ -193,7 +195,10 @@ public class HomePageController {
 
     @FXML
     public void initialize() {
-        // set svae locations
+        // clean the chache
+        wws.clearExpiredData();
+        // get trigger update
+        wws.getTrigger("");
 
         // set all event listeners here
         searchByNameField.setOnAction(event -> {
@@ -313,11 +318,26 @@ public class HomePageController {
         // forecast
         loadForecastCards();
     }
+
+    // triggers
+    public void setHeatwaveTrigger() {
+        wws.setHeatWaveTrigger(currentLocation);
+        System.out.println("Heatwave trigger set for " + currentLocation.city + ", " + currentLocation.country);
+    }
+    public void setHurricaneTrigger() {
+        wws.setHurricaneTrigger(currentLocation);
+        System.out.println("Hurricane trigger set for " + currentLocation.city + ", " + currentLocation.country);
+    }
+    public void setSnowTrigger() {
+        wws.setSnowTrigger(currentLocation);
+        System.out.println("Snow trigger set for " + currentLocation.city + ", " + currentLocation.country);
+    }
+    // saved locations
     public void displaySavedLocation() {
         savedLocations = wws.getSavedLocations();
         int size = (savedLocations != null) ? savedLocations.length : 0;
         Button[] SLButtons = new Button[]{SL1, SL2, SL3, SL4, SL5};
-        for(int i = 0; i < size; i++) {
+        for(int i = 0; i < size && i < 5; i++) {
             if (savedLocations[i].city.length() > 0)
                 SLButtons[i].setText(savedLocations[i].city + ", " + savedLocations[i].country);
             else SLButtons[i].setText("(" + savedLocations[i].lat + ", " + savedLocations[i].lon + ")");
