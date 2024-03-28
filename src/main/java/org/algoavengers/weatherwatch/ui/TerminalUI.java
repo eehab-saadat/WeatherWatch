@@ -187,9 +187,9 @@ public class TerminalUI implements DisplayInterface {
             System.out.println("5. Get AQI");
             System.out.println("6. Get air pollution info");
             System.out.println("7. Save location");
-            System.out.println("8. Set trigger for AQI");
-            System.out.println("9. Set trigger for weather condition");
-            System.out.println("10. Back to Main Menu");
+            System.out.println("8. Set trigger for weather condition");
+            System.out.println("9. Back to Main Menu ");
+
 
             System.out.print("Enter your choice (1-10): ");
             int choice = scanner.nextInt();
