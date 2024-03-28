@@ -1,32 +1,17 @@
 package org.algoavengers.weatherwatch.ui;
 
-
 import java.util.Scanner;
 
-import com.google.gson.JsonObject;
 import org.algoavengers.weatherwatch.models.APData;
 import org.algoavengers.weatherwatch.models.LocationData;
 import org.algoavengers.weatherwatch.models.WeatherData;
 import org.algoavengers.weatherwatch.services.WeatherWatchService;
-import org.algoavengers.weatherwatch.services.apis.APGetter;
-import org.algoavengers.weatherwatch.services.apis.Geocoder;
-import org.algoavengers.weatherwatch.services.apis.WeatherForecaster;
-import org.algoavengers.weatherwatch.storage.CacheManager;
-import org.algoavengers.weatherwatch.storage.DBManager;
-import java.io.IOException;
 
 /**
  * TerminalUI class implements the DisplayInterface.
  * It provides a terminal-based user interface for the weather watch application.
  */
 public class TerminalUI implements DisplayInterface {
-    /**
-     * The run method is the entry point for the TerminalUI.
-     * It prompts the user for a city name, fetches the location data, current weather forecast,
-     * 5-day weather forecast, and air pollution data for the entered city, and displays the data.
-     *
-     * @param API_KEY The API key to be used for the API calls.
-     */
 
     // Data members
     private WeatherData currentWeather;
@@ -38,7 +23,7 @@ public class TerminalUI implements DisplayInterface {
     @Override
     public void run(String API_KEY) {
         System.out.println("Welcome to the Location App!");
-        String triggerUpdate = weather.getTrigger();
+        String triggerUpdate = weather.getTrigger("random_string");
         if (triggerUpdate != null) {
             System.out.println("Trigger update: " + triggerUpdate);
         }
@@ -58,7 +43,7 @@ public class TerminalUI implements DisplayInterface {
 
             switch (choice) {
                 case 1:
-                   WeatherWatchService cacheManager = new WeatherWatchService();
+                    WeatherWatchService cacheManager = new WeatherWatchService();
                     LocationData[] locationArr = cacheManager.getSavedLocations();
                     break;
                 case 2:
@@ -79,20 +64,25 @@ public class TerminalUI implements DisplayInterface {
             }
         }
     }
+
     private void pauseScreen(Scanner scanner) {
         // Pause screen until user presses Enter
         System.out.println("\nPress Enter to continue...");
         scanner.nextLine();
     }
-   private void clearScreen() {
+
+    private void clearScreen() {
         try {
+            // Clear the terminal screen
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        } catch (IOException | InterruptedException e) {
+        } catch (Exception e) {
+            // Handle error if unable to clear screen
             System.out.println("Error clearing screen: " + e.getMessage());
         }
     }
-    private void displayCredits(Scanner scanner) {
 
+    private void displayCredits(Scanner scanner) {
+        // Display credits for the app development
         System.out.println("***************************************************");
         System.out.println("*                                                 *");
         System.out.println("*            WeatherWatch Application             *");
@@ -119,14 +109,17 @@ public class TerminalUI implements DisplayInterface {
         System.out.println("***************************************************");
         pauseScreen(scanner);
     }
+
     private void searchByName(String API_KEY, Scanner scanner) {
         try {
+            // Prompt user for city name and fetch data
             System.out.print("Enter city name: ");
             String cityName = scanner.nextLine();
             LocationData location = weather.cityToCoords(cityName);
             if (location != null) {
                 Object[] data = weather.fetchData(location);
                 if (data != null) {
+                    // Handle fetched data
                     this.location = (LocationData) data[0];
                     this.currentWeather = (WeatherData) data[1];
                     this.APdata = (APData) data[2];
@@ -135,7 +128,7 @@ public class TerminalUI implements DisplayInterface {
                     if (APdata != null && APdata.aqi >= 4) {
                         System.out.println("Warning: AQI level is high for the provided coordinates.");
                     }
-
+                    // Display action menu
                     displayActionMenu(scanner);
                 } else {
                     System.out.println("Error fetching data for " + cityName + ".");
@@ -150,6 +143,7 @@ public class TerminalUI implements DisplayInterface {
 
     private void searchByCoordinates(String API_KEY, Scanner scanner) {
         try {
+            // Prompt user for coordinates and fetch data
             System.out.print("Enter latitude: ");
             float latitude = scanner.nextFloat();
             scanner.nextLine();
@@ -160,6 +154,7 @@ public class TerminalUI implements DisplayInterface {
             if (location != null) {
                 Object[] data = weather.fetchData(location);
                 if (data != null) {
+                    // Handle fetched data
                     this.location = (LocationData) data[0];
                     this.currentWeather = (WeatherData) data[1];
                     this.APdata = (APData) data[2];
@@ -168,7 +163,7 @@ public class TerminalUI implements DisplayInterface {
                     if (APdata != null && APdata.aqi >= 4) {
                         System.out.println("Warning: AQI level is high for the provided coordinates.");
                     }
-
+                    // Display action menu
                     displayActionMenu(scanner);
                 } else {
                     System.out.println("Error fetching data for coordinates: " + latitude + ", " + longitude);
@@ -183,6 +178,7 @@ public class TerminalUI implements DisplayInterface {
 
     private void displayActionMenu(Scanner scanner) {
         while (true) {
+            // Display action menu options
             System.out.println("\nAction Menu:");
             System.out.println("1. Get current weather");
             System.out.println("2. Basic information");
@@ -218,14 +214,14 @@ public class TerminalUI implements DisplayInterface {
                 case 6:
                     getAirPollutionInfo(scanner);
                     break;
-                 case 7:
-                 saveLocation(scanner);
-                 break;
-                   case 8:
-                       setWeatherConditionTrigger(scanner);
-                   break;
-                 case 9:
-                     return; // Return to Main Menu
+                case 7:
+                    saveLocation(scanner);
+                    break;
+                case 8:
+                    setWeatherConditionTrigger(scanner);
+                    break;
+                case 9:
+                    return; // Return to Main Menu
 
                 default:
                     System.out.println("Invalid choice. Please select a number between 1 and 10.");
@@ -242,7 +238,6 @@ public class TerminalUI implements DisplayInterface {
             System.out.println("Main: " + currentWeather.main);
             System.out.println("Description: " + currentWeather.description);
             pauseScreen(scanner);
-
         } else {
             System.out.println("No current weather data available.");
         }
@@ -317,6 +312,7 @@ public class TerminalUI implements DisplayInterface {
             pauseScreen(scanner);
         }
     }
+
     private void saveLocation(Scanner scanner) {
         if (location != null) {
             weather.saveLocation(location);
@@ -326,6 +322,7 @@ public class TerminalUI implements DisplayInterface {
         }
         pauseScreen(scanner);
     }
+
     private void setWeatherConditionTrigger(Scanner scanner) {
         if (location != null) {
             System.out.println("Choose a weather condition trigger:");
@@ -358,5 +355,4 @@ public class TerminalUI implements DisplayInterface {
         }
         pauseScreen(scanner);
     }
-
 }
