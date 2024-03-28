@@ -132,6 +132,10 @@ public class TerminalUI implements DisplayInterface {
                     this.APdata = (APData) data[2];
                     this.forecast = (WeatherData[]) data[3];
                     System.out.println("Data fetched successfully for " + cityName + ".");
+                    if (APdata != null && APdata.aqi >= 4) {
+                        System.out.println("Warning: AQI level is high for the provided coordinates.");
+                    }
+
                     displayActionMenu(scanner);
                 } else {
                     System.out.println("Error fetching data for " + cityName + ".");
@@ -161,6 +165,10 @@ public class TerminalUI implements DisplayInterface {
                     this.APdata = (APData) data[2];
                     this.forecast = (WeatherData[]) data[3];
                     System.out.println("Data fetched successfully for coordinates: " + latitude + ", " + longitude);
+                    if (APdata != null && APdata.aqi >= 4) {
+                        System.out.println("Warning: AQI level is high for the provided coordinates.");
+                    }
+
                     displayActionMenu(scanner);
                 } else {
                     System.out.println("Error fetching data for coordinates: " + latitude + ", " + longitude);
@@ -214,11 +222,10 @@ public class TerminalUI implements DisplayInterface {
                  saveLocation(scanner);
                  break;
                    case 8:
-                       setWeatherConditionTrigger();
+                       setWeatherConditionTrigger(scanner);
                    break;
                  case 9:
                      return; // Return to Main Menu
-                  break;
 
                 default:
                     System.out.println("Invalid choice. Please select a number between 1 and 10.");
