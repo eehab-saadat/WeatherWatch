@@ -53,6 +53,7 @@ public class LoaderController {
                     Parent root = FXMLLoader.load(getClass().getResource("/org/algoavengers/weatherwatch/views/home-page.fxml"));
                     Stage stage = (Stage) logoImageView.getScene().getWindow();
                     stage.setScene(new Scene(root, 1080, 680));
+                    stage.setTitle("Home Page");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

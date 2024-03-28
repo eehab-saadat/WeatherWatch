@@ -10,6 +10,10 @@ import org.algoavengers.weatherwatch.models.WeatherData;
 import org.algoavengers.weatherwatch.services.apis.APGetter;
 import org.algoavengers.weatherwatch.services.apis.Geocoder;
 import org.algoavengers.weatherwatch.services.apis.WeatherForecaster;
+import org.algoavengers.weatherwatch.storage.CacheManager;
+import org.algoavengers.weatherwatch.storage.DBManager;
+import java.io.IOException;
+
 /**
  * TerminalUI class implements the DisplayInterface.
  * It provides a terminal-based user interface for the weather watch application.
@@ -47,7 +51,8 @@ public class TerminalUI implements DisplayInterface {
 
             switch (choice) {
                 case 1:
-                    // Placeholder for getSavedLocations() method
+                 /*  CacheMananger cacheManager = new CacheManager(new DBManager());
+                    LocationData[] locationArr = cacheManager.getSavedLocations();*/
                     break;
                 case 2:
                     searchByName(API_KEY, scanner);
@@ -56,7 +61,7 @@ public class TerminalUI implements DisplayInterface {
                     searchByCoordinates(API_KEY, scanner);
                     break;
                 case 4:
-                    displayCredits();
+                    displayCredits(scanner);
                     break;
                 case 5:
                     System.out.println("Exiting. Thank you!");
@@ -67,7 +72,19 @@ public class TerminalUI implements DisplayInterface {
             }
         }
     }
-    private void displayCredits() {
+    private void pauseScreen(Scanner scanner) {
+        // Pause screen until user presses Enter
+        System.out.println("\nPress Enter to continue...");
+        scanner.nextLine();
+    }
+   private void clearScreen() {
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error clearing screen: " + e.getMessage());
+        }
+    }
+    private void displayCredits(Scanner scanner) {
 
         System.out.println("***************************************************");
         System.out.println("*                                                 *");
@@ -93,6 +110,7 @@ public class TerminalUI implements DisplayInterface {
         System.out.println("*       - Moeez Ali                               *");
         System.out.println("*                                                 *");
         System.out.println("***************************************************");
+        pauseScreen(scanner);
     }
     private void searchByName(String API_KEY, Scanner scanner) {
         System.out.print("Enter city name: ");
@@ -123,6 +141,7 @@ public class TerminalUI implements DisplayInterface {
             }
 
             System.out.println("Data fetched successfully for " + cityName + ".");
+
             displayActionMenu(scanner);
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
@@ -188,22 +207,22 @@ public class TerminalUI implements DisplayInterface {
 
             switch (choice) {
                 case 1:
-                    getCurrentWeather();
+                    getCurrentWeather(scanner);
                     break;
                 case 2:
-                    getBasicInformation();
+                    getBasicInformation(scanner);
                     break;
                 case 3:
-                    getSunsetSunrise();
+                    getSunsetSunrise(scanner);
                     break;
                 case 4:
-                    get5DayForecast();
+                    get5DayForecast(scanner);
                     break;
                 case 5:
-                    getAQI();
+                    getAQI(scanner);
                     break;
                 case 6:
-                    getAirPollutionInfo();
+                    getAirPollutionInfo(scanner);
                     break;
                /*  case 7:
                  saveLocation();
@@ -223,7 +242,7 @@ public class TerminalUI implements DisplayInterface {
         }
     }
 
-    private void getCurrentWeather() {
+    private void getCurrentWeather(Scanner scanner) {
         if (currentWeather != null) {
             // Print current weather data
             System.out.println("Current Weather:");
@@ -231,13 +250,14 @@ public class TerminalUI implements DisplayInterface {
             System.out.println("Feels Like: " + currentWeather.feelsLike);
             System.out.println("Main: " + currentWeather.main);
             System.out.println("Description: " + currentWeather.description);
-            // Print more data as needed
+            pauseScreen(scanner);
+
         } else {
             System.out.println("No current weather data available.");
         }
     }
 
-    private void getBasicInformation() {
+    private void getBasicInformation(Scanner scanner) {
         if (currentWeather != null) {
             // Print basic information
             System.out.println("Basic Information:");
@@ -247,23 +267,24 @@ public class TerminalUI implements DisplayInterface {
             System.out.println("Description: " + currentWeather.description);
             System.out.println("Minimum Temperature: " + currentWeather.tempMin);
             System.out.println("Maximum Temperature: " + currentWeather.tempMax);
-            // Print more data as needed
+            pauseScreen(scanner);
         } else {
             System.out.println("No current weather data available.");
         }
     }
 
-    private void getSunsetSunrise() {
+    private void getSunsetSunrise(Scanner scanner) {
         if (currentWeather != null) {
             // Print sunset and sunrise times
             System.out.println("Sunset Time: " + currentWeather.sunset);
             System.out.println("Sunrise Time: " + currentWeather.sunrise);
+            pauseScreen(scanner);
         } else {
             System.out.println("No current weather data available.");
         }
     }
 
-    private void get5DayForecast() {
+    private void get5DayForecast(Scanner scanner) {
         if (forecast != null) {
             // Print 5-day forecast data
             System.out.println("5-Day Forecast:");
@@ -274,35 +295,35 @@ public class TerminalUI implements DisplayInterface {
                 System.out.println("Temperature: " + data.temp);
                 System.out.println("min temp: " + data.tempMin);
                 System.out.println("max temp: " + data.tempMax);
-                // Print more forecast data as needed
+                pauseScreen(scanner);
             }
         } else {
             System.out.println("No 5-day forecast data available.");
         }
     }
 
-    private void getAQI() {
+    private void getAQI(Scanner scanner) {
         if (APdata != null) {
             // Print AQI data
             System.out.println("Air Quality Index (AQI): " + APdata.aqi);
             System.out.println("Comment: " + APdata.comment);
-            // Print more AQI data as needed
+            pauseScreen(scanner);
         } else {
             System.out.println("No air quality data available.");
         }
     }
 
-    private void getAirPollutionInfo() {
+    private void getAirPollutionInfo(Scanner scanner) {
         if (APdata != null) {
             // Print air pollution data
-            getAQI();
+            getAQI(scanner);
             System.out.println("Carbon Monoxide: " + APdata.co);
             System.out.println("Nitrogen Monoxide: " + APdata.no);
             System.out.println("Nitrogen Dioxide: " + APdata.no2);
             System.out.println("Suplhur: " + APdata.so2);
             System.out.println("PM 2.5: " + APdata.pm2_5);
             System.out.println("PM 10: " + APdata.pm10);
-
+            pauseScreen(scanner);
         }
     }
 }
