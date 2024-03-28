@@ -38,4 +38,4 @@ build/
 .DS_Store
 
 ### Removed API_KEY Tracking
-src/main/resources/API_KEY.json
+**/src/main/resources/API_KEY.json

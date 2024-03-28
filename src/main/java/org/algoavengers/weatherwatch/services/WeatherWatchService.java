@@ -79,6 +79,10 @@ public class WeatherWatchService {
         }
     }
 
+    String getTriggers() {
+        return "";
+    }
+
     String getTrigger(String id) {
         try {
             return Triggers.getTrigger(API_KEY, id);
