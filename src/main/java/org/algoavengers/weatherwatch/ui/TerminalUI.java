@@ -38,6 +38,11 @@ public class TerminalUI implements DisplayInterface {
     @Override
     public void run(String API_KEY) {
         System.out.println("Welcome to the Location App!");
+        String triggerUpdate = weather.getTrigger();
+        if (triggerUpdate != null) {
+            System.out.println("Trigger update: " + triggerUpdate);
+        }
+
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("\nMain Menu:");
@@ -208,15 +213,13 @@ public class TerminalUI implements DisplayInterface {
                  case 7:
                  saveLocation(scanner);
                  break;
-              /*   case 8:
-                   setAQITrigger();
+                   case 8:
+                       setWeatherConditionTrigger();
                    break;
                  case 9:
-                   setWeatherConditionTrigger();
+                     return; // Return to Main Menu
                   break;
-                  */
-                case 10:
-                    return; // Return to Main Menu
+
                 default:
                     System.out.println("Invalid choice. Please select a number between 1 and 10.");
             }
@@ -313,6 +316,38 @@ public class TerminalUI implements DisplayInterface {
             System.out.println("Location saved successfully.");
         } else {
             System.out.println("No location data available to save.");
+        }
+        pauseScreen(scanner);
+    }
+    private void setWeatherConditionTrigger(Scanner scanner) {
+        if (location != null) {
+            System.out.println("Choose a weather condition trigger:");
+            System.out.println("1. Heat Wave");
+            System.out.println("2. Snow");
+            System.out.println("3. Hurricane");
+            System.out.print("Enter your choice (1/2/3): ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    weather.setHeatWaveTrigger(location);
+                    System.out.println("Trigger for heat wave set successfully in " + location.city + " for the next 7 days.");
+                    break;
+                case 2:
+                    weather.setSnowTrigger(location);
+                    System.out.println("Trigger for snow set successfully in " + location.city + " for the next 7 days.");
+                    break;
+                case 3:
+                    weather.setHurricaneTrigger(location);
+                    System.out.println("Trigger for hurricane set successfully in " + location.city + " for the next 7 days.");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please select 1, 2, or 3.");
+                    break;
+            }
+        } else {
+            System.out.println("No location data available to set trigger.");
         }
         pauseScreen(scanner);
     }
