@@ -68,6 +68,8 @@ public class HomePageController {
     private ImageView FmainIcon4;
     @FXML
     private ImageView FmainIcon5;
+    @FXML
+    private ImageView backgroundImage;
     // Labels
     @FXML
     private Label locationName;
@@ -230,8 +232,10 @@ public class HomePageController {
         });
 
         saveButton.setOnAction(event -> {
-            wws.saveLocation(currentLocation);
-            displaySavedLocation();
+            if(currentLocation != null) {
+                wws.saveLocation(currentLocation);
+                displaySavedLocation();
+            }
         });
         // default actions
         // setting saved locations
@@ -261,21 +265,20 @@ public class HomePageController {
         //implement background images here
         String bkgPNG = "";
         if(currentWeather.main.equals("Drizzle") || currentWeather.main.equals("Rain"))
-            bkgPNG = "rain.jpg";
+            bkgPNG = "rain";
         else if(currentWeather.main.equals("Snow"))
-            bkgPNG = "snow.jpeg";
+            bkgPNG = "snow";
         else if(currentWeather.main.equals("Clear"))
-            bkgPNG = "clear.jpeg";
+            bkgPNG = "clear";
         else if(currentWeather.main.equals("Clouds"))
-            bkgPNG = "clouds.jpg";
+            bkgPNG = "clouds";
         else if (currentWeather.main.equals("Thunderstorm") || currentWeather.main.equals("Tornado"))
-            bkgPNG = "thunderstorm.jpg";
+            bkgPNG = "thunderstorm";
         else if (currentWeather.main.equals("Smoke") || currentWeather.main.equals("Haze") || currentWeather.main.equals("Dust") || currentWeather.main.equals("Fog"))
-            bkgPNG = "haze.jpeg";
+            bkgPNG = "haze";
 
         if (bkgPNG.length() > 0) {
-            String imagePath = getClass().getResource("/assets/" + bkgPNG).toExternalForm();
-            mainPane.setStyle("-fx-background-image: url('" + imagePath + "'); -fx-background-size: cover;");
+            backgroundImage.setImage(loadImageFromAssets(bkgPNG));
         }
 
         // air quality info
@@ -312,7 +315,7 @@ public class HomePageController {
     }
     public void displaySavedLocation() {
         savedLocations = wws.getSavedLocations();
-        int size = savedLocations.length;
+        int size = (savedLocations != null) ? savedLocations.length : 0;
         Button[] SLButtons = new Button[]{SL1, SL2, SL3, SL4, SL5};
         for(int i = 0; i < size; i++) {
             if (savedLocations[i].city.length() > 0)
