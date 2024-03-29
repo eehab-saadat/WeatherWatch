@@ -7,8 +7,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.media.MediaPlayer;
 //models imports
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -198,12 +200,13 @@ public class HomePageController {
 
     @FXML
     public void initialize() {
-        showAlert("Welcome to WeatherWatch!", "This is a weather app that provides real-time weather updates and forecasts for any location in the world.");
         // clean the cache
         wws.clearExpiredData();
         // get trigger update
-        wws.getTrigger("");
-
+        String triggerMessage = wws.getTrigger("");
+        if(triggerMessage != null && triggerMessage.length() > 0) {
+            showAlert("Trigger Update", triggerMessage);
+        }
         // set all event listeners here
         searchByNameField.setOnAction(event -> {
             String text = searchByNameField.getText();
@@ -214,6 +217,7 @@ public class HomePageController {
                 setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
                 displayData();
             } catch (Exception e) {
+                showAlert("Error", "Error Fetching Location: Invalid location name or location not found");
                 System.out.println("Error fetching data: " + e.getMessage());
             }
             searchByNameField.clear();
@@ -234,8 +238,10 @@ public class HomePageController {
                 displayData();
             } catch (NumberFormatException e) {
                 System.out.println("Error parsing coordinates: " + e.getMessage());
+                showAlert("Error", "Error Fetching Location: Invalid Coordinates");
             } catch (Exception e) {
                 System.out.println("Error fetching data: " + e.getMessage());
+                showAlert("Error", "Error Fetching Location: Invalid Coordinates");
             }
             searchByCoordsField.clear();
         });
@@ -318,23 +324,41 @@ public class HomePageController {
                 aqiStatus.setFill(Color.BLACK);
         }
 
-
         // forecast
         loadForecastCards();
+
+        // alerts
+        if(currentAPData.aqi > 3)
+            showAlert("Warning", "Air Quality Alert: The Air Quality Index for " + currentLocation.city + ", " + currentLocation.country + " is " + currentAPData.aqi + ". Please stay indoors and wear a mask before going outside.");
     }
 
     // triggers
     public void setHeatwaveTrigger() {
-        wws.setHeatWaveTrigger(currentLocation);
-        System.out.println("Heatwave trigger set for " + currentLocation.city + ", " + currentLocation.country);
+        try {
+            wws.setHeatWaveTrigger(currentLocation);
+            showAlert("New Trigger", "Trigger Details: Heatwave trigger set for " + currentLocation.city + ", " + currentLocation.country + "for the next 7 days.");
+        } catch (Exception e) {
+            System.out.println("Error setting trigger: " + e.getMessage());
+            showAlert("Error", "Error setting trigger: " + e.getMessage());
+        }
     }
     public void setHurricaneTrigger() {
-        wws.setHurricaneTrigger(currentLocation);
-        System.out.println("Hurricane trigger set for " + currentLocation.city + ", " + currentLocation.country);
+        try {
+            wws.setHurricaneTrigger(currentLocation);
+            showAlert("New Trigger", "Trigger Details: Hurricane trigger set for " + currentLocation.city + ", " + currentLocation.country + "for the next 7 days.");
+        } catch (Exception e) {
+            System.out.println("Error setting trigger: " + e.getMessage());
+            showAlert("Error", "Error setting trigger: " + e.getMessage());
+        }
     }
     public void setSnowTrigger() {
-        wws.setSnowTrigger(currentLocation);
-        System.out.println("Snow trigger set for " + currentLocation.city + ", " + currentLocation.country);
+        try {
+            wws.setSnowTrigger(currentLocation);
+            showAlert("New Trigger", "Trigger Details: Snow trigger set for " + currentLocation.city + ", " + currentLocation.country + "for the next 7 days.");
+        } catch (Exception e) {
+            System.out.println("Error setting trigger: " + e.getMessage());
+            showAlert("Error", "Error setting trigger: " + e.getMessage());
+        }
     }
     // saved locations
     public void displaySavedLocation() {
@@ -349,55 +373,31 @@ public class HomePageController {
         }
     }
 
-    public void getSavedLocationData1() {
+    public void getSavedLocationData(int index) {
         try {
-            currentLocation = savedLocations[0];
-            Object[] data = wws.fetchData(currentLocation);
+            LocationData tempLocation = savedLocations[index];
+            Object[] data = wws.fetchData(tempLocation);
             setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
             displayData();
         } catch (Exception e) {
+            showAlert("Error", "Error Fetching Location: Data for the saved location" + savedLocations[index].city + ", " + savedLocations[index].country + " is not available");
             System.out.println("Error fetching data: " + e.getMessage());
         }
+    }
+    public void getSavedLocationData1() {
+        getSavedLocationData(0);
     }
     public void getSavedLocationData2() {
-        try {
-            currentLocation = savedLocations[1];
-            Object[] data = wws.fetchData(currentLocation);
-            setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
-            displayData();
-        } catch (Exception e) {
-            System.out.println("Error fetching data: " + e.getMessage());
-        }
+        getSavedLocationData(1);
     }
     public void getSavedLocationData3() {
-        try {
-            currentLocation = savedLocations[2];
-            Object[] data = wws.fetchData(currentLocation);
-            setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
-            displayData();
-        } catch (Exception e) {
-            System.out.println("Error fetching data: " + e.getMessage());
-        }
+        getSavedLocationData(2);
     }
     public void getSavedLocationData4() {
-        try {
-            currentLocation = savedLocations[3];
-            Object[] data = wws.fetchData(currentLocation);
-            setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
-            displayData();
-        } catch (Exception e) {
-            System.out.println("Error fetching data: " + e.getMessage());
-        }
+        getSavedLocationData(3);
     }
     public void getSavedLocationData5() {
-        try {
-            currentLocation = savedLocations[4];
-            Object[] data = wws.fetchData(currentLocation);
-            setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
-            displayData();
-        } catch (Exception e) {
-            System.out.println("Error fetching data: " + e.getMessage());
-        }
+        getSavedLocationData(4);
     }
 
     //setters
@@ -455,6 +455,8 @@ public class HomePageController {
     }
 
     public void showAlert(String title, String message) {
+        // playing sound
+        playSound("popup-alert.mp3");
         // setting content
         Alert alert = new Alert(Alert.AlertType.WARNING, "Welcome to WeatherWatch!");
         alert.setTitle(title);
@@ -471,7 +473,20 @@ public class HomePageController {
         alert.setX(xOffset);
         alert.setY(yOffset);
         // configurations
-        alert.initModality(Modality.NONE);
+        alert.initModality(Modality.APPLICATION_MODAL);
         alert.show();
+    }
+
+    public void playSound(String fileName) {
+        try {
+            Media sound = new Media(getClass().getResource("/org/algoavengers/weatherwatch/music/" + fileName).toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.setOnEndOfMedia(() -> {
+                mediaPlayer.dispose();
+            });
+            mediaPlayer.play();
+        } catch (Exception e) {
+            System.out.println("Error playing sound: " + e.getMessage());
+        }
     }
 }

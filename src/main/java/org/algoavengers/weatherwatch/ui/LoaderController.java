@@ -55,7 +55,7 @@ public class LoaderController {
                     Stage stage = (Stage) logoImageView.getScene().getWindow();
                     stage.setScene(new Scene(root, 1080, 680));
                     stage.getIcons().add(new Image(getClass().getResourceAsStream("/org/algoavengers/weatherwatch/assets/logo.png")));
-                    stage.setTitle("Home Page");
+                    stage.setTitle("WeatherWatch");
                     stage.setIconified(false);
                 } catch (IOException e) {
                     e.printStackTrace();
