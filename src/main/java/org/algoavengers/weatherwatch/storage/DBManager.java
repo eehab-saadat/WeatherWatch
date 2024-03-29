@@ -364,6 +364,7 @@ public class DBManager implements CacheManagerInterface {
                 System.out.println("No saved locations found!");
                 return null;
             }
+            conn.close();
             return locations.toArray(new LocationData[locations.size()]);
         } catch (SQLException e) {
             e.printStackTrace();  // Log or handle the exception as needed
@@ -521,6 +522,7 @@ public class DBManager implements CacheManagerInterface {
                 location.lat = resultSet.getFloat("l.latitude");
                 location.lon = resultSet.getFloat("l.longitude");
                 location.country = resultSet.getString("l.country");
+                connection.close();
                 return new Object[]{location, description};
             } else {
                 return null; // No trigger found with the specified ID
@@ -560,6 +562,7 @@ public class DBManager implements CacheManagerInterface {
                 System.out.println("No triggers found!");
                 return null;
             }
+            connection.close();
             return triggerIds.toArray(new String[0]);
         } catch (SQLException e) {
             e.printStackTrace();
