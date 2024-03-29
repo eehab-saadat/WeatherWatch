@@ -2,6 +2,7 @@ package org.algoavengers.weatherwatch.ui;
 
 //fxml imports
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,6 +10,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 //models imports
+import javafx.stage.Modality;
+import javafx.stage.Screen;
 import org.algoavengers.weatherwatch.models.*;
 import org.algoavengers.weatherwatch.services.WeatherWatchService;
 import org.algoavengers.weatherwatch.utils.DTConverter;
@@ -195,7 +198,8 @@ public class HomePageController {
 
     @FXML
     public void initialize() {
-        // clean the chache
+        showAlert("Welcome to WeatherWatch!", "This is a weather app that provides real-time weather updates and forecasts for any location in the world.");
+        // clean the cache
         wws.clearExpiredData();
         // get trigger update
         wws.getTrigger("");
@@ -273,7 +277,7 @@ public class HomePageController {
             bkgPNG = "rain";
         else if(currentWeather.main.equals("Snow"))
             bkgPNG = "snow";
-        else if(currentWeather.main.equals("Clear"))
+        else if(currentWeather.main.equals("Clear") || currentWeather.main.equals("Sunny"))
             bkgPNG = "clear";
         else if(currentWeather.main.equals("Clouds"))
             bkgPNG = "clouds";
@@ -448,5 +452,26 @@ public class HomePageController {
     }
     public Image loadImageFromAssets(String iconName) {
         return new Image("file:" + assetsPath + iconName + ".png");
+    }
+
+    public void showAlert(String title, String message) {
+        // setting content
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Welcome to WeatherWatch!");
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        // setting geometry
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        double screenWidth = primaryScreenBounds.getWidth();
+        double screenHeight = primaryScreenBounds.getHeight();
+        System.out.println(screenWidth + " " + screenHeight);
+        System.out.println(alert.getWidth() + " " + alert.getHeight());
+        double xOffset = screenWidth - 660; // Adjust this value to set the distance from the left edge
+        double yOffset = screenHeight - 220; // Adjust this value to set the distance from the bottom edge
+        alert.setX(xOffset);
+        alert.setY(yOffset);
+        // configurations
+        alert.initModality(Modality.NONE);
+        alert.show();
     }
 }

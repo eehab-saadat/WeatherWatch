@@ -253,7 +253,7 @@ public class FileManager implements CacheManagerInterface {
                         forecastData[i].description = parts[11].trim();
                         forecastData[i].icon = parts[12].trim();
                         currentLine = br3.readLine();
-                        parts = currentLine.split(",");
+                        if(currentLine!=null) parts = currentLine.split(",");
                     }
                     br3.close();
                     break;

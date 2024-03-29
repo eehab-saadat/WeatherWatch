@@ -732,7 +732,7 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe8d6" height="64.0" layoutY="-3.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1080.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="64.0" layoutY="-3.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1080.0" />
       <Label layoutX="55.0" layoutY="-2.0" prefHeight="64.0" prefWidth="242.0" text="WeatherWatch">
          <font>
             <Font size="33.0" />
