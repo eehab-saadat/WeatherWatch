@@ -3,6 +3,7 @@ package org.algoavengers.weatherwatch.storage;
 import org.algoavengers.weatherwatch.models.APData;
 import org.algoavengers.weatherwatch.models.LocationData;
 import org.algoavengers.weatherwatch.models.WeatherData;
+import org.algoavengers.weatherwatch.utils.DTConverter;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,7 +24,6 @@ public class FileManager implements CacheManagerInterface {
 
     // Filepath for storage
     private final String filepath = "src\\main\\resources\\org\\algoavengers\\weatherwatch\\txt\\";
-
 
     public void save(LocationData location, WeatherData weatherData, APData apData, WeatherData[] forecastData) {
         // Check if the city already exists in the file
@@ -163,12 +163,20 @@ public class FileManager implements CacheManagerInterface {
      * @return Array of floats where the first element is the latitude and the second is the longitude.
      */
     public Object[] find(String city) {
-        try (BufferedReader br1 = new BufferedReader(new FileReader(filepath + "WeatherDetails.txt"));
-             BufferedReader br2 = new BufferedReader(new FileReader(filepath + "APDetails.txt"))) {
+        try
+                (
+                        BufferedReader br1 = new BufferedReader(new FileReader(filepath + "WeatherDetails.txt"));
+                        BufferedReader br2 = new BufferedReader(new FileReader(filepath + "APDetails.txt"));
+                        BufferedReader br3 = new BufferedReader(new FileReader(filepath + "Forecasts.txt"));
+
+                )
+
+        {
             String currentLine;
             LocationData locationData = null;
             WeatherData weatherData = null;
             APData apData = null;
+            WeatherData[] forecastData = null;
 
             // Read lines from WeatherDetails.txt and fill LocationData and WeatherData objects
             while ((currentLine = br1.readLine()) != null) {
@@ -176,9 +184,10 @@ public class FileManager implements CacheManagerInterface {
                 if (parts[0].trim().equalsIgnoreCase(city)) { // Use case-insensitive comparison
                     locationData = new LocationData(parts[0].trim(), parts[2].trim(), Float.parseFloat(parts[3].trim()), Float.parseFloat(parts[4].trim()));
                     weatherData = new WeatherData(); // initializing the object with default constructor where location is null
+                    forecastData = new WeatherData[5];
                     weatherData.setLocation(locationData);
                     weatherData.temp = Float.parseFloat(parts[5].trim());
-                    // Fill the rest of the weatherData fields
+                    // Fill with the rest of the weatherData fields
                     weatherData.feelsLike = Float.parseFloat(parts[6].trim());
                     weatherData.tempMin = Float.parseFloat(parts[7].trim());
                     weatherData.tempMax = Float.parseFloat(parts[8].trim());
@@ -195,6 +204,7 @@ public class FileManager implements CacheManagerInterface {
                     weatherData.icon = parts[15].trim();
                     weatherData.sunrise = parts[16].trim();
                     weatherData.sunset = parts[17].trim();
+                    br1.close();
                     break;
                 }
             }
@@ -207,7 +217,7 @@ public class FileManager implements CacheManagerInterface {
                     apData.dt = parts[1].trim();
                     apData.aqi = Integer.parseInt(parts[2].trim());
                     apData.setLocation(locationData);
-                    // Fill the rest of the apData fields
+                    // Fill with the rest of the apData fields
                     apData.co = Float.parseFloat(parts[6].trim());
                     apData.no = Float.parseFloat(parts[7].trim());
                     apData.no2 = Float.parseFloat(parts[8].trim());
@@ -217,12 +227,41 @@ public class FileManager implements CacheManagerInterface {
                     apData.pm10 = Float.parseFloat(parts[12].trim());
                     apData.nh3 = Float.parseFloat(parts[13].trim());
                     apData.comment = parts[14].trim();
+                    br2.close();
+                    break;
+
+                }
+            }
+
+            // Read lines from Forecasts.txt
+            while ((currentLine = br3.readLine()) != null) {
+                String[] parts = currentLine.split(",");
+                if (parts[0].trim().equalsIgnoreCase(city)) { // Use case-insensitive comparison
+                    for (int i = 0; i < 5; i++) {
+                        forecastData[i] = new WeatherData();
+                        forecastData[i].setLocation(locationData);
+                        forecastData[i].dt = parts[1].trim();
+                        forecastData[i].temp = Float.parseFloat(parts[2].trim());
+                        forecastData[i].feelsLike = Float.parseFloat(parts[3].trim());
+                        forecastData[i].tempMin = Float.parseFloat(parts[4].trim());
+                        forecastData[i].tempMax = Float.parseFloat(parts[5].trim());
+                        forecastData[i].pressure = Float.parseFloat(parts[6].trim());
+                        forecastData[i].humidity = Float.parseFloat(parts[7].trim());
+                        forecastData[i].windSpeed = Float.parseFloat(parts[8].trim());
+                        forecastData[i].visibility = Float.parseFloat(parts[9].trim());
+                        forecastData[i].main = parts[10].trim();
+                        forecastData[i].description = parts[11].trim();
+                        forecastData[i].icon = parts[12].trim();
+                        currentLine = br3.readLine();
+                        if(currentLine!=null) parts = currentLine.split(",");
+                    }
+                    br3.close();
                     break;
                 }
             }
 
-            if (locationData != null && weatherData != null && apData != null) {
-                return new Object[]{locationData, weatherData, apData};
+            if (locationData != null && weatherData != null && apData != null && forecastData != null) {
+                return new Object[]{locationData, weatherData, apData, forecastData};
             }
         } catch (IOException e) {
             System.out.println("An error occurred: " + e.getMessage());
@@ -360,7 +399,8 @@ public class FileManager implements CacheManagerInterface {
 
         return savedLocations.toArray(new LocationData[0]);
     }
-    public void saveLocation(LocationData location) {
+    public void saveLocation(LocationData location)
+    {
         try {
             File inputFile = new File(filepath + "Locations.txt");
             File tempFile = new File(filepath + "tempLocations.txt");
@@ -434,5 +474,104 @@ public class FileManager implements CacheManagerInterface {
             System.out.println("An error occurred: " + e.getMessage());
         }
     }
+
+
+
+    public void saveTrigger(LocationData location, String trigger_id, String description) {
+        try (FileWriter writer = new FileWriter(filepath, true);
+             BufferedWriter bw = new BufferedWriter(writer)) {
+
+            String dt = DTConverter.convertToDateTime(System.currentTimeMillis() / 1000L);
+            String line = trigger_id + ", " + dt + ", " + description + ", " + location.city + ", " + location.country + ", " + location.lat + ", " + location.lon;
+            bw.write(line);
+            bw.newLine();
+
+            System.out.println("Trigger saved successfully.");
+
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
+
+    public Object[] getTriggerDetails(String id) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filepath + "Triggers.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts[0].trim().equals(id)) {
+                    LocationData location = new LocationData(parts[3].trim(), parts[4].trim(), Float.parseFloat(parts[5].trim()), Float.parseFloat(parts[6].trim()));
+                    String description = parts[2].trim();
+                    return new Object[] {location, description};
+                }
+            }
+            br.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public String[] getTriggerIDs() {
+        List<String> triggerIDs = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filepath+"Triggers.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                triggerIDs.add(parts[0].trim());
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+        return triggerIDs.toArray(new String[0]);
+    }
+
+    public void clearOutdatedTriggers() {
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filepath + "Triggers.txt"));
+             BufferedWriter bw = new BufferedWriter(new FileWriter(filepath + "tempTriggers.txt"))) {
+
+            String line;
+            LocalDateTime oneWeekAgo = LocalDateTime.now().minusWeeks(1);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                LocalDateTime dt = LocalDateTime.parse(parts[1].trim(), formatter);
+                if (dt.isAfter(oneWeekAgo)) {
+                    bw.write(line);
+                    bw.newLine();
+                }
+            }
+
+            File file = new File(filepath);
+            if (!file.delete()) {
+                System.out.println("Failed to delete the original file.");
+                return;
+            }
+
+            File tempFile = new File(filepath + "tempTriggers.txt");
+            if (!tempFile.renameTo(file)) {
+                System.out.println("Failed to rename the temporary file.");
+            }
+
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
+
+    public void clear() {
+        File dir = new File(filepath);
+        File[] files = dir.listFiles((d, name) -> name.endsWith(".txt"));
+        if (files != null) {
+            for (File file : files) {
+                try (FileWriter writer = new FileWriter(file, false)) {
+                    // FileWriter is auto-closed, and since we're not writing anything, the file is cleared
+                } catch (IOException e) {
+                    System.out.println("An error occurred: " + e.getMessage());
+                }
+            }
+        }
+    }
+
 
 }

@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
@@ -26,6 +27,7 @@ public class GraphicalUI_App extends Application implements DisplayInterface {
 
         // Set the loader.fxml as the scene for your primary stage
         primaryStage.setScene(new Scene(loaderRoot));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/org/algoavengers/weatherwatch/assets/logo.png")));
         primaryStage.show();
 
         // Create a pause of 5 seconds

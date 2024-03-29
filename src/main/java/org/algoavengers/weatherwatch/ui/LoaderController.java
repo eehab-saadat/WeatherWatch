@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.image.ImageView;
@@ -53,7 +54,9 @@ public class LoaderController {
                     Parent root = FXMLLoader.load(getClass().getResource("/org/algoavengers/weatherwatch/views/home-page.fxml"));
                     Stage stage = (Stage) logoImageView.getScene().getWindow();
                     stage.setScene(new Scene(root, 1080, 680));
-                    stage.setTitle("Home Page");
+                    stage.getIcons().add(new Image(getClass().getResourceAsStream("/org/algoavengers/weatherwatch/assets/logo.png")));
+                    stage.setTitle("WeatherWatch");
+                    stage.setIconified(false);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
