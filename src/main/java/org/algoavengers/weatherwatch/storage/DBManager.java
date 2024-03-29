@@ -255,7 +255,7 @@ public class DBManager implements CacheManagerInterface {
                 forecast.dt = (rs.getString("dt"));
                 weatherForecasts[i++] = forecast;
             }
-
+             conn.close();
             return new Object[]{location, weatherData, apData, weatherForecasts};
 
         } catch (SQLException e) {
@@ -296,8 +296,9 @@ public class DBManager implements CacheManagerInterface {
                 locationData.country = (rs.getString("country"));
                 locations.add(locationData);
             }
-
+            conn.close();
             // Convert List to array (optional, can return the List directly)
+            
             return locations.toArray(new LocationData[locations.size()]);
         } catch (SQLException e) {
             e.printStackTrace();
