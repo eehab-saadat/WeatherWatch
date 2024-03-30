@@ -45,6 +45,14 @@ public class TerminalUI implements DisplayInterface {
                 case 1:
                     WeatherWatchService cacheManager = new WeatherWatchService();
                     LocationData[] locationArr = cacheManager.getSavedLocations();
+                    if (locationArr != null) {
+                        System.out.println("Saved Locations:");
+                        for (LocationData loc : locationArr) {
+                            System.out.println(loc.city + ", " + loc.country);
+                        }
+                    } else {
+                        System.out.println("No saved locations found.");
+                    }
                     break;
                 case 2:
                     searchByName(API_KEY, scanner);

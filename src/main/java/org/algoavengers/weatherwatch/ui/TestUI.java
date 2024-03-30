@@ -1,11 +1,9 @@
 package org.algoavengers.weatherwatch.ui;
 
 import org.algoavengers.weatherwatch.models.*;
-import org.algoavengers.weatherwatch.services.WeatherWatchService;
 import org.algoavengers.weatherwatch.services.apis.*;
 import org.algoavengers.weatherwatch.storage.*;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 public class TestUI implements DisplayInterface {
@@ -13,34 +11,108 @@ public class TestUI implements DisplayInterface {
         @Override
         public void run(String API_KEY) {
             System.out.println("Running TestUI");
-            FileManager fileManager = new FileManager();
-            fileManager.clear();
-//            WeatherWatchService wws = new WeatherWatchService();
-//            Scanner scanner = new Scanner(System.in);
-//            System.out.println("Enter the city name: ");
-//            String city = scanner.nextLine();
-//            scanner.close();
+            System.out.println("Enter city name: ");
+            Scanner scanner = new Scanner(System.in);
+            String city = scanner.nextLine();
+            scanner.close();
+
+            LocationData location = Geocoder.geocode(API_KEY, city);
+            if (location == null) {
+                System.out.println("An error occurred while fetching the coordinates.");
+                return;
+            }
+//            location.displayDetails();
+
+            System.out.println();
+            WeatherData weatherData = WeatherForecaster.GetCurrentForecast(API_KEY, location);
+            if (weatherData == null) {
+                System.out.println("An error occurred while fetching the weather forecast.");
+                return;
+            }
+
+//            weatherData.displayDetails();
+
+            APData apData = APGetter.GetAPIData(API_KEY, location);
+            if (apData == null) {
+                System.out.println("An error occurred while fetching the air pollution data.");
+                return;
+            }
+//            apData.displayDetails();
+
+            WeatherData[] forecast = WeatherForecaster.GetPentaDayForecast(API_KEY, location);
+            if (forecast == null) {
+                System.out.println("An error occurred while fetching the 5-day weather forecast.");
+                return;
+            }
 //
-//            LocationData location = wws.cityToCoords(city);
-//            if (location == null) {
-//                System.out.println("An error occurred while fetching the city name.");
+//            for (WeatherData data : forecast) {
+//                data.displayDetails();
+//            }
+
+            CacheManager cacheManager = new CacheManager(new DBManager());
+            try {
+
+
+                cacheManager.cache.save(location, weatherData, apData, forecast);
+                cacheManager.cache.saveLocation(location);
+                for (LocationData data : cacheManager.cache.getSavedLocations()) {
+                    data.displayDetails();
+                }
+
+            } catch (Exception e) {
+                System.out.println("An error occurred while saving the data to the cache.");
+                System.out.println(e.getMessage());
+                return;
+            }
+
+            try {
+                System.out.println(location.city);
+                Object[] obj = cacheManager.cache.find(city);
+                System.out.println(location.city);
+                if (obj != null) {
+                    System.out.println(location.city);
+                    LocationData loc = (LocationData) obj[0];
+                    WeatherData wData = (WeatherData) obj[1];
+                    APData aData = (APData) obj[2];
+//                    loc.displayDetails();
+//                    wData.displayDetails();
+//                    aData.displayDetails();
+                }
+            } catch (Exception e) {
+                System.out.println("An error occurred while fetching the data from the cache.");
+                System.out.println(e.getMessage());
+                return;
+            }
+//            try {
+//                LocationData[] loc = cacheManager.cache.getTop5Locations();
+//                for (LocationData l : loc) {
+//                    l.displayDetails();
+//                }
+//            } catch (Exception e) {
+//                System.out.println("An error occurred while fetching the top 5 locations from the cache.");
+//                System.out.println(e.getMessage());
 //                return;
 //            }
-//            Object[] weatherData = wws.fetchData(location);
-//            if (weatherData == null) {
-//                System.out.println("An error occurred while fetching the weather data.");
-//                return;
-//            }
-//            LocationData locationData = (LocationData) weatherData[0];
-//            WeatherData weather = (WeatherData) weatherData[1];
-//            APData ap = (APData) weatherData[2];
-//            WeatherData[] forecast = (WeatherData[]) weatherData[3];
-//
-//            locationData.displayDetails();
-//            weather.displayDetails();
-//            ap.displayDetails();
-//            for (WeatherData day : forecast) {
-//                day.displayDetails();
-//            }
+            try {
+//            cacheManager.cache.delete(location.city);
+                cacheManager.cache.deleteOutdatedRecords();
+
+            }
+            catch (Exception e) {
+                System.out.println("An error occurred while deleting the data from the cache.");
+                System.out.println(e.getMessage());
+                return;
+            }
+
+            cacheManager = new CacheManager(new DBManager());
+            //cacheManager.cache.
+            cacheManager.cache.save(location, weatherData, apData, forecast);
+            System.out.println("Data saved to cache");
+            Object[] obj = cacheManager.cache.find(location.city);
+            System.out.println("found:");
+            ((LocationData) obj[0]).displayDetails();
+            cacheManager.cache.getTop5Locations();
+            cacheManager.cache.delete(location.city);
+            cacheManager.cache.deleteOutdatedRecords();
         }
 }

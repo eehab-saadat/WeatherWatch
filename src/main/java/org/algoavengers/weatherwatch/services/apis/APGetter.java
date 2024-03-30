@@ -27,6 +27,7 @@ public class APGetter {
 
         // Constructing the full URL
         String apiUrl = BASE_URL + "?" + params;
+        // String apiUrl = BASE_URL + "?q=" + location.city + "&appid=" + API_KEY;
 
         // Making the API request and getting the JSON response
         try {
