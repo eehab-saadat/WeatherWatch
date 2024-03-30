@@ -36,7 +36,6 @@ public class Geocoder {
 
             // Get the first JsonObject from the JsonArray
             JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
-            System.out.println(jsonObject.toString());
 
             // Returning Location Data
             return new LocationData(
