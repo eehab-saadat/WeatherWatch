@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import org.algoavengers.weatherwatch.ui.GraphicalUI_App;
 import org.algoavengers.weatherwatch.ui.TerminalUI;
-import org.algoavengers.weatherwatch.ui.TestUI;
+//import org.algoavengers.weatherwatch.ui.TestUI;
 import org.algoavengers.weatherwatch.utils.App;
 
 import java.io.FileReader;

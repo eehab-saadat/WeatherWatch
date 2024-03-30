@@ -5,12 +5,7 @@ import org.algoavengers.weatherwatch.models.LocationData;
 import org.algoavengers.weatherwatch.models.WeatherData;
 import org.algoavengers.weatherwatch.utils.DTConverter;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -52,7 +47,6 @@ public class FileManager implements CacheManagerInterface {
             bw2.newLine();
 
 
-
             bw3.write(location.city + ", " + weatherData.dt + ", " + location.lat + ", " + location.lon + ", " + location.country + ", " + "0");
             bw3.newLine();
 
@@ -71,10 +65,10 @@ public class FileManager implements CacheManagerInterface {
             System.out.println("An error occurred. " + e.getMessage());
         }
     }
+
     public void save(LocationData location, WeatherData weatherData, APData apData) {
         // Check if the city already exists in the file
-        if (find(location.city) != null)
-        {
+        if (find(location.city) != null) {
             System.out.println("The city already exists in the file. Skipping...");
             return;
         }
@@ -99,8 +93,10 @@ public class FileManager implements CacheManagerInterface {
             System.out.println("An error occurred. " + e.getMessage());
         }
     }
+
     /**
      * Method to delete city data from storage file.
+     *
      * @param city Name of the city to be deleted.
      */
     public void delete(String city) {
@@ -159,6 +155,7 @@ public class FileManager implements CacheManagerInterface {
 
     /**
      * Method to find latitude and longitude of a given city.
+     *
      * @param city Name of the city to be found.
      * @return Array of floats where the first element is the latitude and the second is the longitude.
      */
@@ -169,9 +166,7 @@ public class FileManager implements CacheManagerInterface {
                         BufferedReader br2 = new BufferedReader(new FileReader(filepath + "APDetails.txt"));
                         BufferedReader br3 = new BufferedReader(new FileReader(filepath + "Forecasts.txt"));
 
-                )
-
-        {
+                ) {
             String currentLine;
             LocationData locationData = null;
             WeatherData weatherData = null;
@@ -195,7 +190,7 @@ public class FileManager implements CacheManagerInterface {
                     weatherData.humidity = Float.parseFloat(parts[10].trim());
                     weatherData.windSpeed = Float.parseFloat(parts[11].trim());
                     weatherData.visibility = Float.parseFloat(parts[12].trim());
-                    weatherData.dt = parts[1].trim();
+
                     weatherData.main = parts[13].trim();
                     System.out.println(weatherData.main);
 
@@ -214,9 +209,9 @@ public class FileManager implements CacheManagerInterface {
                 String[] parts = currentLine.split(",");
                 if (parts[0].trim().equalsIgnoreCase(city)) { // Use case-insensitive comparison
                     apData = new APData();
+                    apData.setLocation(locationData);
                     apData.dt = parts[1].trim();
                     apData.aqi = Integer.parseInt(parts[2].trim());
-                    apData.setLocation(locationData);
                     // Fill with the rest of the apData fields
                     apData.co = Float.parseFloat(parts[6].trim());
                     apData.no = Float.parseFloat(parts[7].trim());
@@ -253,7 +248,9 @@ public class FileManager implements CacheManagerInterface {
                         forecastData[i].description = parts[11].trim();
                         forecastData[i].icon = parts[12].trim();
                         currentLine = br3.readLine();
-                        if(currentLine!=null) parts = currentLine.split(",");
+                        if (currentLine != null) {
+                            parts = currentLine.split(",");
+                        }
                     }
                     br3.close();
                     break;
@@ -268,8 +265,10 @@ public class FileManager implements CacheManagerInterface {
         }
         return null; // City not found or error occurred
     }
+
     /**
      * Method to retrieve latest five entries from storage file.
+     *
      * @return Array of strings where each string represents a city with its latitude and longitude.
      */
     public LocationData[] getTop5Locations() {
@@ -399,8 +398,12 @@ public class FileManager implements CacheManagerInterface {
 
         return savedLocations.toArray(new LocationData[0]);
     }
-    public void saveLocation(LocationData location)
-    {
+
+    public void saveLocation(LocationData location) {
+        LocationData[] locations = getSavedLocations();
+        if (locations.length >= 5) {
+            return;
+        }
         try {
             File inputFile = new File(filepath + "Locations.txt");
             File tempFile = new File(filepath + "tempLocations.txt");
@@ -437,8 +440,7 @@ public class FileManager implements CacheManagerInterface {
         }
     }
 
-    public void removeLocation(String city  )
-    {
+    public void removeLocation(String city) {
         try {
             File inputFile = new File(filepath + "Locations.txt");
             File tempFile = new File(filepath + "tempLocations.txt");
@@ -476,7 +478,6 @@ public class FileManager implements CacheManagerInterface {
     }
 
 
-
     public void saveTrigger(LocationData location, String trigger_id, String description) {
         try (FileWriter writer = new FileWriter(filepath, true);
              BufferedWriter bw = new BufferedWriter(writer)) {
@@ -501,7 +502,7 @@ public class FileManager implements CacheManagerInterface {
                 if (parts[0].trim().equals(id)) {
                     LocationData location = new LocationData(parts[3].trim(), parts[4].trim(), Float.parseFloat(parts[5].trim()), Float.parseFloat(parts[6].trim()));
                     String description = parts[2].trim();
-                    return new Object[] {location, description};
+                    return new Object[]{location, description};
                 }
             }
             br.close();
@@ -513,7 +514,7 @@ public class FileManager implements CacheManagerInterface {
 
     public String[] getTriggerIDs() {
         List<String> triggerIDs = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filepath+"Triggers.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filepath + "Triggers.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
