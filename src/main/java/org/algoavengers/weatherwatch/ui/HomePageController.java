@@ -2,7 +2,10 @@ package org.algoavengers.weatherwatch.ui;
 
 //fxml imports
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,6 +17,7 @@ import javafx.scene.media.MediaPlayer;
 //models imports
 import javafx.stage.Modality;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 import org.algoavengers.weatherwatch.models.*;
 import org.algoavengers.weatherwatch.services.WeatherWatchService;
 import org.algoavengers.weatherwatch.utils.DTConverter;
@@ -56,6 +60,8 @@ public class HomePageController {
     private Button SL4;
     @FXML
     private Button SL5;
+    @FXML
+    private Button openMapButton;
     // images
     @FXML
     private ImageView mainWeatherIcon;
@@ -336,7 +342,7 @@ public class HomePageController {
     public void setHeatwaveTrigger() {
         try {
             wws.setHeatWaveTrigger(currentLocation);
-            showAlert("New Trigger", "Trigger Details: Heatwave trigger set for " + currentLocation.city + ", " + currentLocation.country + "for the next 7 days.");
+            showAlert("New Trigger", "Trigger Details: Heatwave trigger set for " + currentLocation.city + ", " + currentLocation.country + " for the next 7 days.");
         } catch (Exception e) {
             System.out.println("Error setting trigger: " + e.getMessage());
             showAlert("Error", "Error setting trigger: " + e.getMessage());
@@ -345,7 +351,7 @@ public class HomePageController {
     public void setHurricaneTrigger() {
         try {
             wws.setHurricaneTrigger(currentLocation);
-            showAlert("New Trigger", "Trigger Details: Hurricane trigger set for " + currentLocation.city + ", " + currentLocation.country + "for the next 7 days.");
+            showAlert("New Trigger", "Trigger Details: Hurricane trigger set for " + currentLocation.city + ", " + currentLocation.country + " for the next 7 days.");
         } catch (Exception e) {
             System.out.println("Error setting trigger: " + e.getMessage());
             showAlert("Error", "Error setting trigger: " + e.getMessage());
@@ -487,6 +493,22 @@ public class HomePageController {
             mediaPlayer.play();
         } catch (Exception e) {
             System.out.println("Error playing sound: " + e.getMessage());
+        }
+    }
+
+    // page navigation
+    public void openMap() {
+        // on click mount the search-map.fxml on the current stage
+        try {
+            Parent mapRoot = FXMLLoader.load(getClass().getResource("/org/algoavengers/weatherwatch/views/search-map.fxml"));
+            Stage stage = (Stage) mainPane.getScene().getWindow();
+            stage.setScene(new Scene(mapRoot, 1080, 680));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/org/algoavengers/weatherwatch/assets/logo.png")));
+            stage.setTitle("WeatherWatch (world map)");
+            stage.setIconified(false);
+        } catch (Exception e) {
+            System.out.println("Error loading map: " + e.getMessage());
+            showAlert("Error", "Error Loading Map: World map could not be loaded. Please use the search bar option instead" );
         }
     }
 }

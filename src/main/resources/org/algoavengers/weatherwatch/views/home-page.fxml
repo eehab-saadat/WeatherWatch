@@ -833,7 +833,7 @@
                   <Image url="@../assets/map.png" />
                </image>
             </ImageView>
-            <Button fx:id="openMapButton" disable="true" mnemonicParsing="false" prefHeight="45.0" prefWidth="142.0" text="Search on Map">
+            <Button fx:id="openMapButton" mnemonicParsing="false" onAction="#openMap" prefHeight="45.0" prefWidth="142.0" text="Search on Map">
                <font>
                   <Font size="14.0" />
                </font>
