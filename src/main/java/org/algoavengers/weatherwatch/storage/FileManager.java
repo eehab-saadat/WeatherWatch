@@ -212,7 +212,6 @@ public class FileManager implements CacheManagerInterface {
                     apData.setLocation(locationData);
                     apData.dt = parts[1].trim();
                     apData.aqi = Integer.parseInt(parts[2].trim());
-                    apData.setLocation(locationData);
                     // Fill with the rest of the apData fields
                     apData.co = Float.parseFloat(parts[6].trim());
                     apData.no = Float.parseFloat(parts[7].trim());
@@ -249,7 +248,7 @@ public class FileManager implements CacheManagerInterface {
                         forecastData[i].description = parts[11].trim();
                         forecastData[i].icon = parts[12].trim();
                         currentLine = br3.readLine();
-                        if (i < 4) {
+                        if (currentLine != null) {
                             parts = currentLine.split(",");
                         }
                     }
