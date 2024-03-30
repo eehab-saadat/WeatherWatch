@@ -195,7 +195,7 @@ public class FileManager implements CacheManagerInterface {
                     weatherData.humidity = Float.parseFloat(parts[10].trim());
                     weatherData.windSpeed = Float.parseFloat(parts[11].trim());
                     weatherData.visibility = Float.parseFloat(parts[12].trim());
-
+                    weatherData.dt = parts[1].trim();
                     weatherData.main = parts[13].trim();
                     System.out.println(weatherData.main);
 

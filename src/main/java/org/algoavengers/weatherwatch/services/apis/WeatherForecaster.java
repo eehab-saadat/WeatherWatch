@@ -24,10 +24,11 @@ public class WeatherForecaster {
         String BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 
         // Constructing parameters
-        params = String.format(params, location.getLat(), location.getLon(), API_KEY);
+        // params = String.format(params, location.getLat(), location.getLon(), API_KEY);
 
         // Constructing the full URL
-        String apiUrl = BASE_URL + "?" + params;
+        // String apiUrl = BASE_URL + "?" + params;
+        String apiUrl = BASE_URL + "?q=" + location.city + "&appid=" + API_KEY + "&units=metric&lang=en";
 
         // Making the API request and getting the JSON response
         try {
@@ -52,10 +53,11 @@ public class WeatherForecaster {
         String BASE_URL = "https://api.openweathermap.org/data/2.5/forecast";
 
         // Constructing parameters
-        params = String.format(params, location.getLat(), location.getLon(), API_KEY);
+        // params = String.format(params, location.getLat(), location.getLon(), API_KEY);
 
         // Constructing the full URL
-        String apiUrl = BASE_URL + "?" + params;
+        // String apiUrl = BASE_URL + "?" + params;
+        String apiUrl = BASE_URL + "?q=" + location.city + "&appid=" + API_KEY + "&units=metric&lang=en";
 
         // Making the API request and getting the JSON response
         try {
