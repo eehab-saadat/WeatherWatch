@@ -24,7 +24,10 @@ import org.algoavengers.weatherwatch.utils.DTConverter;
 
 import static org.algoavengers.weatherwatch.utils.DTConverter.getDate;
 
-
+/**
+ * This class is the controller for the HomePage view.
+ * It handles all the user interactions with the HomePage view.
+ */
 public class HomePageController {
     // assets
     private String assetsPath = "src/main/resources/org/algoavengers/weatherwatch/assets/";
@@ -204,6 +207,10 @@ public class HomePageController {
     @FXML
     private Rectangle aqiStatus;
 
+    /**
+     * This method is called after the HomePage view is loaded.
+     * It sets up the event listeners and default actions.
+     */
     @FXML
     public void initialize() {
         // clean the cache
@@ -263,6 +270,12 @@ public class HomePageController {
         displaySavedLocation();
     }
 
+    /**
+     * This method is used to search for a city by its name.
+     * It fetches the location data for the city and displays it.
+     *
+     * @param city The name of the city to be searched.
+     */
     public void searchByCity(String city) {
         try {
             LocationData tempLocation = wws.cityToCoords(city);
@@ -275,6 +288,10 @@ public class HomePageController {
         }
     }
 
+    /**
+     * This method is used to display the current weather data.
+     * It updates the UI elements with the current weather data.
+     */
     public void displayData() {
         // main card info
         if(currentLocation.city.length()>0)
@@ -351,6 +368,10 @@ public class HomePageController {
     }
 
     // triggers
+    /**
+     * This method is used to set a heatwave trigger for the current location.
+     * It sets a heatwave trigger and displays an alert with the trigger details.
+     */
     public void setHeatwaveTrigger() {
         try {
             wws.setHeatWaveTrigger(currentLocation);
@@ -360,6 +381,11 @@ public class HomePageController {
             showAlert("Error", "Error setting trigger: " + e.getMessage());
         }
     }
+    /**
+     * This method sets a hurricane trigger for the current location.
+     * It calls the setHurricaneTrigger method of the WeatherWatchService class and displays an alert with the trigger details.
+     * If an error occurs while setting the trigger, it catches the exception and displays an error alert.
+     */
     public void setHurricaneTrigger() {
         try {
             wws.setHurricaneTrigger(currentLocation);
@@ -369,6 +395,12 @@ public class HomePageController {
             showAlert("Error", "Error setting trigger: " + e.getMessage());
         }
     }
+
+    /**
+     * This method sets a snow trigger for the current location.
+     * It calls the setSnowTrigger method of the WeatherWatchService class and displays an alert with the trigger details.
+     * If an error occurs while setting the trigger, it catches the exception and displays an error alert.
+     */
     public void setSnowTrigger() {
         try {
             wws.setSnowTrigger(currentLocation);
@@ -378,7 +410,11 @@ public class HomePageController {
             showAlert("Error", "Error setting trigger: " + e.getMessage());
         }
     }
-    // saved locations
+
+    /**
+     * This method displays the saved locations.
+     * It gets the saved locations from the WeatherWatchService class and updates the UI elements accordingly.
+     */
     public void displaySavedLocation() {
         savedLocations = wws.getSavedLocations();
         int size = (savedLocations != null) ? savedLocations.length : 0;
@@ -391,6 +427,13 @@ public class HomePageController {
         }
     }
 
+    /**
+     * This method gets the data for a saved location.
+     * It fetches the data for the saved location from the WeatherWatchService class and displays it.
+     * If an error occurs while fetching the data, it catches the exception and displays an error alert.
+     *
+     * @param index The index of the saved location.
+     */
     public void getSavedLocationData(int index) {
         try {
             LocationData tempLocation = savedLocations[index];
@@ -402,6 +445,8 @@ public class HomePageController {
             System.out.println("Error fetching data: " + e.getMessage());
         }
     }
+
+    // The following methods are shortcuts for getting the data for a saved location at a specific index.
     public void getSavedLocationData1() {
         getSavedLocationData(0);
     }
@@ -418,7 +463,7 @@ public class HomePageController {
         getSavedLocationData(4);
     }
 
-    //setters
+    // The following methods are setters for the current weather, location, air pollution data, and forecast.
     public void setCurrentWeather(WeatherData currentWeather) {
         this.currentWeather = currentWeather;
     }
@@ -431,6 +476,15 @@ public class HomePageController {
     public void setForecast(WeatherData[] forecast) {
         this.forecast = forecast;
     }
+
+    /**
+     * This method sets all the data for the current location.
+     *
+     * @param loc The location data.
+     * @param weather The weather data.
+     * @param apData The air pollution data.
+     * @param forecast The forecast data.
+     */
     public void setAllData(LocationData loc, WeatherData weather, APData apData, WeatherData[] forecast) {
         setCurrentLocation(loc);
         setCurrentWeather(weather);
@@ -438,7 +492,10 @@ public class HomePageController {
         setForecast(forecast);
     }
 
-    // others
+    /**
+     * This method loads the forecast cards.
+     * It updates the UI elements with the forecast data.
+     */
     public void loadForecastCards() {
         Label[] Fdates = new Label[5];
         Label[] Ftemps = new Label[5];
@@ -468,33 +525,54 @@ public class HomePageController {
             FmainIcons[currentIndex].setImage(loadImageFromAssets(forecast[currentIndex].icon));
         }
     }
+
+    /**
+     * This method loads an image from the assets.
+     *
+     * @param iconName The name of the icon to be loaded.
+     * @return An Image object representing the loaded image.
+     */
     public Image loadImageFromAssets(String iconName) {
         return new Image("file:" + assetsPath + iconName + ".png");
     }
-
+    /**
+     * This method is used to display an alert with a specific title and message.
+     * It also plays a sound when the alert is displayed.
+     * The alert is displayed at a specific position on the screen.
+     *
+     * @param title The title of the alert.
+     * @param message The message to be displayed in the alert.
+     */
     public void showAlert(String title, String message) {
-        // playing sound
+        // Play a sound when the alert is displayed
         playSound("popup-alert.mp3");
-        // setting content
+
+        // Create a new alert with the specified title and message
         Alert alert = new Alert(Alert.AlertType.WARNING, "Welcome to WeatherWatch!");
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
-        // setting geometry
+
+        // Set the position of the alert on the screen
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
         double screenWidth = primaryScreenBounds.getWidth();
         double screenHeight = primaryScreenBounds.getHeight();
-        System.out.println(screenWidth + " " + screenHeight);
-        System.out.println(alert.getWidth() + " " + alert.getHeight());
         double xOffset = screenWidth - 660; // Adjust this value to set the distance from the left edge
         double yOffset = screenHeight - 220; // Adjust this value to set the distance from the bottom edge
         alert.setX(xOffset);
         alert.setY(yOffset);
-        // configurations
+
+        // Set the modality of the alert and display it
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.show();
     }
 
+    /**
+     * This method is used to play a sound from a specified file.
+     * If an error occurs while playing the sound, it is caught and an error message is displayed.
+     *
+     * @param fileName The name of the file containing the sound to be played.
+     */
     public void playSound(String fileName) {
         try {
             Media sound = new Media(getClass().getResource("/org/algoavengers/weatherwatch/music/" + fileName).toURI().toString());
@@ -508,9 +586,12 @@ public class HomePageController {
         }
     }
 
-    // page navigation
+    /**
+     * This method is used to open the map view.
+     * It loads the map view from a FXML file and sets it as the current scene.
+     * If an error occurs while loading the map, it is caught and an error alert is displayed.
+     */
     public void openMap() {
-        // on click mount the search-map.fxml on the current stage
         try {
             Parent mapRoot = FXMLLoader.load(getClass().getResource("/org/algoavengers/weatherwatch/views/search-map.fxml"));
             Stage stage = (Stage) mainPane.getScene().getWindow();

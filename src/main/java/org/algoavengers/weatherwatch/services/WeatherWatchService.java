@@ -15,7 +15,7 @@ import java.io.IOException;
  * This class provides services for managing weather data and location data.
  * It interacts with the cache to store and retrieve data.
  */
-public class WeatherWatchService {
+public class WeatherWatchService implements WeatherWatchServiceInterface {
     CacheManager cacheManager = new CacheManager(new FileManager());
     String API_KEY;
 

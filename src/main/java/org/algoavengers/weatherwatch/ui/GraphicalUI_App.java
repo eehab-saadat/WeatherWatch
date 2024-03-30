@@ -9,17 +9,31 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
-
+import org.algoavengers.weatherwatch.ui.DisplayInterface;
 import java.io.IOException;
 import java.util.Objects;
 
 public class GraphicalUI_App extends Application implements DisplayInterface {
     private String API_KEY;
 
+    /**
+     * The main method of the application.
+     * It calls the launch method from the Application class to start the application.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * The start method of the application.
+     * It is called after the application has been initialized.
+     * It sets up the primary stage of the application, including loading the initial scene from an FXML file and setting a pause before transitioning to the home page.
+     *
+     * @param primaryStage The primary stage for this application.
+     * @throws Exception If an error occurs while loading the FXML file.
+     */
     @Override
     public void start(@NotNull Stage primaryStage) throws Exception {
         // Load the loader.fxml file
@@ -45,6 +59,11 @@ public class GraphicalUI_App extends Application implements DisplayInterface {
 
     }
 
+    /**
+     * This method is used to set the API key for the application.
+     *
+     * @param API_KEY The API key to be used for the application.
+     */
     @Override
     public void run(String API_KEY) {
         this.API_KEY = API_KEY;
