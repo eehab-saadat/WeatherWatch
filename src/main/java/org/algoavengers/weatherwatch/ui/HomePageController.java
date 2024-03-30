@@ -263,6 +263,18 @@ public class HomePageController {
         displaySavedLocation();
     }
 
+    public void searchByCity(String city) {
+        try {
+            LocationData tempLocation = wws.cityToCoords(city);
+            Object[] data = wws.fetchData(tempLocation);
+            setAllData((LocationData) data[0], (WeatherData) data[1], (APData) data[2], (WeatherData[]) data[3]);
+            displayData();
+        } catch (Exception e) {
+            showAlert("Error", "Error Fetching Location: Invalid location name or location not found");
+            System.out.println("Error fetching data: " + e.getMessage());
+        }
+    }
+
     public void displayData() {
         // main card info
         if(currentLocation.city.length()>0)
@@ -504,7 +516,7 @@ public class HomePageController {
             Stage stage = (Stage) mainPane.getScene().getWindow();
             stage.setScene(new Scene(mapRoot, 1080, 680));
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/org/algoavengers/weatherwatch/assets/logo.png")));
-            stage.setTitle("WeatherWatch (world map)");
+            stage.setTitle("WeatherWatch (World-map)");
             stage.setIconified(false);
         } catch (Exception e) {
             System.out.println("Error loading map: " + e.getMessage());
