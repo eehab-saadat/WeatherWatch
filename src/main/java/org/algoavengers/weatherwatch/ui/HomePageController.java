@@ -294,8 +294,10 @@ public class HomePageController {
      */
     public void displayData() {
         // main card info
-        if(currentLocation.city.length()>0)
+        if(currentLocation.city.length()>0) {
+            if(currentLocation.country.equalsIgnoreCase("IL")) currentLocation.setCountry("PS");
             locationName.setText(currentLocation.city + ", " + currentLocation.country);
+        }
         else locationName.setText(currentLocation.lat + ", " + currentLocation.lon);
         tempLabel.setText(currentWeather.temp + "°C");
         todayDate.setText(currentWeather.dt);
