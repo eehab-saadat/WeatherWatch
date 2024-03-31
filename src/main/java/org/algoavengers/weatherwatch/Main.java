@@ -24,7 +24,7 @@ public class Main {
             System.out.println("An error occurred: " + e.getMessage());
             return;
         }
-        App WeatherWatch = new App(new TerminalUI());
+        App WeatherWatch = new App(new GraphicalUI_App());
         WeatherWatch.app.run(API_KEY);
         //WeatherWatch = new App(new GraphicalUI_App());
        // WeatherWatch.app.run(API_KEY);
