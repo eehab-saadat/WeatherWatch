@@ -181,6 +181,7 @@ public class FileManager implements CacheManagerInterface {
                     weatherData = new WeatherData(); // initializing the object with default constructor where location is null
                     forecastData = new WeatherData[5];
                     weatherData.setLocation(locationData);
+                    weatherData.dt = parts[1];
                     weatherData.temp = Float.parseFloat(parts[5].trim());
                     // Fill with the rest of the weatherData fields
                     weatherData.feelsLike = Float.parseFloat(parts[6].trim());
@@ -210,7 +211,8 @@ public class FileManager implements CacheManagerInterface {
                 if (parts[0].trim().equalsIgnoreCase(city)) { // Use case-insensitive comparison
                     apData = new APData();
                     apData.setLocation(locationData);
-                    apData.dt = parts[1].trim();
+                    apData.dt = parts[1];
+                    System.out.println(parts[1]);
                     apData.aqi = Integer.parseInt(parts[2].trim());
                     // Fill with the rest of the apData fields
                     apData.co = Float.parseFloat(parts[6].trim());
