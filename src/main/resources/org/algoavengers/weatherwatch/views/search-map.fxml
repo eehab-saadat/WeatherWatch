@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -32,7 +33,10 @@
                </stops>
             </LinearGradient>
          </fill></Rectangle>
-      <WorldMapView id="map" fx:id="worldMap" countrySelectionMode="SINGLE" layoutX="-3.0" layoutY="60.8" locationSelectionMode="SINGLE" prefHeight="619.0" prefWidth="1232.0" viewOrder="2.0" zoomFactor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="61.0" />
+      <WorldMapView id="map" fx:id="worldMap" countrySelectionMode="SINGLE" layoutX="-3.0" layoutY="60.8" locationSelectionMode="SINGLE" prefHeight="619.0" prefWidth="1232.0" viewOrder="2.0" zoomFactor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="61.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></WorldMapView>
       <HBox prefHeight="62.0" prefWidth="510.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
