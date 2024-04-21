@@ -133,8 +133,15 @@ public class WeatherWatchService implements WeatherWatchServiceInterface {
      * Removes outdated records from the cache.
      */
     public void clearExpiredData() {
-        // Remove outdated records from the cache
-        cacheManager.cache.deleteOutdatedRecords();
+        try {
+
+
+            // Remove outdated records from the cache
+
+            cacheManager.cache.deleteOutdatedRecords();
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
     }
 
     /**

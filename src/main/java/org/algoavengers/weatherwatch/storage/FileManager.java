@@ -46,9 +46,11 @@ public class FileManager implements CacheManagerInterface {
                     apData.co + ", " + apData.no + ", " + apData.no2 + ", " + apData.o3 + ", " + apData.so2 + ", " + apData.pm2_5 + ", " + apData.pm10 + ", " + apData.nh3 + ", " + apData.comment);
             bw2.newLine();
 
-
-            bw3.write(location.city + ", " + weatherData.dt + ", " + location.lat + ", " + location.lon + ", " + location.country + ", " + "0");
-            bw3.newLine();
+            if(!findCity(location.city))
+            {
+                bw3.write(location.city + ", " + weatherData.dt + ", " + location.lat + ", " + location.lon + ", " + location.country + ", " + "0");
+                bw3.newLine();
+            }
 
             // Write forecastData attributes to Forecasts.txt
             for (WeatherData forecast : forecastData) {
@@ -65,6 +67,27 @@ public class FileManager implements CacheManagerInterface {
             System.out.println("An error occurred. " + e.getMessage());
         }
     }
+
+
+
+    public boolean findCity(String cityName) {
+        File locationsFile = new File(filepath + "Locations.txt");
+
+        try (BufferedReader locationsReader = new BufferedReader(new FileReader(locationsFile))) {
+            String currentLine;
+            while ((currentLine = locationsReader.readLine()) != null) {
+                String[] parts = currentLine.split(",");
+                if (parts[0].trim().equals(cityName)) { // If the city is found
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred. " + e.getMessage());
+        }
+
+        return false; // City not found
+    }
+
 
     public void save(LocationData location, WeatherData weatherData, APData apData) {
         // Check if the city already exists in the file
