@@ -46,9 +46,11 @@ public class FileManager implements CacheManagerInterface {
                     apData.co + ", " + apData.no + ", " + apData.no2 + ", " + apData.o3 + ", " + apData.so2 + ", " + apData.pm2_5 + ", " + apData.pm10 + ", " + apData.nh3 + ", " + apData.comment);
             bw2.newLine();
 
-
-            bw3.write(location.city + ", " + weatherData.dt + ", " + location.lat + ", " + location.lon + ", " + location.country + ", " + "0");
-            bw3.newLine();
+            if(!findCity(location.city))
+            {
+                bw3.write(location.city + ", " + weatherData.dt + ", " + location.lat + ", " + location.lon + ", " + location.country + ", " + "0");
+                bw3.newLine();
+            }
 
             // Write forecastData attributes to Forecasts.txt
             for (WeatherData forecast : forecastData) {
@@ -65,6 +67,27 @@ public class FileManager implements CacheManagerInterface {
             System.out.println("An error occurred. " + e.getMessage());
         }
     }
+
+
+
+    public boolean findCity(String cityName) {
+        File locationsFile = new File(filepath + "Locations.txt");
+
+        try (BufferedReader locationsReader = new BufferedReader(new FileReader(locationsFile))) {
+            String currentLine;
+            while ((currentLine = locationsReader.readLine()) != null) {
+                String[] parts = currentLine.split(",");
+                if (parts[0].trim().equals(cityName)) { // If the city is found
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred. " + e.getMessage());
+        }
+
+        return false; // City not found
+    }
+
 
     public void save(LocationData location, WeatherData weatherData, APData apData) {
         // Check if the city already exists in the file
@@ -320,17 +343,51 @@ public class FileManager implements CacheManagerInterface {
         try {
             File weatherDetailsFile = new File(filepath + "WeatherDetails.txt");
             File apDetailsFile = new File(filepath + "APDetails.txt");
+            File forecastsFile = new File(filepath + "Forecasts.txt");
             File tempWeatherDetailsFile = new File(filepath + "tempWeatherDetails.txt");
             File tempAPDetailsFile = new File(filepath + "tempAPDetails.txt");
+            File tempForecastsFile = new File(filepath + "tempForecasts.txt");
+            File locationsFile = new File(filepath + "Locations.txt");
+            File tempLocationsFile = new File(filepath + "tempLocations.txt");
+
+            // Readers and writers for Locations
+            BufferedReader locationsReader = new BufferedReader(new FileReader(locationsFile));
+            BufferedWriter tempLocationsWriter = new BufferedWriter(new FileWriter(tempLocationsFile));
 
             BufferedReader weatherDetailsReader = new BufferedReader(new FileReader(weatherDetailsFile));
             BufferedReader apDetailsReader = new BufferedReader(new FileReader(apDetailsFile));
+            BufferedReader forecastsReader = new BufferedReader(new FileReader(forecastsFile));
             BufferedWriter tempWeatherDetailsWriter = new BufferedWriter(new FileWriter(tempWeatherDetailsFile));
             BufferedWriter tempAPDetailsWriter = new BufferedWriter(new FileWriter(tempAPDetailsFile));
+            BufferedWriter tempForecastsWriter = new BufferedWriter(new FileWriter(tempForecastsFile));
 
             String currentLine;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime currentTimeMinus24Hours = LocalDateTime.now().minusHours(24);
+
+
+            while ((currentLine = locationsReader.readLine()) != null) {
+                String[] parts = currentLine.split(",");
+                LocalDateTime dt = LocalDateTime.parse(parts[1].trim(), formatter);
+                if (dt.isAfter(currentTimeMinus24Hours) || parts[parts.length - 1].trim().equals("1")) { // If the record is not older than 24 hours or it is saved
+                    tempLocationsWriter.write(currentLine + System.getProperty("line.separator"));
+                }
+            }
+
+            // Close readers and writers
+            locationsReader.close();
+            tempLocationsWriter.close();
+
+            // Delete original files
+            if (!locationsFile.delete()) {
+                System.out.println("Failed to delete the original files.");
+                return;
+            }
+
+            if (!tempLocationsFile.renameTo(locationsFile)) {
+                System.out.println("Failed to rename the temporary files.");
+                return;
+            }
 
             // Read lines from WeatherDetails.txt and APDetails.txt, skip the ones older than 24 hours
             while ((currentLine = weatherDetailsReader.readLine()) != null) {
@@ -349,20 +406,38 @@ public class FileManager implements CacheManagerInterface {
                 }
             }
 
+            // Read lines from Forecasts.txt, skip the ones older than 24 hours
+            List<String> forecastLines = new ArrayList<>();
+            while ((currentLine = forecastsReader.readLine()) != null) {
+                forecastLines.add(currentLine);
+                if (forecastLines.size() == 5) { // If we have read five lines
+                    String[] parts = forecastLines.get(0).split(",");
+                    LocalDateTime dt = LocalDateTime.parse(parts[1].trim(), formatter);
+                    if (dt.isAfter(currentTimeMinus24Hours)) { // If the record is not older than 24 hours
+                        for (String line : forecastLines) {
+                            tempForecastsWriter.write(line + System.getProperty("line.separator"));
+                        }
+                    }
+                    forecastLines.clear();
+                }
+            }
+
             // Close readers and writers
             weatherDetailsReader.close();
             apDetailsReader.close();
+            forecastsReader.close();
             tempWeatherDetailsWriter.close();
             tempAPDetailsWriter.close();
+            tempForecastsWriter.close();
 
             // Delete original files
-            if (!weatherDetailsFile.delete() || !apDetailsFile.delete()) {
+            if (!weatherDetailsFile.delete() || !apDetailsFile.delete() || !forecastsFile.delete()) {
                 System.out.println("Failed to delete the original files.");
                 return;
             }
 
             // Rename the temporary files to the original file names
-            if (!tempWeatherDetailsFile.renameTo(weatherDetailsFile) || !tempAPDetailsFile.renameTo(apDetailsFile)) {
+            if (!tempWeatherDetailsFile.renameTo(weatherDetailsFile) || !tempAPDetailsFile.renameTo(apDetailsFile) || !tempForecastsFile.renameTo(forecastsFile)) {
                 System.out.println("Failed to rename the temporary files.");
                 return;
             }
@@ -372,6 +447,7 @@ public class FileManager implements CacheManagerInterface {
             System.out.println("An error occurred. " + e.getMessage());
         }
     }
+
 
 
     public LocationData[] getSavedLocations() {
