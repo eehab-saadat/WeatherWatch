@@ -66,6 +66,8 @@ public class GraphicalUI_App extends Application implements DisplayInterface {
      */
     @Override
     public void run(String API_KEY) {
+
         this.API_KEY = API_KEY;
+        launch();
     }
 }
