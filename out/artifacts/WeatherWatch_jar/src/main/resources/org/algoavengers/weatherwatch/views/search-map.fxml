@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.WorldMapView?>
+
+<AnchorPane prefHeight="680" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.algoavengers.weatherwatch.ui.SearchMapController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="64.0" layoutX="-288.0" layoutY="-3.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1834.0" AnchorPane.bottomAnchor="616.0" AnchorPane.leftAnchor="-288.0" AnchorPane.rightAnchor="-312.0" AnchorPane.topAnchor="0.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0" startY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.28280702233314514" green="0.39375439286231995" blue="0.6526315808296204" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.08319687843322754" green="0.09803508967161179" blue="0.23157894611358643" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill></Rectangle>
+      <WorldMapView id="map" fx:id="worldMap" countrySelectionMode="SINGLE" layoutX="-3.0" layoutY="60.8" locationSelectionMode="SINGLE" prefHeight="619.0" prefWidth="1232.0" viewOrder="2.0" zoomFactor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="61.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></WorldMapView>
+      <HBox prefHeight="62.0" prefWidth="510.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/logo.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="5.0" top="14.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label prefHeight="63.0" prefWidth="470.0" text="WeatherWatch">
+               <font>
+                  <Font size="33.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

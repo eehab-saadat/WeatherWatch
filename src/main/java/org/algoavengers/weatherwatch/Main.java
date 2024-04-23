@@ -4,13 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import org.algoavengers.weatherwatch.ui.GraphicalUI_App;
+//import org.algoavengers.weatherwatch.ui.TerminalUI;
 import org.algoavengers.weatherwatch.ui.TerminalUI;
-//import org.algoavengers.weatherwatch.ui.TestUI;
 import org.algoavengers.weatherwatch.utils.App;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,9 +23,7 @@ public class Main {
             System.out.println("An error occurred: " + e.getMessage());
             return;
         }
-        App WeatherWatch = new App(new GraphicalUI_App());
+        App WeatherWatch = new App(new TerminalUI());
         WeatherWatch.app.run(API_KEY);
-        //WeatherWatch = new App(new GraphicalUI_App());
-       // WeatherWatch.app.run(API_KEY);
     }
 }

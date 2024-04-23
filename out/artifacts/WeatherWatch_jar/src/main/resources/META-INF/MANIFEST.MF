@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: org.algoavengers.weatherwatch.Main
+Class-Path: org.algoavengers.weatherwatch.Main
+

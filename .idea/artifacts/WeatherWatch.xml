@@ -1,0 +1,58 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="WeatherWatch">
+    <output-path>$PROJECT_DIR$/out/artifacts/WeatherWatch</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="org.algoavengers.weatherwatch.ui.GraphicalUI_App" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="icons">
+          <JavaFxApplicationIcons>
+            <option name="linuxIcon" value="$PROJECT_DIR$/src/main/resources/org/algoavengers/weatherwatch/assets/logo.png" />
+            <option name="windowsIcon" value="$PROJECT_DIR$/src/main/resources/org/algoavengers/weatherwatch/assets/logo.ico" />
+          </JavaFxApplicationIcons>
+        </option>
+        <option name="title" value="WeatherWatch" />
+        <option name="vendor" value="algorithm avengers" />
+        <option name="version" value="1.0" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="WeatherWatch.jar">
+        <element id="module-output" name="WeatherWatch" />
+        <element id="library" level="project" name="Maven: com.dlsc.formsfx:formsfx-core:11.6.0" />
+        <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.10.1" />
+        <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.6.1" />
+        <element id="library" level="project" name="Maven: eu.hansolo:tilesfx:11.48" />
+        <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.18" />
+        <element id="library" level="project" name="Maven: org.apiguardian:apiguardian-api:1.1.2" />
+        <element id="library" level="project" name="Maven: org.controlsfx:controlsfx:11.1.2" />
+        <element id="library" level="project" name="Maven: org.jetbrains:annotations:13.0" />
+        <element id="library" level="project" name="Maven: org.json:json:20210307" />
+        <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter-api:5.10.0" />
+        <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.10.0" />
+        <element id="library" level="project" name="Maven: org.junit.platform:junit-platform-commons:1.10.0" />
+        <element id="library" level="project" name="Maven: org.junit.platform:junit-platform-engine:1.10.0" />
+        <element id="library" level="project" name="Maven: org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-base:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-base:win:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:win:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:win:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-media:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-media:win:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-swing:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-swing:win:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-web:21" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-web:win:21" />
+        <element id="library" level="project" name="Maven: org.opentest4j:opentest4j:1.3.0" />
+      </element>
+      <element id="directory" name="src">
+        <element id="dir-copy" path="$PROJECT_DIR$/src" />
+      </element>
+    </root>
+  </artifact>
+</component>
