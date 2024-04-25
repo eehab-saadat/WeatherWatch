@@ -1,6 +1,29 @@
 # WeatherWatch - Mausam, ~Aap Bataein~ Hum Bataein
 Experience weather forecasting like never before with WeatherWatch! Seamlessly navigate through current conditions, five-day forecasts, and pollution data for any location, all in one intuitive interface. 
+## Deployment
+In order to run WeatherWatch on your local system, you must have all the following pre-requisites:
+- JDK (preferabbly version 17 or higher) installed and path environment configured.
 
+- An IDE or text editor of choice with support for java development. [installation](https://www.oracle.com/java/technologies/downloads/#jdk22-windows)
+
+- Apache maven installed and added to environment variables. [installation](https://maven.apache.org/download.cgi)
+
+Once done with all pre-requisites, follow the following steps:
+1. Clone this repo to your local system using:
+   ```shell
+   git clone https://github.com/eehab-saadat/WeatherWatch/
+   ```
+2. Open the root directory and run the following command to download all the dependencies using maven:
+   ```shell
+   mvn install
+   ```
+3. Get a key for open weather api through [this website](https://openweathermap.org/appid) and generate a key for yourself. Then paste that key in the ```src/main/resources/API_KEY.json``` file.
+4. You may now run the application by runnig ```src/main/java/org/algoavengers/weatherwatch/Main.java``` file.
+
+**NOTE:** 
+> To switch between GUI and terminal application, specify which frontend to use in the ```src/main/java/org/algoavengers/weatherwatch/Main.java``` file.
+
+> To switch between sql and file based database, specify which database to use in the ```WeatherWatchService``` class in ```src/main/java/org/algoavengers/weatherwatch/services/WeatherWatchService.java``` file.
 ## What's new?
 - **Protected Branches:** The main branch is now protected from any direct commits. It is now impossible to change the main branch directly. It is necessary to submit the changes via a pull request (PR) which would now necessarily require a code review, and hence approval before any merges. The feedback of th code review would now be provided within the submitted PR if needed.
 -  **GitHub Projects:** This is a built-in GitHub feature for requirements management and task status tracking. For this project, a Kanban-like board has been setup for maintaing and managing task backlog in conjunction with automation triggers provided by *GitHub Workflow*. For details and usage, refer to the `Projects` tab above (open the project's README when you're there to get more details on how to use it).
