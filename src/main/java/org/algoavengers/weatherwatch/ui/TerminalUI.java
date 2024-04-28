@@ -18,12 +18,12 @@ public class TerminalUI implements DisplayInterface {
     private LocationData location;
     private WeatherData[] forecast;
     private APData APdata;
-    private WeatherWatchService weather = new WeatherWatchService();
+    private WeatherWatchService weatherApp = WeatherWatchService.getInstance();
 
     @Override
     public void run(String API_KEY) {
         System.out.println("Welcome to the Location App!");
-        String triggerUpdate = weather.getTrigger("random_string");
+        String triggerUpdate = weatherApp.getTrigger("random_string");
         if (triggerUpdate != null) {
             System.out.println("Trigger update: " + triggerUpdate);
         }
@@ -43,7 +43,7 @@ public class TerminalUI implements DisplayInterface {
 
             switch (choice) {
                 case 1:
-                    WeatherWatchService cacheManager = new WeatherWatchService();
+                    WeatherWatchService cacheManager = WeatherWatchService.getInstance();
                     LocationData[] locationArr = cacheManager.getSavedLocations();
                     if (locationArr != null) {
                         System.out.println("Saved Locations:");
@@ -123,9 +123,9 @@ public class TerminalUI implements DisplayInterface {
             // Prompt user for city name and fetch data
             System.out.print("Enter city name: ");
             String cityName = scanner.nextLine();
-            LocationData location = weather.cityToCoords(cityName);
+            LocationData location = weatherApp.cityToCoords(cityName);
             if (location != null) {
-                Object[] data = weather.fetchData(location);
+                Object[] data = weatherApp.fetchData(location);
                 if (data != null) {
                     // Handle fetched data
                     this.location = (LocationData) data[0];
@@ -158,9 +158,9 @@ public class TerminalUI implements DisplayInterface {
             System.out.print("Enter longitude: ");
             float longitude = scanner.nextFloat();
             scanner.nextLine();
-            LocationData location = weather.coordsToCity(latitude, longitude);
+            LocationData location = weatherApp.coordsToCity(latitude, longitude);
             if (location != null) {
-                Object[] data = weather.fetchData(location);
+                Object[] data = weatherApp.fetchData(location);
                 if (data != null) {
                     // Handle fetched data
                     this.location = (LocationData) data[0];
@@ -323,7 +323,7 @@ public class TerminalUI implements DisplayInterface {
 
     private void saveLocation(Scanner scanner) {
         if (location != null) {
-            weather.saveLocation(location);
+            weatherApp.saveLocation(location);
             System.out.println("Location saved successfully.");
         } else {
             System.out.println("No location data available to save.");
@@ -343,15 +343,15 @@ public class TerminalUI implements DisplayInterface {
 
             switch (choice) {
                 case 1:
-                    weather.setHeatWaveTrigger(location);
+                    weatherApp.setHeatWaveTrigger(location);
                     System.out.println("Trigger for heat wave set successfully in " + location.city + " for the next 7 days.");
                     break;
                 case 2:
-                    weather.setSnowTrigger(location);
+                    weatherApp.setSnowTrigger(location);
                     System.out.println("Trigger for snow set successfully in " + location.city + " for the next 7 days.");
                     break;
                 case 3:
-                    weather.setHurricaneTrigger(location);
+                    weatherApp.setHurricaneTrigger(location);
                     System.out.println("Trigger for hurricane set successfully in " + location.city + " for the next 7 days.");
                     break;
                 default:

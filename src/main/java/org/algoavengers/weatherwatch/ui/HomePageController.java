@@ -32,7 +32,7 @@ public class HomePageController {
     // assets
     private String assetsPath = "src/main/resources/org/algoavengers/weatherwatch/assets/";
     // service
-    WeatherWatchService wws = new WeatherWatchService();
+    WeatherWatchService wws = WeatherWatchService.getInstance();
     // Weather Data from backend
     private WeatherData currentWeather;
     private LocationData currentLocation;
