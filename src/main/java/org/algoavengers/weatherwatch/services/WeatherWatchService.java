@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class WeatherWatchService implements WeatherWatchServiceInterface {// is a singelton class
     private static WeatherWatchService instance = null;
-    CacheManager cacheManager = new CacheManager(new FileManager());
+    CacheManager cacheManager;
     String API_KEY;
 
     public static void setInstance (CacheManager cacheManager) {

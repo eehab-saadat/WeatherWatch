@@ -12,9 +12,9 @@ import java.util.List;
 
 
 public class DBManager implements CacheManagerInterface {
-    private static final java.lang.String DB_URL = "jdbc:mysql://sql6.freesqldatabase.com:3306/sql6693696";
-    private static final java.lang.String USER = "sql6693696";
-    private static final java.lang.String PASSWORD = "RPwZURS5JZ";
+    private static final java.lang.String DB_URL = "jdbc:mysql://sql6.freesqldatabase.com:3306/sql6702649";
+    private static final java.lang.String USER = "sql6702649";
+    private static final java.lang.String PASSWORD = "LrMGJX2iPU";
 
     //function to add city to database
 
