@@ -16,9 +16,11 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
+import org.algoavengers.weatherwatch.services.WeatherWatchService;
 
 public class LoaderController {
 
+    public WeatherWatchService wws = WeatherWatchService.getInstance();
     private boolean loaded = false;
     @FXML
     private ImageView logoImageView;
@@ -51,7 +53,8 @@ public class LoaderController {
             PauseTransition pause = new PauseTransition(Duration.seconds(5)); // Change the total duration to 5 seconds
             pause.setOnFinished(event -> {
                 try {
-                    Parent root = FXMLLoader.load(getClass().getResource("/org/algoavengers/weatherwatch/views/home-page.fxml"));
+                    FXMLLoader homeLoader = new FXMLLoader(getClass().getResource("/org/algoavengers/weatherwatch/views/home-page.fxml"));
+                    Parent root = homeLoader.load();
                     Stage stage = (Stage) logoImageView.getScene().getWindow();
                     stage.setScene(new Scene(root, 1080, 680));
                     stage.getIcons().add(new Image(getClass().getResourceAsStream("/org/algoavengers/weatherwatch/assets/logo.png")));
@@ -70,5 +73,10 @@ public class LoaderController {
             pause.play();
         }
     }
-
+    public void setWws(WeatherWatchService wws) {
+        this.wws = wws;
+    }
+    public WeatherWatchService getWws() {
+        return wws;
+    }
 }

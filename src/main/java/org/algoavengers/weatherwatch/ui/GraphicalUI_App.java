@@ -8,13 +8,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.algoavengers.weatherwatch.services.WeatherWatchService;
 import org.jetbrains.annotations.NotNull;
-import org.algoavengers.weatherwatch.ui.DisplayInterface;
 import java.io.IOException;
 import java.util.Objects;
 
 public class GraphicalUI_App extends Application implements DisplayInterface {
     private String API_KEY;
+    public WeatherWatchService wws = WeatherWatchService.getInstance();
 
     /**
      * The main method of the application.
@@ -37,8 +38,8 @@ public class GraphicalUI_App extends Application implements DisplayInterface {
     @Override
     public void start(@NotNull Stage primaryStage) throws Exception {
         // Load the loader.fxml file
-        Parent loaderRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/algoavengers/weatherwatch/views/loader.fxml")));
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/algoavengers/weatherwatch/views/loader.fxml"));
+        Parent loaderRoot = loader.load();
         // Set the loader.fxml as the scene for your primary stage
         primaryStage.setScene(new Scene(loaderRoot));
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/org/algoavengers/weatherwatch/assets/logo.png")));
@@ -49,7 +50,8 @@ public class GraphicalUI_App extends Application implements DisplayInterface {
         pauseBeforeHomePage.setOnFinished(event -> {
             // Load the home-page.fxml file
             try {
-                Parent homeRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/algoavengers/weatherwatch/views/home-page.fxml")));
+                FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/org/algoavengers/weatherwatch/views/home-page.fxml"));
+                Parent homeRoot = loader2.load();
                 // Set the home-page.fxml as the scene for your primary stage
                 primaryStage.setScene(new Scene(homeRoot));
             } catch (IOException e) {

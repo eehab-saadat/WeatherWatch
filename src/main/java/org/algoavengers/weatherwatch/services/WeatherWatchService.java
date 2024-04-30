@@ -15,11 +15,21 @@ import java.io.IOException;
  * This class provides services for managing weather data and location data.
  * It interacts with the cache to store and retrieve data.
  */
-public class WeatherWatchService implements WeatherWatchServiceInterface {
-    CacheManager cacheManager = new CacheManager(new FileManager());
+public class WeatherWatchService implements WeatherWatchServiceInterface {// is a singelton class
+    private static WeatherWatchService instance = null;
+    CacheManager cacheManager;
     String API_KEY;
 
-    public WeatherWatchService() {
+    public static void setInstance (CacheManager cacheManager) {
+        if (instance == null) {
+            instance = new WeatherWatchService(cacheManager);
+        }
+    }
+    public static WeatherWatchService getInstance() {
+        return instance;
+    }
+    private WeatherWatchService(CacheManager c) {
+
         try {// get the API key
             Gson gson = new Gson();
             JsonReader reader = new JsonReader(new FileReader("src/main/resources/API_KEY.json"));
@@ -28,6 +38,7 @@ public class WeatherWatchService implements WeatherWatchServiceInterface {
         } catch (IOException e) {
             System.out.println("An error occurred: " + e.getMessage());
         }
+        this.cacheManager = c;
     }
 
     /**
